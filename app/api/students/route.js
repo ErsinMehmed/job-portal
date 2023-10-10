@@ -20,12 +20,25 @@ export async function POST(request) {
   return NextResponse.json({ message: "Student Created" }, { status: 201 });
 }
 
-export async function GET() {
+export async function GET(request) {
+  const page = request.nextUrl.searchParams.get("page") || 1;
+  const perPage = request.nextUrl.searchParams.get("per_page") || 10;
+
   await connectMongoDB();
 
-  const students = await Student.find();
+  const totalStudents = await Student.countDocuments();
+  const students = await Student.find()
+    .skip((page - 1) * perPage)
+    .limit(perPage);
 
-  return NextResponse.json({ students });
+  const pagination = {
+    current_page: parseInt(page),
+    total_pages: Math.ceil(totalStudents / perPage),
+    total_results: totalStudents,
+    per_page: parseInt(perPage),
+  };
+
+  return NextResponse.json({ students, pagination });
 }
 
 export async function DELETE(request) {
