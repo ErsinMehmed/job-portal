@@ -4,6 +4,7 @@ import Group from "./group";
 const studentSchema = new Schema(
   {
     name: String,
+    personal_number: String,
     birthday: Date,
     faculty_number: Number,
     faculty: String,
