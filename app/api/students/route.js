@@ -3,7 +3,7 @@ import Student from "@/models/student";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const { name, birthday, faculty_number, faculty, email, password, group_id } =
+  const { name, birthday, faculty_number, faculty, email, password, group } =
     await request.json();
 
   await connectMongoDB();
@@ -14,7 +14,7 @@ export async function POST(request) {
     faculty,
     email,
     password,
-    group_id,
+    group,
   });
 
   return NextResponse.json({ message: "Student Created" }, { status: 201 });
@@ -28,6 +28,10 @@ export async function GET(request) {
 
   const totalStudents = await Student.countDocuments();
   const students = await Student.find()
+    .populate({
+      path: "group",
+      select: "name number course",
+    })
     .skip((page - 1) * perPage)
     .limit(perPage);
 

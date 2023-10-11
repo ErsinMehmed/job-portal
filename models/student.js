@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import Group from "./group";
 
 const studentSchema = new Schema(
   {
@@ -8,7 +9,7 @@ const studentSchema = new Schema(
     faculty: String,
     email: String,
     password: String,
-    group_id: Number,
+    group: { type: Schema.Types.ObjectId, ref: "Group" },
   },
   {
     timestamps: true,
