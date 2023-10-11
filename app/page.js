@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FcGraduationCap } from "react-icons/fc";
 import { FcBriefcase } from "react-icons/fc";
 
-export default function Home() {
+const Home = () => {
   const data = [
     {
       text: "Студент",
@@ -41,4 +41,6 @@ export default function Home() {
       </div>
     </section>
   );
-}
+};
+
+export default Home;
