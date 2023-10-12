@@ -10,7 +10,12 @@ export async function POST(request) {
   const fieldRules = {
     name: { required: true, minLength: 3, maxLength: 255, type: "string" },
     faculty: { required: true, type: "string" },
-    email: { required: true, minLength: 5, maxLength: 255, type: "string" },
+    email: {
+      required: true,
+      minLength: 5,
+      maxLength: 255,
+      type: "string",
+    },
     password: {
       required: true,
       minLength: 8,
@@ -32,7 +37,7 @@ export async function POST(request) {
 
   if (validationErrors) {
     request.session = validationErrors;
-    return NextResponse.json({ errors: validationErrors });
+    return NextResponse.json({ errorFields: validationErrors });
   }
 
   if (password !== passwordRep) {

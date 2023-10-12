@@ -3,30 +3,45 @@ export function validateFields(object, fieldRules) {
 
   for (const field in fieldRules) {
     const rules = fieldRules[field];
-    const value = object[field]; // Дефинирайте value като стойността на полето
+    const value = object[field];
 
-    // Проверка дали полето съществува
     if (rules.required && (value === "" || value === null)) {
-      errors[field] = `${field} е задължително поле и не е предоставено.`;
+      errors[field] = "Полето е задължително поле.";
     }
 
-    // Проверка на минималната дължина (ако е определена)
     if (rules.minLength && value && value.length < rules.minLength) {
-      errors[
-        field
-      ] = `${field} трябва да бъде поне ${rules.minLength} символа.`;
+      errors[field] = `Полето трябва съдържа поне ${rules.minLength} символа.`;
     }
 
-    // Проверка на дължината на стойността (ако е определена)
     if (rules.maxLength && value && value.length > rules.maxLength) {
       errors[
         field
-      ] = `${field} трябва да бъде по-кратко или равно на ${rules.maxLength} символа.`;
+      ] = `Полето трябва да бъде по-кратко или равно на ${rules.maxLength} символа.`;
     }
 
-    // Проверка на типа на полето (ако е определен)
     if (rules.type && typeof value !== rules.type) {
-      errors[field] = `${field} трябва да бъде от тип ${rules.type}.`;
+      errors[field] = `Полето трябва да бъде от тип ${rules.type}.`;
+    }
+
+    if (field.toLowerCase() === "email" && value) {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      if (!emailPattern.test(value)) {
+        errors[field] = "Въведете валиден имейл адрес.";
+      }
+    }
+
+    if (
+      field.toLowerCase() === "password" ||
+      field.toLowerCase() === "passwordrep"
+    ) {
+      const passwordPattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*])[A-Za-z\d@#$!%^&*]{8,}$/;
+
+      if (value && !passwordPattern.test(value)) {
+        errors[field] =
+          "Паролата трябва да съдържа поне една малка буква, една главна буква, една цифра и един специален знак.";
+      }
     }
   }
 
