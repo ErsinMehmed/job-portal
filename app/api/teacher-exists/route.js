@@ -7,7 +7,9 @@ export async function POST(request) {
   const { email } = await request.json();
   const teacher = await Teacher.findOne({ email }).select("_id");
 
-  console.log("teacher: ", teacher);
+  if (teacher) {
+    return NextResponse.json({ message: "Потребителят вече съществува!" });
+  }
 
   return NextResponse.json({ teacher });
 }

@@ -2,28 +2,49 @@ import connectMongoDB from "@/libs/mongodb";
 import Teacher from "@/models/teacher";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { validateFields } from "../../utils";
 
 export async function POST(request) {
-  try {
-    const { name, faculty, email, password, passwordRep } =
-      await request.json();
+  const { name, faculty, email, password, passwordRep } = await request.json();
 
-    if (password !== passwordRep) {
-      return NextResponse.json({ message: "Въведените пароли не съвпадат" });
-    }
+  const fieldRules = {
+    name: { required: true, minLength: 3, maxLength: 255, type: "string" },
+    faculty: { required: true, type: "string" },
+    email: { required: true, minLength: 5, maxLength: 255, type: "string" },
+    password: {
+      required: true,
+      minLength: 8,
+      maxLength: 255,
+      type: "string",
+    },
+    passwordRep: {
+      required: true,
+      minLength: 8,
+      maxLength: 255,
+      type: "string",
+    },
+  };
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    await connectMongoDB();
-    await Teacher.create({ name, faculty, email, password: hashedPassword });
+  const validationErrors = validateFields(
+    { name, faculty, email, password, passwordRep },
+    fieldRules
+  );
 
-    return NextResponse.json(
-      { message: "Преподавателя е създаден" },
-      { status: 201 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      { message: "An error occurred while registering the user." },
-      { status: 500 }
-    );
+  if (validationErrors) {
+    request.session = validationErrors;
+    return NextResponse.json({ errors: validationErrors });
   }
+
+  if (password !== passwordRep) {
+    return NextResponse.json({ message: "Въведените пароли не съвпадат" });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  await connectMongoDB();
+  await Teacher.create({ name, faculty, email, password: hashedPassword });
+
+  return NextResponse.json(
+    { message: "Преподавателя е създаден" },
+    { status: 201 }
+  );
 }

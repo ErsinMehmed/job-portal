@@ -91,33 +91,32 @@ const Register = () => {
   };
 
   return (
-    <section className='bg-gray-50'>
-      <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0'>
-        <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
-          <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
-            <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-800'>
+    <section className="bg-gray-50">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800">
               Създайте акаунт
             </h1>
 
             <Input
               size={"sm"}
-              type='text'
-              label='Име и фамилия'
+              type="text"
+              label="Име и фамилия"
               value={user.name}
-              name='name'
+              name="name"
               onChange={handleInputChange}
             />
 
             <Select
-              label='Факултет'
-              className='w-full'
+              label="Факултет"
+              className="w-full"
               size={"sm"}
-              name='faculty'
-              onChange={handleInputChange}>
+              name="faculty"
+              onChange={handleInputChange}
+            >
               {faculties.map((faculty, key) => (
-                <SelectItem
-                  key={key}
-                  value={user.faculty}>
+                <SelectItem key={key} value={user.faculty}>
                   {faculty.name}
                 </SelectItem>
               ))}
@@ -125,81 +124,76 @@ const Register = () => {
 
             <Input
               size={"sm"}
-              type='email'
-              label='Имейл'
+              type="email"
+              label="Имейл"
               value={user.email}
-              name='email'
+              name="email"
               onChange={handleInputChange}
             />
 
             <Input
               size={"sm"}
-              label='Парола'
+              label="Парола"
               endContent={
                 <button
-                  className='focus:outline-none'
-                  type='button'
-                  onClick={toggleVisibility}>
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
                   {isVisible ? (
-                    <AiFillEye className='text-2xl text-default-400 pointer-events-none' />
+                    <AiFillEye className="text-2xl text-default-400 pointer-events-none" />
                   ) : (
-                    <AiFillEyeInvisible className='text-2xl text-default-400 pointer-events-none' />
+                    <AiFillEyeInvisible className="text-2xl text-default-400 pointer-events-none" />
                   )}
                 </button>
               }
               type={isVisible ? "text" : "password"}
               value={user.password}
-              name='password'
+              name="password"
               onChange={handleInputChange}
             />
 
             <Input
               size={"sm"}
-              label='Потвърди парола'
+              label="Потвърди парола"
               endContent={
                 <button
-                  className='focus:outline-none'
-                  type='button'
-                  onClick={toggleVisibilityRep}>
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibilityRep}
+                >
                   {isVisibleRep ? (
-                    <AiFillEye className='text-2xl text-default-400 pointer-events-none' />
+                    <AiFillEye className="text-2xl text-default-400 pointer-events-none" />
                   ) : (
-                    <AiFillEyeInvisible className='text-2xl text-default-400 pointer-events-none' />
+                    <AiFillEyeInvisible className="text-2xl text-default-400 pointer-events-none" />
                   )}
                 </button>
               }
               type={isVisibleRep ? "text" : "password"}
               value={user.passwordRep}
-              name='passwordRep'
+              name="passwordRep"
               onChange={handleInputChange}
             />
 
-            <div className='flex items-start space-x-3'>
-              <div className='flex items-start'>
-                <div className='flex items-center h-5'>
-                  <Checkbox size='sm'>Приемам</Checkbox>
+            <div className="flex items-start space-x-3">
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <Checkbox size="sm">Приемам</Checkbox>
                 </div>
               </div>
 
-              <Link
-                href='#'
-                className='hover:underline text-blue-600 text-sm'>
+              <Link href="#" className="hover:underline text-blue-600 text-sm">
                 Правилата и условията
               </Link>
             </div>
 
-            <Button
-              className='w-full'
-              color='primary'
-              onClick={handleSubmit}>
+            <Button className="w-full" color="primary" onClick={handleSubmit}>
               Регистрация
             </Button>
 
-            <p className='text-sm font-light text-gray-500'>
+            <p className="text-sm font-light text-gray-500">
               Вече имате акаунт?{" "}
-              <Link
-                href='/login'
-                className='hover:underline text-blue-500'>
+              <Link href="/login" className="hover:underline text-blue-500">
                 Вход
               </Link>
             </p>
