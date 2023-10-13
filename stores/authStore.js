@@ -42,7 +42,6 @@ class Auth {
     const message = await response.json();
 
     if (message.hasOwnProperty("errorFields")) {
-      console.log("in");
       commonStore.setErrorFields(message.errorFields);
     }
   };

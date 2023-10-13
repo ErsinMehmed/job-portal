@@ -35,12 +35,23 @@ export function validateFields(object, fieldRules) {
       field.toLowerCase() === "password" ||
       field.toLowerCase() === "passwordrep"
     ) {
-      const passwordPattern =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%^&*])[A-Za-z\d@#$!%^&*]{8,}$/;
+      const passwordRegex = new RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$"
+      );
 
-      if (value && !passwordPattern.test(value)) {
-        errors[field] =
-          "Паролата трябва да съдържа поне една малка буква, една главна буква, една цифра и един специален знак.";
+      if (!passwordRegex.test(value)) {
+        if (!value.match(/[a-zа-я]/)) {
+          errors[field] = "Липсва малка буква.";
+        }
+        if (!value.match(/[A-ZА-Я]/)) {
+          errors[field] = "Липсва голяма буква.";
+        }
+        if (!value.match(/[0-9]/)) {
+          errors[field] = "Липсва цифра.";
+        }
+        if (!value.match(/[^a-zA-Z0-9]/)) {
+          errors[field] = "Липсва специален знак.";
+        }
       }
     }
   }
