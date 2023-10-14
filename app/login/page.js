@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button, Checkbox, Input } from "@nextui-org/react";
-import { AiFillEye } from "react-icons/ai";
-import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,7 +12,7 @@ const Login = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
-    <section className='flex items-center justify-center min-h-full h-screen w-full bg-gray-50'>
+    <section className='flex items-center justify-center min-h-screen w-full bg-gray-50'>
       <div className='flex flex-col px-6 py-8 mx-auto lg:py-0'>
         <div className='w-full bg-white rounded-lg shadow md:mt-0 xl:p-0'>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
@@ -35,9 +35,9 @@ const Login = () => {
                   type='button'
                   onClick={toggleVisibility}>
                   {isVisible ? (
-                    <AiFillEye className='text-2xl text-default-400 pointer-events-none' />
+                    <AiOutlineEye className='text-2xl text-default-400 pointer-events-none' />
                   ) : (
-                    <AiFillEyeInvisible className='text-2xl text-default-400 pointer-events-none' />
+                    <AiOutlineEyeInvisible className='text-2xl text-default-400 pointer-events-none' />
                   )}
                 </button>
               }
