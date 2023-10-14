@@ -39,12 +39,14 @@ class Auth {
           password: true,
           passwordRep: true,
         });
+
         break;
       case RegisterEnums.TEACHER_EXIST:
         commonStore.setErrorMessage("Потребителят вече съществува");
         commonStore.setErrorFields({
           email: true,
         });
+
         break;
       case RegisterEnums.USER_CREATED:
         commonStore.setSuccessMessage("Потребителят е създаден");
@@ -58,7 +60,7 @@ class Auth {
 
         break;
       default:
-        commonStore.teacherData(response.errorFields);
+        commonStore.setErrorFields(response.errorFields);
     }
   };
 }
