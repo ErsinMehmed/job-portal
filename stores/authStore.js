@@ -2,6 +2,8 @@ import { makeObservable, observable, action } from "mobx";
 import authApi from "@/api/auth";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
+import { validateFields } from "../app/utils";
+import { registerRules } from "../rules/register";
 
 class Auth {
   teacherData = {
@@ -12,10 +14,17 @@ class Auth {
     passwordRep: "",
   };
 
+  loginData = {
+    email: "",
+    password: "",
+  };
+
   constructor() {
     makeObservable(this, {
       teacherData: observable,
+      loginData: observable,
       setTeacherData: action,
+      setLoginData: action,
     });
   }
 
@@ -23,10 +32,21 @@ class Auth {
     this.teacherData = teacherData;
   };
 
-  handleSubmit = async () => {
+  setLoginData = (loginData) => {
+    this.loginData = loginData;
+  };
+
+  createTeacherProfile = async () => {
     commonStore.setErrorFields({});
     commonStore.setErrorMessage("");
     commonStore.setSuccessMessage("");
+
+    const errorFields = validateFields(this.teacherData, registerRules);
+
+    if (errorFields) {
+      commonStore.setErrorFields(errorFields);
+      return;
+    }
 
     const res = await authApi.createTeacherApi(this.teacherData);
 
@@ -61,6 +81,21 @@ class Auth {
         break;
       default:
         commonStore.setErrorFields(response.errorFields);
+    }
+  };
+
+  login = async (e) => {
+    e.preventDefault();
+
+    const res = await authApi.login(this.loginData);
+
+    if (res.error) {
+      commonStore.setErrorMessage("Потребителят не съществува");
+      commonStore.setErrorFields({
+        email: true,
+        password: true,
+      });
+      return;
     }
   };
 }

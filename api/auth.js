@@ -1,3 +1,5 @@
+import { signIn } from "next-auth/react";
+
 class Auth {
   createTeacherApi = async (data) => {
     try {
@@ -7,6 +9,20 @@ class Auth {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+      });
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  login = async (data) => {
+    try {
+      const response = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
       });
 
       return response;

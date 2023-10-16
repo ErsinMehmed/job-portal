@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
@@ -11,8 +13,17 @@ import { faculties } from "../data";
 import Alert from "../../components/Alert";
 
 const Register = () => {
-  const { teacherData, setTeacherData, handleSubmit } = authStore;
+  const { teacherData, setTeacherData, createTeacherProfile } = authStore;
   const { errorFields, errorMessage, successMessage } = commonStore;
+  const { data: session } = useSession();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
 
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleRep, setIsVisibleRep] = useState(false);
@@ -33,12 +44,8 @@ const Register = () => {
 
   return (
     <>
-      {(errorMessage || successMessage) && (
-        <Alert
-          message={errorMessage || successMessage}
-          kind={errorMessage}
-        />
-      )}
+      <Alert />
+
       <section className='bg-gray-50 min-h-screen'>
         <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0'>
           <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
@@ -181,7 +188,7 @@ const Register = () => {
                 className='w-full'
                 color='primary'
                 isDisabled={!termsCheckbox}
-                onClick={handleSubmit}>
+                onClick={createTeacherProfile}>
                 Регистрация
               </Button>
 

@@ -14,7 +14,6 @@ export async function POST(request) {
   );
 
   if (validationErrors) {
-    request.session = validationErrors;
     return NextResponse.json({ status: false, errorFields: validationErrors });
   }
 
