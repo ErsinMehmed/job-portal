@@ -3,10 +3,7 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { Button, Checkbox, Input } from "@nextui-org/react";
-import { AiOutlineEye } from "react-icons/ai";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { authStore, commonStore } from "../../stores/useStore";
 import Layout from "../../components/layouts/Dashboard";
 
@@ -25,11 +22,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Layout>
-        <Button className="mt-20" onClick={() => signOut()}>
-          Излез
-        </Button>
-      </Layout>
+      <Layout></Layout>
     </div>
   );
 };

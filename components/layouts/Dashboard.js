@@ -1,10 +1,14 @@
 import Navbar from "../dashboard/Navbar";
+import SideBar from "../dashboard/Sidebar";
 
 const DashboardLayout = (props) => {
   return (
     <>
       <Navbar />
-      {props.children}
+      <div className='flex items-center'>
+        <SideBar />
+        {props.children}
+      </div>
     </>
   );
 };
