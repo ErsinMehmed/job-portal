@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import authApi from "@/api/auth";
+import authApi from "@/apis/auth";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
 import { validateFields } from "../app/utils";
