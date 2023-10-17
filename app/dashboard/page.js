@@ -8,6 +8,7 @@ import { Button, Checkbox, Input } from "@nextui-org/react";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { authStore, commonStore } from "../../stores/useStore";
+import Layout from "../../components/layouts/Dashboard";
 
 const Dashboard = () => {
   const { loginData, setLoginData, login } = authStore;
@@ -24,7 +25,11 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Button onClick={() => signOut()}>Излез</Button>
+      <Layout>
+        <Button className="mt-20" onClick={() => signOut()}>
+          Излез
+        </Button>
+      </Layout>
     </div>
   );
 };

@@ -92,8 +92,7 @@ class Auth {
     if (res.error) {
       commonStore.setErrorMessage("Потребителят не съществува");
       commonStore.setErrorFields({
-        email: true,
-        password: true,
+        error: true,
       });
       return;
     }
