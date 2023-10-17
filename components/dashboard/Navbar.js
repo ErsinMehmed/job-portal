@@ -39,7 +39,6 @@ const Navbar = () => {
                 </svg>
               </button>
               <a href="#" className="flex ml-2 md:mr-24">
-                <img src="" className="h-8 mr-3" alt="FlowBite Logo" />
                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                   University Portal
                 </span>
@@ -138,11 +137,6 @@ const Navbar = () => {
                     className="flex px-4 py-3 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
                   >
                     <div className="flex-shrink-0">
-                      <img
-                        className="rounded-full w-11 h-11"
-                        src=""
-                        alt="Jese image"
-                      />
                       <div className="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 border border-white rounded-full bg-primary-700 dark:border-gray-700">
                         <svg
                           className="w-3 h-3 text-white"
@@ -161,7 +155,7 @@ const Navbar = () => {
                         <span className="font-semibold text-gray-900 dark:text-white">
                           Bonnie Green
                         </span>
-                        : "Hey, what's up? All set for the presentation?"
+                        : Hey, whats up? All set for the presentation?
                       </div>
                       <div className="text-xs font-medium text-primary-700 dark:text-primary-400">
                         a few moments ago
@@ -173,11 +167,6 @@ const Navbar = () => {
                     className="flex px-4 py-3 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
                   >
                     <div className="flex-shrink-0">
-                      <img
-                        className="rounded-full w-11 h-11"
-                        src=""
-                        alt="Jese image"
-                      />
                       <div className="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-gray-900 border border-white rounded-full dark:border-gray-700">
                         <svg
                           className="w-3 h-3 text-white"
@@ -210,11 +199,6 @@ const Navbar = () => {
                     className="flex px-4 py-3 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
                   >
                     <div className="flex-shrink-0">
-                      <img
-                        className="rounded-full w-11 h-11"
-                        src=""
-                        alt="Joseph image"
-                      />
                       <div className="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-red-600 border border-white rounded-full dark:border-gray-700">
                         <svg
                           className="w-3 h-3 text-white"
@@ -251,11 +235,6 @@ const Navbar = () => {
                     className="flex px-4 py-3 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
                   >
                     <div className="flex-shrink-0">
-                      <img
-                        className="rounded-full w-11 h-11"
-                        src=""
-                        alt="Leslie image"
-                      />
                       <div className="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-green-400 border border-white rounded-full dark:border-gray-700">
                         <svg
                           className="w-3 h-3 text-white"
@@ -292,11 +271,6 @@ const Navbar = () => {
                     className="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600"
                   >
                     <div className="flex-shrink-0">
-                      <img
-                        className="rounded-full w-11 h-11"
-                        src=""
-                        alt="Robert image"
-                      />
                       <div className="absolute flex items-center justify-center w-5 h-5 ml-6 -mt-5 bg-purple-500 border border-white rounded-full dark:border-gray-700">
                         <svg
                           className="w-3 h-3 text-white"
@@ -596,11 +570,6 @@ const Navbar = () => {
                     data-dropdown-toggle="dropdown-2"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      className="w-8 h-8 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                      alt="user photo"
-                    />
                   </button>
                 </div>
                 <div
