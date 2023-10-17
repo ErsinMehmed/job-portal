@@ -15,7 +15,9 @@ const Alert = () => {
       className={`animate-slide-down absolute top-5 left-1/2 -translate-x-1/2 flex items-center p-4 mb-4 ${
         errorMessage ? "text-red-600 bg-red-50" : "text-green-600 bg-green-50"
       }  rounded-lg `}>
-      <div className='ml-3 mr-2 text-sm font-medium'>{errorMessage}</div>
+      <div className='ml-3 mr-2 text-sm font-medium'>
+        {errorMessage || successMessage}
+      </div>
       <button
         type='button'
         onClick={handleHideAlert}

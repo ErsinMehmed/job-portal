@@ -9,11 +9,16 @@ import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { authStore, commonStore } from "../../stores/useStore";
-import { faculties } from "../data";
 import Alert from "../../components/Alert";
 
 const Register = () => {
-  const { teacherData, setTeacherData, createTeacherProfile } = authStore;
+  const {
+    faculties,
+    teacherData,
+    setTeacherData,
+    createTeacherProfile,
+    getFaculties,
+  } = authStore;
   const { errorFields, errorMessage, successMessage } = commonStore;
   const { data: session } = useSession();
 
@@ -23,7 +28,9 @@ const Register = () => {
     if (session) {
       router.push("/dashboard");
     }
-  }, [session, router]);
+
+    getFaculties();
+  }, [session, router, getFaculties]);
 
   const [isVisible, setIsVisible] = useState(false);
   const [isVisibleRep, setIsVisibleRep] = useState(false);
@@ -39,6 +46,8 @@ const Register = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    console.log(e.target);
     setTeacherData({ ...teacherData, [name]: value });
   };
 
@@ -66,19 +75,17 @@ const Register = () => {
               />
 
               <Select
+                items={faculties}
                 label='Факултет'
                 className='w-full'
                 size={"sm"}
                 name='faculty'
                 onChange={handleInputChange}
                 isInvalid={errorFields.faculty ? true : false}
-                errorMessage={errorFields.faculty}>
+                errorMessage={errorFields.faculty}
+                value={teacherData.faculty}>
                 {faculties.map((faculty, key) => (
-                  <SelectItem
-                    key={key}
-                    value={teacherData.faculty}>
-                    {faculty.name}
-                  </SelectItem>
+                  <SelectItem key={key}>{faculty.name}</SelectItem>
                 ))}
               </Select>
 

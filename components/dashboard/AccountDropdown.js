@@ -44,7 +44,7 @@ const AccountDropdown = () => {
             onPress={() => signOut()}
             key='logout'
             color='danger'>
-            Log Out
+            Изход
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

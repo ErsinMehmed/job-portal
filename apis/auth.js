@@ -11,7 +11,7 @@ class Auth {
         body: JSON.stringify(data),
       });
 
-      return response;
+      return response.json();
     } catch (error) {
       throw error;
     }

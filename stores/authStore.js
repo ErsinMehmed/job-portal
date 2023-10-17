@@ -1,5 +1,6 @@
 import { makeObservable, observable, action } from "mobx";
 import authApi from "@/apis/auth";
+import facultyApi from "@/apis/faculty";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
 import { validateFields } from "../app/utils";
@@ -19,12 +20,16 @@ class Auth {
     password: "",
   };
 
+  faculties = [];
+
   constructor() {
     makeObservable(this, {
       teacherData: observable,
       loginData: observable,
+      faculties: observable,
       setTeacherData: action,
       setLoginData: action,
+      setFaculties: action,
     });
   }
 
@@ -34,6 +39,14 @@ class Auth {
 
   setLoginData = (loginData) => {
     this.loginData = loginData;
+  };
+
+  setFaculties = (faculties) => {
+    this.faculties = faculties;
+  };
+
+  getFaculties = async () => {
+    this.setFaculties(await facultyApi.getFaculties());
   };
 
   createTeacherProfile = async () => {
@@ -48,9 +61,7 @@ class Auth {
       return;
     }
 
-    const res = await authApi.createTeacherApi(this.teacherData);
-
-    const response = await res.json();
+    const response = await authApi.createTeacherApi(this.teacherData);
 
     switch (response.status_code) {
       case RegisterEnums.PASSWORD_NOT_MATCH:
