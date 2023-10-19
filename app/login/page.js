@@ -38,9 +38,9 @@ const Login = () => {
       <Alert />
 
       <section className="flex items-center justify-center min-h-screen w-full bg-gray-50">
-        <div className="flex flex-col px-6 py-8 mx-auto lg:py-0">
+        <div className="flex flex-col px-6 py-8 sm:mx-auto lg:py-0">
           <div className="w-full bg-white rounded-lg shadow md:mt-0 xl:p-0">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div className="p-6 space-y-5 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800">
                 Влезте в акаунта си
               </h1>
@@ -88,15 +88,18 @@ const Login = () => {
                 onChange={handleInputChange}
               />
 
-              <div className="flex items-center justify-between space-x-32">
+              <div className="flex items-center justify-between space-x-10 sm:space-x-28">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <Checkbox size="sm">Запомни ме</Checkbox>
                   </div>
                 </div>
 
-                <Link href="#" className="hover:underline text-blue-600">
-                  Забравена парола?
+                <Link
+                  href="#"
+                  className="hover:underline text-blue-600 text-sm"
+                >
+                  Забравена парола
                 </Link>
               </div>
 

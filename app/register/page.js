@@ -55,35 +55,36 @@ const Register = () => {
     <>
       <Alert />
 
-      <section className='bg-gray-50 min-h-screen'>
-        <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0'>
-          <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
-            <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
-              <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-800'>
+      <section className="flex items-center justify-center min-h-screen w-full bg-gray-50">
+        <div className="flex flex-col items-center justify-center px-6 py-8 w-full sm:mx-auto lg:py-0">
+          <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800">
                 Създайте акаунт
               </h1>
 
               <Input
                 size={"sm"}
-                type='text'
-                label='Име и фамилия'
+                type="text"
+                label="Име и фамилия"
                 value={teacherData.name}
                 isInvalid={errorFields.name ? true : false}
                 errorMessage={errorFields.name}
-                name='name'
+                name="name"
                 onChange={handleInputChange}
               />
 
               <Select
                 items={faculties}
-                label='Факултет'
-                className='w-full'
+                label="Факултет"
+                className="w-full"
                 size={"sm"}
-                name='faculty'
+                name="faculty"
                 onChange={handleInputChange}
                 isInvalid={errorFields.faculty ? true : false}
                 errorMessage={errorFields.faculty}
-                value={teacherData.faculty}>
+                value={teacherData.faculty}
+              >
                 {faculties.map((faculty, key) => (
                   <SelectItem key={key}>{faculty.name}</SelectItem>
                 ))}
@@ -91,23 +92,24 @@ const Register = () => {
 
               <Input
                 size={"sm"}
-                type='email'
-                label='Имейл'
+                type="email"
+                label="Имейл"
                 value={teacherData.email}
                 isInvalid={errorFields.email ? true : false}
                 errorMessage={errorFields.email}
-                name='email'
+                name="email"
                 onChange={handleInputChange}
               />
 
               <Input
                 size={"sm"}
-                label='Парола'
+                label="Парола"
                 endContent={
                   <button
-                    className='focus:outline-none'
-                    type='button'
-                    onClick={toggleVisibility}>
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}
+                  >
                     {isVisible ? (
                       <AiOutlineEye
                         className={`text-2xl ${
@@ -131,18 +133,19 @@ const Register = () => {
                 value={teacherData.password}
                 isInvalid={errorFields.password ? true : false}
                 errorMessage={errorFields.password}
-                name='password'
+                name="password"
                 onChange={handleInputChange}
               />
 
               <Input
                 size={"sm"}
-                label='Потвърди парола'
+                label="Потвърди парола"
                 endContent={
                   <button
-                    className='focus:outline-none'
-                    type='button'
-                    onClick={toggleVisibilityRep}>
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibilityRep}
+                  >
                     {isVisibleRep ? (
                       <AiOutlineEye
                         className={`text-2xl ${
@@ -166,44 +169,45 @@ const Register = () => {
                 value={teacherData.passwordRep}
                 isInvalid={errorFields.passwordRep ? true : false}
                 errorMessage={errorFields.passwordRep}
-                name='passwordRep'
+                name="passwordRep"
                 onChange={handleInputChange}
               />
 
-              <div className='flex items-start space-x-1.5'>
-                <div className='flex items-start'>
-                  <div className='flex items-center h-5'>
+              <div className="flex items-start space-x-1.5">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
                     <Checkbox
                       isSelected={termsCheckbox}
                       onValueChange={() => {
                         setTermsCheckbox(termsCheckbox ? false : true);
                       }}
-                      size='sm'>
+                      size="sm"
+                    >
                       Приемам
                     </Checkbox>
                   </div>
                 </div>
 
                 <Link
-                  href='#'
-                  className='hover:underline text-blue-600 text-sm'>
-                  правилата и условията
+                  href="#"
+                  className="hover:underline text-blue-600 text-sm pr-10 sm:pr-36"
+                >
+                  условията
                 </Link>
               </div>
 
               <Button
-                className='w-full'
-                color='primary'
+                className="w-full"
+                color="primary"
                 isDisabled={!termsCheckbox}
-                onClick={createTeacherProfile}>
+                onClick={createTeacherProfile}
+              >
                 Регистрация
               </Button>
 
-              <p className='text-sm font-light text-gray-500'>
+              <p className="text-sm font-light text-gray-500">
                 Вече имате акаунт?{" "}
-                <Link
-                  href='/login'
-                  className='hover:underline text-blue-500'>
+                <Link href="/login" className="hover:underline text-blue-500">
                   Вход
                 </Link>
               </p>
