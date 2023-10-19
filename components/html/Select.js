@@ -10,12 +10,11 @@ const SelectComponent = (props) => {
   return (
     <Select
       label={props.label}
-      className="w-full"
+      className='w-full'
       size={"sm"}
       onChange={handleChange}
-      isInvalid={props.errorFields ? true : false}
-      errorMessage={props.errorFields}
-    >
+      isInvalid={props.errorMessage ? true : false}
+      errorMessage={props.errorMessage}>
       {props.items.map((item, key) => (
         <SelectItem key={key}>{item.name}</SelectItem>
       ))}

@@ -10,7 +10,7 @@ export function validateFields(object, fieldRules) {
     validatePassword(field, value, errors);
 
     if (rules.required && (value === "" || value === null)) {
-      errors[field] = "Полето е задължително поле.";
+      errors[field] = "Полето е задължително.";
     }
 
     if (rules.minLength && value && value.length < rules.minLength) {
