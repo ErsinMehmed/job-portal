@@ -19,7 +19,7 @@ const Register = () => {
   const { data: session } = useSession();
 
   const [termsCheckbox, setTermsCheckbox] = useState(false);
-  const [userKind, setUserKind] = useState(sessionStorage.getItem("userKind"));
+  // const [userKind, setUserKind] = useState(sessionStorage.getItem("userKind"));
 
   const router = useRouter();
 
