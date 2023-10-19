@@ -40,13 +40,13 @@ const InputComponent = (props) => {
             {isVisible ? (
               <AiOutlineEye
                 className={`text-2xl ${
-                  props.errorField ? "text-red-400" : "text-default-400"
+                  props.errorMessage ? "text-red-400" : "text-default-400"
                 } text-default-400`}
               />
             ) : (
               <AiOutlineEyeInvisible
                 className={`text-2xl ${
-                  props.errorField ? "text-red-400" : "text-default-400"
+                  props.errorMessage ? "text-red-400" : "text-default-400"
                 } text-default-400`}
               />
             )}

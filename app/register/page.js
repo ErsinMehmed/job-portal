@@ -9,29 +9,30 @@ import { authStore, commonStore } from "../../stores/useStore";
 import Alert from "../../components/Alert";
 import Select from "../../components/html/Select";
 import Input from "../../components/html/Input";
+import { faculties } from "../data";
+import { RoleEnums } from "../../enums/role";
 
 const Register = () => {
-  const {
-    faculties,
-    teacherData,
-    setTeacherData,
-    createTeacherProfile,
-    getFaculties,
-  } = authStore;
+  const { teacherData, setTeacherData, createTeacherProfile, getFaculties } =
+    authStore;
   const { errorFields, errorMessage, successMessage } = commonStore;
   const { data: session } = useSession();
+
+  const [termsCheckbox, setTermsCheckbox] = useState(false);
+  const [userKind, setUserKind] = useState(sessionStorage.getItem("userKind"));
 
   const router = useRouter();
 
   useEffect(() => {
+    console.log(userKind ? userKind : null);
+    if (userKind == RoleEnums.STUDENT) {
+      router.push("/login");
+    }
+
     if (session) {
       router.push("/dashboard");
     }
-
-    getFaculties();
-  }, [session, router, getFaculties]);
-
-  const [termsCheckbox, setTermsCheckbox] = useState(false);
+  }, [session, router]);
 
   const handleInputChange = (name, value) => {
     setTeacherData({ ...teacherData, [name]: value });
@@ -40,8 +41,6 @@ const Register = () => {
   // const facultyIndex = faculties.findIndex(
   //   (faculty) => faculty._id === teacherData.faculty
   // );
-
-  console.log(errorFields);
 
   return (
     <>

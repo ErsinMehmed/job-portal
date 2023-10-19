@@ -3,7 +3,9 @@ import { Select, SelectItem } from "@nextui-org/react";
 const SelectComponent = (props) => {
   const handleChange = (event) => {
     if (props.onChange) {
-      props.onChange(props.items[event.target.value]._id);
+      props.onChange(
+        props.getId ? props.items[event.target.value]._id : event.target.value
+      );
     }
   };
 

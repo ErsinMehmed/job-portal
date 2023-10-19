@@ -34,12 +34,7 @@ const AccountDropdown = () => {
         <DropdownMenu
           aria-label='User Actions'
           variant='flat'>
-          <DropdownItem key='settings'>My Settings</DropdownItem>
-          <DropdownItem key='team_settings'>Team Settings</DropdownItem>
-          <DropdownItem key='analytics'>Analytics</DropdownItem>
-          <DropdownItem key='system'>System</DropdownItem>
-          <DropdownItem key='configurations'>Configurations</DropdownItem>
-          <DropdownItem key='help_and_feedback'>Help & Feedback</DropdownItem>
+          <DropdownItem key='my_data'>Моите данни</DropdownItem>
           <DropdownItem
             onPress={() => signOut()}
             key='logout'

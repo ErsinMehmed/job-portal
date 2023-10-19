@@ -11,7 +11,7 @@ import Input from "../../components/html/Input";
 
 const Login = () => {
   const { loginData, setLoginData, login } = authStore;
-  const { errorFields, errorMessage, successMessage } = commonStore;
+  const { userKind, errorFields, errorMessage, successMessage } = commonStore;
   const { data: session } = useSession();
 
   const router = useRouter();
