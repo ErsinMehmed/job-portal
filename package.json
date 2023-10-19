@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.13",
+    "@vercel/analytics": "^1.1.1",
     "bcryptjs": "^2.4.3",
     "framer-motion": "^10.16.4",
     "mobx-react-lite": "^4.0.5",

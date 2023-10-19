@@ -1,5 +1,6 @@
 import "./globals.css";
 // import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import Provider from "./provider";
 import { AuthProvider } from "./providerAuth";
 
@@ -13,10 +14,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body>
         <AuthProvider>
-          <Provider>{children}</Provider>
+          <Provider>
+            {children}
+            <Analytics />
+          </Provider>
         </AuthProvider>
       </body>
     </html>
