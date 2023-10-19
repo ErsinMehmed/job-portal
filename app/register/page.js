@@ -5,11 +5,12 @@ import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
+import { Button, Checkbox, Input } from "@nextui-org/react";
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { authStore, commonStore } from "../../stores/useStore";
 import Alert from "../../components/Alert";
+import Select from "../../components/html/Select";
 
 const Register = () => {
   const {
@@ -44,12 +45,16 @@ const Register = () => {
     setIsVisibleRep(!isVisibleRep);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    console.log(e.target);
-    setTeacherData({ ...teacherData, [name]: value });
+  const handleInputChange = (name, value) => {
+    setTeacherData({
+      ...teacherData,
+      [name]: value,
+    });
   };
+
+  const facultyIndex = faculties.findIndex(
+    (faculty) => faculty._id === teacherData.faculty
+  );
 
   return (
     <>
@@ -74,7 +79,7 @@ const Register = () => {
                 onChange={handleInputChange}
               />
 
-              <Select
+              {/* <Select
                 items={faculties}
                 label="Факултет"
                 className="w-full"
@@ -83,12 +88,21 @@ const Register = () => {
                 onChange={handleInputChange}
                 isInvalid={errorFields.faculty ? true : false}
                 errorMessage={errorFields.faculty}
-                value={teacherData.faculty}
+                selectedKeys={facultyIndex.toString()}
               >
                 {faculties.map((faculty, key) => (
-                  <SelectItem key={key}>{faculty.name}</SelectItem>
+                  <SelectItem key={key} value={faculty._id}>
+                    {faculty.name}
+                  </SelectItem>
                 ))}
-              </Select>
+              </Select> */}
+
+              <Select
+                items={faculties}
+                label="Факултет"
+                errorFields={errorFields.faculty}
+                onChange={(value) => handleInputChange("faculty", value)}
+              />
 
               <Input
                 size={"sm"}
