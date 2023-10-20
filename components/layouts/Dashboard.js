@@ -22,14 +22,15 @@ const DashboardLayout = (props) => {
   };
 
   return (
-    <div className='flex items-center w-full'>
+    <div className="flex items-center w-full">
       {pageWidth && pageWidth > 640 && <SideBar show={isVisible} />}
       {pageWidth && pageWidth < 640 && <MobileMenu show={isVisible} />}
       <div
         className={`${
-          isVisible ? "sm:ml-16" : "sm:ml-56"
-        } transition-all duration-500 w-full`}>
-        <Navbar onMenuClick={toggleMenu} />
+          isVisible ? "sm:ml-16" : "sm:ml-56 xl:ml-64 2xl:ml-72"
+        } transition-all duration-500 w-full`}
+      >
+        <Navbar onMenuClick={toggleMenu} show={isVisible} />
         {props.children}
       </div>
     </div>
