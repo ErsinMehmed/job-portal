@@ -18,8 +18,6 @@ const Dashboard = () => {
 
   const [chartOptions, setChartOptions] = useState({
     chart: {
-      height: "100%",
-      width: "100%",
       type: "area",
       fontFamily: "Inter, sans-serif",
       dropShadow: {
@@ -129,6 +127,7 @@ const Dashboard = () => {
             series={chartOptions.series}
             type="area"
             height={350}
+            width={350}
           />
 
           <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
