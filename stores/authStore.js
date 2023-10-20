@@ -9,6 +9,7 @@ class Auth {
   teacherData = {
     name: "",
     faculty: "",
+    department: "",
     email: "",
     password: "",
     passwordRep: "",
@@ -71,6 +72,7 @@ class Auth {
         this.teacherData = {
           name: "",
           faculty: "",
+          department: "",
           email: "",
           password: "",
           passwordRep: "",

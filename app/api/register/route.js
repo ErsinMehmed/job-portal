@@ -6,10 +6,11 @@ import { validateFields } from "../../utils";
 import { registerRules } from "../../../rules/register";
 
 export async function POST(request) {
-  const { name, faculty, email, password, passwordRep } = await request.json();
+  const { name, faculty, department, email, password, passwordRep } =
+    await request.json();
 
   const validationErrors = validateFields(
-    { name, faculty, email, password, passwordRep },
+    { name, faculty, department, email, password, passwordRep },
     registerRules
   );
 
@@ -36,7 +37,13 @@ export async function POST(request) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await Teacher.create({ name, faculty, email, password: hashedPassword });
+  await Teacher.create({
+    name,
+    faculty,
+    department,
+    email,
+    password: hashedPassword,
+  });
 
   return NextResponse.json({ status: true, status_code: 3 }, { status: 201 });
 }

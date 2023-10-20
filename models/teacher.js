@@ -4,6 +4,7 @@ const teacherSchema = new Schema(
   {
     name: String,
     faculty: String,
+    department: String,
     email: String,
     password: String,
   },

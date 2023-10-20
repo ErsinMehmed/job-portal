@@ -1,6 +1,7 @@
 const registerRules = {
   name: { required: true, minLength: 3, maxLength: 255, type: "string" },
   faculty: { required: true, type: "string" },
+  department: { required: true, type: "string" },
   email: {
     required: true,
     minLength: 5,

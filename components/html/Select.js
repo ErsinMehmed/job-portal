@@ -17,7 +17,7 @@ const SelectComponent = (props) => {
       onChange={handleChange}
       isInvalid={props.errorMessage ? true : false}
       errorMessage={props.errorMessage}>
-      {props.items.map((item, key) => (
+      {props.items?.map((item, key) => (
         <SelectItem key={key}>{item.name}</SelectItem>
       ))}
     </Select>

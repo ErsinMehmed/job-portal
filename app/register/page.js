@@ -9,8 +9,7 @@ import { authStore, commonStore } from "../../stores/useStore";
 import Alert from "../../components/Alert";
 import Select from "../../components/html/Select";
 import Input from "../../components/html/Input";
-import { faculties } from "../data";
-import { RoleEnums } from "../../enums/role";
+import { faculties, departments } from "../data";
 
 const Register = () => {
   const { teacherData, setTeacherData, createTeacherProfile, getFaculties } =
@@ -19,16 +18,11 @@ const Register = () => {
   const { data: session } = useSession();
 
   const [termsCheckbox, setTermsCheckbox] = useState(false);
-  // const [userKind, setUserKind] = useState(sessionStorage.getItem("userKind"));
+  const [filteredDepartments, setFilteredDepartments] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
-    console.log(userKind ? userKind : null);
-    if (userKind == RoleEnums.STUDENT) {
-      router.push("/login");
-    }
-
     if (session) {
       router.push("/dashboard");
     }
@@ -36,6 +30,14 @@ const Register = () => {
 
   const handleInputChange = (name, value) => {
     setTeacherData({ ...teacherData, [name]: value });
+
+    if (name === "faculty") {
+      const filteredDepartments = departments.filter(
+        (department) => department.faculty == value
+      );
+
+      setFilteredDepartments(filteredDepartments);
+    }
   };
 
   // const facultyIndex = faculties.findIndex(
@@ -68,6 +70,15 @@ const Register = () => {
                 errorMessage={errorFields.faculty}
                 onChange={(value) => handleInputChange("faculty", value)}
               />
+
+              {teacherData.faculty && (
+                <Select
+                  items={filteredDepartments}
+                  label='Катедра'
+                  errorMessage={errorFields.department}
+                  onChange={(value) => handleInputChange("department", value)}
+                />
+              )}
 
               <Input
                 type='email'
