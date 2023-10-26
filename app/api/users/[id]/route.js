@@ -1,5 +1,5 @@
 import connectMongoDB from "@/libs/mongodb";
-import Employee from "@/models/employee";
+import User from "@/models/user";
 import { NextResponse } from "next/server";
 
 export async function PUT(request, { params }) {
@@ -14,7 +14,7 @@ export async function PUT(request, { params }) {
   } = await request.json();
 
   await connectMongoDB();
-  await Employee.findByIdAndUpdate(id, {
+  await User.findByIdAndUpdate(id, {
     name,
     birthday,
     city,
@@ -23,7 +23,7 @@ export async function PUT(request, { params }) {
     group_id,
   });
 
-  return NextResponse.json({ message: "Employee updated" }, { status: 200 });
+  return NextResponse.json({ message: "User updated" }, { status: 200 });
 }
 
 export async function GET(request, { params }) {
@@ -31,7 +31,7 @@ export async function GET(request, { params }) {
 
   await connectMongoDB();
 
-  const employee = await Employee.findOne({ _id: id });
+  const user = await User.findOne({ _id: id });
 
-  return NextResponse.json({ employee }, { status: 200 });
+  return NextResponse.json({ user }, { status: 200 });
 }

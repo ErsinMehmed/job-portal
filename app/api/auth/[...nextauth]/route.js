@@ -1,5 +1,5 @@
 import connectMongoDB from "@/libs/mongodb";
-import Teacher from "@/models/employeer";
+import User from "@/models/user";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -15,7 +15,7 @@ export const authOptions = {
 
         try {
           await connectMongoDB();
-          const user = await Teacher.findOne({ email });
+          const user = await User.findOne({ email });
 
           if (!user) {
             return null;

@@ -1,13 +1,8 @@
 import connectMongoDB from "@/libs/mongodb";
-import Employyer from "@/models/employeer";
-import Employee from "@/models/employee";
+import User from "@/models/user";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { validateFields } from "../../utils";
-import {
-  registerEmployeerRules,
-  registerEmployeeRules,
-} from "../../../rules/register";
 
 export async function POST(request) {
   // const { name, role, city, vat_number, email, password, passwordRep } =
@@ -32,9 +27,9 @@ export async function POST(request) {
 
   await connectMongoDB();
 
-  const existingEmployyer = await Employyer.findOne({ email });
+  const userExist = await User.findOne({ email });
 
-  if (existingEmployyer) {
+  if (userExist) {
     return NextResponse.json({
       status: false,
       status_code: 2,
@@ -42,7 +37,7 @@ export async function POST(request) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await Employyer.create({
+  await User.create({
     name,
     vat_number,
     email,

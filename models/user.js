@@ -1,22 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 import Group from "./group";
+import Role from "./role";
 
-const employeeSchema = new Schema(
+const userSchema = new Schema(
   {
     name: String,
     personal_number: String,
+    vat_number: String,
+    role: { type: Schema.Types.ObjectId, ref: "Role" },
     birthday: Date,
     city: String,
     email: String,
     password: String,
-    group: { type: Schema.Types.ObjectId, ref: "Group" },
   },
   {
     timestamps: true,
   }
 );
 
-const Employee =
-  mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-export default Employee;
+export default User;

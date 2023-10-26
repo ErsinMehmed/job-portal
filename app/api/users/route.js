@@ -1,23 +1,32 @@
 import connectMongoDB from "@/libs/mongodb";
-import Employee from "@/models/employee";
+import User from "@/models/user";
+import UserRole from "@/models/userRole";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const { name, personal_number, birthday, city, email, password, group } =
+  const { name, role, personal_number, birthday, city, email, password } =
     await request.json();
 
   await connectMongoDB();
-  await Employee.create({
+
+  const newUser = await User.create({
     name,
     personal_number,
+    role,
     birthday,
     city,
     email,
     password,
-    group,
   });
 
-  return NextResponse.json({ message: "Employee Created" }, { status: 201 });
+  if (role && newUser) {
+    await UserRole.create({
+      user: newUser._id,
+      role: role,
+    });
+  }
+
+  return NextResponse.json({ message: "User Created" }, { status: 201 });
 }
 
 export async function GET(request) {
@@ -29,9 +38,9 @@ export async function GET(request) {
 
   await connectMongoDB();
 
-  const queryBuilder = Employee.find().populate({
-    path: "group",
-    select: "name number",
+  const queryBuilder = User.find().populate({
+    path: "role",
+    select: "name",
   });
 
   if (nameFilter) {
@@ -42,24 +51,24 @@ export async function GET(request) {
     queryBuilder.where("personal_number", personalNumberFilter);
   }
 
-  const totalEmployees = await Employee.find(queryBuilder).countDocuments();
-  const employee = await queryBuilder.skip((page - 1) * perPage).limit(perPage);
+  const totalUsers = await User.find(queryBuilder).countDocuments();
+  const user = await queryBuilder.skip((page - 1) * perPage).limit(perPage);
 
   const pagination = {
     current_page: parseInt(page),
-    total_pages: Math.ceil(totalEmployees / perPage),
-    total_results: totalEmployees,
+    total_pages: Math.ceil(totalUsers / perPage),
+    total_results: totalUsers,
     per_page: parseInt(perPage),
   };
 
-  return NextResponse.json({ employee, pagination });
+  return NextResponse.json({ user, pagination });
 }
 
 export async function DELETE(request) {
   const id = request.nextUrl.searchParams.get("id");
 
   await connectMongoDB();
-  await Employee.findByIdAndDelete(id);
+  await User.findByIdAndDelete(id);
 
-  return NextResponse.json({ message: "Employee deleted" }, { status: 200 });
+  return NextResponse.json({ message: "User deleted" }, { status: 200 });
 }

@@ -1,13 +1,11 @@
 import { makeObservable, observable, action } from "mobx";
 import authApi from "@/apis/auth";
+import roleApi from "@/apis/role";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
 import { RoleEnums } from "../enums/role";
 import { validateFields } from "../app/utils";
-import {
-  registerEmployeerRules,
-  registerEmployeeRules,
-} from "../rules/register";
+import { generateRegisterRules } from "../rules/register";
 
 class Auth {
   userData = {
@@ -25,12 +23,16 @@ class Auth {
     password: "",
   };
 
+  roles = {};
+
   constructor() {
     makeObservable(this, {
       userData: observable,
       loginData: observable,
+      roles: observable,
       setUserData: action,
       setLoginData: action,
+      setRole: action,
     });
   }
 
@@ -42,19 +44,24 @@ class Auth {
     this.loginData = loginData;
   };
 
+  setRole = (roles) => {
+    this.roles = roles;
+  };
+
+  loadRoles = async () => {
+    this.setRole(await roleApi.getRoles());
+  };
+
   createUserProfile = async () => {
     commonStore.setErrorFields({});
     commonStore.setErrorMessage("");
     commonStore.setSuccessMessage("");
 
-    const errorFields = validateFields(
-      this.userData,
-      this.userData.role === RoleEnums.EMPLOYEER
-        ? registerEmployeerRules
-        : registerEmployeeRules
-    );
-    console.log(errorFields);
+    console.log(generateRegisterRules(this.userData.role));
     return;
+
+    const errorFields = validateFields(registerRules, this.userData);
+    console.log(errorFields);
 
     if (errorFields) {
       commonStore.setErrorFields(errorFields);
