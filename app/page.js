@@ -1,41 +1,91 @@
 "use client";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import Link from "next/link";
-import { userKind } from "./data";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Button, Checkbox } from "@nextui-org/react";
+import { authStore, commonStore } from "../stores/useStore";
+import Alert from "../components/Alert";
+import Input from "../components/html/Input";
 
-const Home = () => {
-  const handleUserKindClick = (index) => {
-    sessionStorage.setItem("userKind", index);
+const Login = () => {
+  const { loginData, setLoginData, login } = authStore;
+  const { userKind, errorFields, errorMessage, successMessage } = commonStore;
+  const { data: session } = useSession();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
+
+  const handleInputChange = (name, value) => {
+    setLoginData({ ...loginData, [name]: value });
   };
 
   return (
-    <section className='flex items-center justify-center h-screen min-h-screen w-full bg-gray-100'>
-      <div className='bg-white p-10 rounded-lg shadow-lg'>
-        <div className='font-bold text-slate-700 text-2xl mb-6 text-center'>
-          Изберете тип потребител
-        </div>
+    <>
+      <Alert />
 
-        <div className='flex space-x-10'>
-          {userKind.map((item, index) => (
-            <Link
-              key={index}
-              href='/login'>
-              <button onClick={() => handleUserKindClick(index + 1)}>
-                <div className='flex items-center justify-center h-64 w-64 shadow-lg rounded-md border border-slate-100 border-b-8 border-b-transparent hover:border-b-blue-400 hover:bg-gray-50 hover:shadow-xl cursor-pointer transition-all active:scale-95'>
-                  <div>
-                    {item.icon}
-                    <div className='text-center text-xl font-semibold'>
-                      {item.text}
-                    </div>
+      <section className="flex items-center justify-center min-h-screen w-full bg-gray-50">
+        <div className="flex flex-col px-6 py-8 sm:mx-auto lg:py-0">
+          <div className="w-full bg-white rounded-lg shadow md:mt-0 xl:p-0">
+            <div className="p-6 space-y-5 md:space-y-6 sm:p-8">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800">
+                Влезте в акаунта си
+              </h1>
+
+              <Input
+                type="email"
+                label="Имейл"
+                errorMessage={errorFields.error}
+                onChange={(value) => handleInputChange("email", value)}
+              />
+
+              <Input
+                label="Парола"
+                type={"password"}
+                errorMessage={errorFields.error}
+                onChange={(value) => handleInputChange("password", value)}
+              />
+
+              <div className="flex items-center justify-between space-x-10 sm:space-x-28">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <Checkbox size="sm">Запомни ме</Checkbox>
                   </div>
                 </div>
-              </button>
-            </Link>
-          ))}
+
+                <Link
+                  href="#"
+                  className="hover:underline text-blue-600 text-sm"
+                >
+                  Забравена парола
+                </Link>
+              </div>
+
+              <Button className="w-full" color="primary" onClick={login}>
+                Вход
+              </Button>
+
+              <p className="text-sm font-light text-gray-500">
+                Нямате профил все още?{" "}
+                <Link
+                  className="ml-1 hover:underline text-blue-500"
+                  href="/register"
+                >
+                  Регистрация
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
-export default Home;
+export default observer(Login);

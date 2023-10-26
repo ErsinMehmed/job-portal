@@ -4,7 +4,6 @@ const groupSchema = new Schema(
   {
     name: String,
     number: Number,
-    course: Number,
   },
   {
     timestamps: true,

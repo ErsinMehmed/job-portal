@@ -1,7 +1,7 @@
 import { signIn } from "next-auth/react";
 
 class Auth {
-  createTeacherApi = async (data) => {
+  createUserApi = async (data) => {
     try {
       const response = await fetch("api/register", {
         method: "POST",

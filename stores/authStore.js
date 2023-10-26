@@ -2,14 +2,19 @@ import { makeObservable, observable, action } from "mobx";
 import authApi from "@/apis/auth";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
+import { RoleEnums } from "../enums/role";
 import { validateFields } from "../app/utils";
-import { registerRules } from "../rules/register";
+import {
+  registerEmployeerRules,
+  registerEmployeeRules,
+} from "../rules/register";
 
 class Auth {
-  teacherData = {
+  userData = {
     name: "",
-    faculty: "",
-    department: "",
+    role: "",
+    vat_number: "",
+    city: "",
     email: "",
     password: "",
     passwordRep: "",
@@ -22,34 +27,41 @@ class Auth {
 
   constructor() {
     makeObservable(this, {
-      teacherData: observable,
+      userData: observable,
       loginData: observable,
-      setTeacherData: action,
+      setUserData: action,
       setLoginData: action,
     });
   }
 
-  setTeacherData = (teacherData) => {
-    this.teacherData = teacherData;
+  setUserData = (userData) => {
+    this.userData = userData;
   };
 
   setLoginData = (loginData) => {
     this.loginData = loginData;
   };
 
-  createTeacherProfile = async () => {
+  createUserProfile = async () => {
     commonStore.setErrorFields({});
     commonStore.setErrorMessage("");
     commonStore.setSuccessMessage("");
 
-    const errorFields = validateFields(this.teacherData, registerRules);
+    const errorFields = validateFields(
+      this.userData,
+      this.userData.role === RoleEnums.EMPLOYEER
+        ? registerEmployeerRules
+        : registerEmployeeRules
+    );
+    console.log(errorFields);
+    return;
 
     if (errorFields) {
       commonStore.setErrorFields(errorFields);
       return;
     }
 
-    const response = await authApi.createTeacherApi(this.teacherData);
+    const response = await authApi.createUserApi(this.userData);
 
     switch (response.status_code) {
       case RegisterEnums.PASSWORD_NOT_MATCH:
@@ -60,7 +72,7 @@ class Auth {
         });
 
         break;
-      case RegisterEnums.TEACHER_EXIST:
+      case RegisterEnums.USER_EXIST:
         commonStore.setErrorMessage("Потребителят вече съществува");
         commonStore.setErrorFields({
           email: true,
@@ -69,10 +81,11 @@ class Auth {
         break;
       case RegisterEnums.USER_CREATED:
         commonStore.setSuccessMessage("Потребителят е създаден");
-        this.teacherData = {
+        this.userData = {
           name: "",
-          faculty: "",
-          department: "",
+          role: "",
+          vat_number: "",
+          city: "",
           email: "",
           password: "",
           passwordRep: "",

@@ -1,5 +1,5 @@
 import connectMongoDB from "@/libs/mongodb";
-import Teacher from "@/models/teacher";
+import Teacher from "@/models/employeer";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -39,7 +39,7 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login",
+    signIn: "/",
   },
 };
 

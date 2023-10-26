@@ -1,16 +1,21 @@
 import connectMongoDB from "@/libs/mongodb";
-import Teacher from "@/models/teacher";
+import Employyer from "@/models/employeer";
+import Employee from "@/models/employee";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { validateFields } from "../../utils";
-import { registerRules } from "../../../rules/register";
+import {
+  registerEmployeerRules,
+  registerEmployeeRules,
+} from "../../../rules/register";
 
 export async function POST(request) {
-  const { name, faculty, department, email, password, passwordRep } =
-    await request.json();
+  // const { name, role, city, vat_number, email, password, passwordRep } =
+  //   await request.json();
+  return NextResponse.json(await request.json());
 
   const validationErrors = validateFields(
-    { name, faculty, department, email, password, passwordRep },
+    { name, vat_number, email, password, passwordRep },
     registerRules
   );
 
@@ -27,9 +32,9 @@ export async function POST(request) {
 
   await connectMongoDB();
 
-  const existingTeacher = await Teacher.findOne({ email });
+  const existingEmployyer = await Employyer.findOne({ email });
 
-  if (existingTeacher) {
+  if (existingEmployyer) {
     return NextResponse.json({
       status: false,
       status_code: 2,
@@ -37,10 +42,9 @@ export async function POST(request) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await Teacher.create({
+  await Employyer.create({
     name,
-    faculty,
-    department,
+    vat_number,
     email,
     password: hashedPassword,
   });

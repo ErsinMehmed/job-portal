@@ -1,13 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 import Group from "./group";
 
-const studentSchema = new Schema(
+const employeeSchema = new Schema(
   {
     name: String,
     personal_number: String,
     birthday: Date,
-    faculty_number: Number,
-    faculty: String,
+    city: String,
     email: String,
     password: String,
     group: { type: Schema.Types.ObjectId, ref: "Group" },
@@ -17,7 +16,7 @@ const studentSchema = new Schema(
   }
 );
 
-const Student =
-  mongoose.models.Student || mongoose.model("Student", studentSchema);
+const Employee =
+  mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
 
-export default Student;
+export default Employee;
