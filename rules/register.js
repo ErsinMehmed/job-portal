@@ -1,7 +1,6 @@
 import { RoleEnums } from "../enums/role";
 
 export function generateRegisterRules(userRole) {
-  console.log(userRole === RoleEnums.EMPLOYER);
   let registerRules = {
     name: { required: true, minLength: 3, maxLength: 255, type: "string" },
     role: { required: true },
@@ -28,12 +27,12 @@ export function generateRegisterRules(userRole) {
   if (userRole === RoleEnums.EMPLOYER) {
     registerRules = {
       ...registerRules,
-      vat_number: { required: true, type: "string" },
+      vat_number: { required: true, type: "string", minLength: 10 },
     };
   } else {
     registerRules = {
       ...registerRules,
-      birthday: { required: true, type: "string" },
+      birthday: { required: true },
       city: { required: true, type: "string" },
     };
   }

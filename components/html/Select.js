@@ -4,7 +4,7 @@ const SelectComponent = (props) => {
   const handleChange = (event) => {
     if (props.onChange) {
       props.onChange(
-        props.getId ? props.items[event.target.value]._id : event.target.value
+        props.getId ? props.items[event.target.value]?._id : event.target.value
       );
     }
   };
@@ -12,11 +12,12 @@ const SelectComponent = (props) => {
   return (
     <Select
       label={props.label}
-      className='w-full'
+      className="w-full"
       size={"sm"}
       onChange={handleChange}
       isInvalid={props.errorMessage ? true : false}
-      errorMessage={props.errorMessage}>
+      errorMessage={props.errorMessage}
+    >
       {props.items?.map((item, key) => (
         <SelectItem key={key}>{item.name}</SelectItem>
       ))}

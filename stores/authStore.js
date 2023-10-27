@@ -11,6 +11,7 @@ class Auth {
   userData = {
     name: "",
     role: "",
+    birthday: "",
     vat_number: "",
     city: "",
     email: "",
@@ -57,11 +58,9 @@ class Auth {
     commonStore.setErrorMessage("");
     commonStore.setSuccessMessage("");
 
-    console.log(generateRegisterRules(this.userData.role));
-    return;
+    const registerRules = generateRegisterRules(this.userData.role);
 
-    const errorFields = validateFields(registerRules, this.userData);
-    console.log(errorFields);
+    const errorFields = validateFields(this.userData, registerRules);
 
     if (errorFields) {
       commonStore.setErrorFields(errorFields);

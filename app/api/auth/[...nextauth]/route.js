@@ -27,7 +27,8 @@ export const authOptions = {
             return null;
           }
 
-          return user;
+          // return user;
+          return { id: user.id, email: user.email };
         } catch (error) {
           console.log("Error: ", error);
         }
