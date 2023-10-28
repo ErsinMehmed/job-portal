@@ -4,6 +4,8 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
+let emailFromCredentials;
+
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -12,6 +14,8 @@ export const authOptions = {
 
       async authorize(credentials) {
         const { email, password } = credentials;
+
+        emailFromCredentials = email;
 
         try {
           await connectMongoDB();
@@ -27,14 +31,40 @@ export const authOptions = {
             return null;
           }
 
-          // return user;
-          return { id: user.id, email: user.email };
+          return user;
         } catch (error) {
           console.log("Error: ", error);
         }
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+      }
+
+      return session;
+    },
+    async jwt({ token, user }) {
+      const dbUser = await User.findOne({ email: emailFromCredentials });
+
+      if (!dbUser) {
+        token.id = user.id;
+        return token;
+      }
+
+      return {
+        id: dbUser._id,
+        name: dbUser.name,
+        email: dbUser.email,
+        role: dbUser.role,
+      };
+    },
+  },
   session: {
     strategy: "jwt",
   },

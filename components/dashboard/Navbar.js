@@ -29,7 +29,7 @@ const Navbar = (props) => {
             />
 
             <span className='hidden sm:block ml-2 -mt-1 md:mr-24 self-center text-xl font-semibold sm:text-2xl whitespace-nowrap'>
-              University Portal
+              Job Portal
             </span>
           </div>
 

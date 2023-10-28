@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
-import Provider from "./provider";
-import { AuthProvider } from "./providerAuth";
+import Provider from "../providers/MainProvider";
+import { AuthProvider } from "../providers/AuthProvider";
 
 export const metadata = {
   title: "Job portal",
@@ -10,7 +10,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body>
         <AuthProvider>
           <Provider>
