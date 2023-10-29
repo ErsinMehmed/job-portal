@@ -1,16 +1,3 @@
-import { RoleEnums } from "../enums/role";
-
-export function hasRole(roles) {
-  for (const role of roles) {
-    for (const enumRole in RoleEnums) {
-      if (RoleEnums[enumRole] === role) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
 export function validateFields(object, fieldRules) {
   const errors = {};
 
@@ -24,7 +11,7 @@ export function validateFields(object, fieldRules) {
 
     if (
       (field.toLowerCase() === "password" ||
-        field.toLowerCase() === "passwordrep") &&
+        field.toLowerCase() === "passwordRep") &&
       value
     ) {
       validatePassword(field, value, errors);

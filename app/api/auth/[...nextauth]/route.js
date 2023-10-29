@@ -50,7 +50,12 @@ export const authOptions = {
       return session;
     },
     async jwt({ token, user }) {
-      const dbUser = await User.findOne({ email: emailFromCredentials });
+      const dbUser = await User.findOne({
+        email: emailFromCredentials,
+      }).populate({
+        path: "role",
+        select: "name",
+      });
 
       if (!dbUser) {
         token.id = user.id;
@@ -61,7 +66,7 @@ export const authOptions = {
         id: dbUser._id,
         name: dbUser.name,
         email: dbUser.email,
-        role: dbUser.role,
+        role: dbUser.role.name,
       };
     },
   },

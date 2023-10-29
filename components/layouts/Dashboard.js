@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../dashboard/Navbar";
 import SideBar from "../dashboard/Sidebar";
 import MobileMenu from "../dashboard/MobileMenu";
+import { useSession } from "next-auth/react";
+import { RoleEnums } from "../../enums/role";
 
 const DashboardLayout = (props) => {
   const [pageWidth, setPageWidth] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     setPageWidth(window.innerWidth ?? null);
@@ -34,6 +37,14 @@ const DashboardLayout = (props) => {
           pageWidth={pageWidth}
           show={isVisible}
         />
+        {/* {RoleEnums.EMPLOYER === session.user.role && (
+          <Navbar
+            onMenuClick={toggleMenu}
+            pageWidth={pageWidth}
+            show={isVisible}
+          />
+        )} */}
+
         {props.children}
       </div>
     </div>
