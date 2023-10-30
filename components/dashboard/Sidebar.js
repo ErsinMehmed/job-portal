@@ -1,3 +1,6 @@
+"use client";
+
+import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
 
 const SideBar = (props) => {
@@ -10,17 +13,31 @@ const SideBar = (props) => {
       <div className="h-full px-3 py-4 overflow-y-auto border-r border-gray-200">
         <ul className="space-y-2 font-medium">
           <li>
-            <a
-              href="#"
+            <Link
+              href="/dashboard"
               className={`flex items-center ${
                 props.show && "justify-center"
               }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group`}
             >
               <AiOutlineHome className="w-5 h-5" />
               <span className={`${props.show ? "hidden" : "block"} ml-3`}>
-                Начало
+                Табло
               </span>
-            </a>
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/dashboard/ads"
+              className={`flex items-center ${
+                props.show && "justify-center"
+              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group`}
+            >
+              <AiOutlineHome className="w-5 h-5" />
+              <span className={`${props.show ? "hidden" : "block"} ml-3`}>
+                Обяви
+              </span>
+            </Link>
           </li>
         </ul>
       </div>
