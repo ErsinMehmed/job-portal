@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
+import { IoDocumentsOutline } from "react-icons/io5";
 
 const SideBar = (props) => {
   return (
@@ -17,7 +18,7 @@ const SideBar = (props) => {
               href="/dashboard"
               className={`flex items-center ${
                 props.show && "justify-center"
-              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group`}
+              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group transition-all`}
             >
               <AiOutlineHome className="w-5 h-5" />
               <span className={`${props.show ? "hidden" : "block"} ml-3`}>
@@ -31,9 +32,9 @@ const SideBar = (props) => {
               href="/dashboard/ads"
               className={`flex items-center ${
                 props.show && "justify-center"
-              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group`}
+              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group transition-all`}
             >
-              <AiOutlineHome className="w-5 h-5" />
+              <IoDocumentsOutline className="w-5 h-5" />
               <span className={`${props.show ? "hidden" : "block"} ml-3`}>
                 Обяви
               </span>

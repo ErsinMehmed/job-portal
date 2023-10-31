@@ -6,6 +6,7 @@ export async function POST(request) {
   const { name } = await request.json();
 
   await connectMongoDB();
+
   await Role.create({
     name,
   });

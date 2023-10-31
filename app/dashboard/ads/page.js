@@ -6,11 +6,14 @@ import Link from "next/link";
 import { Button, Checkbox, Input } from "@nextui-org/react";
 import { authStore, commonStore } from "@/stores/useStore";
 import Layout from "@/components/layouts/Dashboard";
+import Table from "@/components/Table";
 
 const Ads = () => {
   return (
     <div>
-      <Layout>ersin</Layout>
+      <Layout>
+        <Table />
+      </Layout>
     </div>
   );
 };
