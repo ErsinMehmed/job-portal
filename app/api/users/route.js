@@ -52,7 +52,7 @@ export async function GET(request) {
   }
 
   const totalUsers = await User.find(queryBuilder).countDocuments();
-  const user = await queryBuilder.skip((page - 1) * perPage).limit(perPage);
+  const users = await queryBuilder.skip((page - 1) * perPage).limit(perPage);
 
   const pagination = {
     current_page: parseInt(page),
@@ -61,7 +61,7 @@ export async function GET(request) {
     per_page: parseInt(perPage),
   };
 
-  return NextResponse.json({ user, pagination });
+  return NextResponse.json({ users, pagination });
 }
 
 export async function DELETE(request) {
