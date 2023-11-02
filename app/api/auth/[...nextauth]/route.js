@@ -58,7 +58,7 @@ export const authOptions = {
       });
 
       if (!dbUser) {
-        token.id = user._id;
+        token.id = user.id;
         return token;
       }
 

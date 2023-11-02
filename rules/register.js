@@ -34,6 +34,11 @@ export function generateRegisterRules(userRole) {
       ...registerRules,
       birthday: { required: true },
       city: { required: true, type: "string" },
+      // personal_number: {
+      //   required: true,
+      //   minLength: 10,
+      //   type: "string",
+      // },
     };
   }
 

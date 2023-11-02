@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -11,6 +12,12 @@ import {
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 const AccountDropdown = () => {
+  const { data: session } = useSession();
+
+  const getUserFirstName = (name) => {
+    return session?.user.name.split(" ")[0];
+  };
+
   return (
     <div className='flex items-center gap-4'>
       <Dropdown placement='bottom-start'>
@@ -25,7 +32,7 @@ const AccountDropdown = () => {
             />
 
             <div className='ml-3.5 font-semibold hidden md:block'>
-              Ersin Mehmed
+              {getUserFirstName()}
             </div>
 
             <MdKeyboardArrowDown className='ml-1 mt-0.5 text-gray-400 w-6 h-6' />

@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 import { faker } from "@faker-js/faker";
 import dotenv from "dotenv";
-import Ad from "./models/ad.js";
-import User from "./models/user.js";
+import chalk from "chalk";
+import Ad from "../models/ad.js";
+import User from "../models/user.js";
 
-dotenv.config({ path: new URL("./.env", import.meta.url) });
+dotenv.config({ path: new URL("../.env", import.meta.url) });
 
 mongoose
-  .connect(String(process.env.MONGODB_URI), {
+  .connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
@@ -26,8 +27,8 @@ const generateFakeAd = (users) => {
     summary: faker.lorem.sentence(),
     field: faker.person.jobArea(),
     details: faker.person.jobDescriptor(),
-    minimum_salary: Math.floor(Math.random() * (10000 - 700 + 1) + 700),
-    maximum_salary: Math.floor(Math.random() * (10000 - 700 + 1) + 700),
+    minimum_salary: faker.number.int({ min: 700, max: 10000 }),
+    maximum_salary: faker.number.int({ min: 700, max: 1000000 }),
     creator: randomUser._id,
   };
 };
@@ -46,10 +47,22 @@ const importData = async () => {
 
     await Ad.insertMany(fakeAds);
 
-    console.log("Data imported");
+    console.log(
+      `${chalk.bold(
+        "AdsSeeder.mjs"
+      )} .......................................................................................... ${chalk.bold.green(
+        "DONE"
+      )}`
+    );
     process.exit(0);
   } catch (error) {
-    console.error("Data not imported", error.message);
+    console.log(
+      `${chalk.bold(
+        error.message
+      )} .......................................................................................... ${chalk.bold.red(
+        "FAILED"
+      )}`
+    );
     process.exit(1);
   }
 };
