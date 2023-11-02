@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import Group from "./group";
-import Role from "./role";
+import Group from "./group.js";
+import Role from "./role.js";
 
 const userSchema = new Schema(
   {
