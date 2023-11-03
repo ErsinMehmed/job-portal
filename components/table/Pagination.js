@@ -48,7 +48,7 @@ function Pagination(props) {
         of <span className="fw-bold">{props.totalItems}</span> Entries
       </div>
 
-      <PrimaryButton
+      {/* <PrimaryButton
         onClick={() => props.handlePageClick(1)}
         disabled={props.currentPage < 4}
         text="First"
@@ -58,11 +58,11 @@ function Pagination(props) {
         onClick={props.handlePrevPage}
         disabled={props.currentPage === 1}
         text="Prev"
-      />
+      /> */}
 
       {pageButtons}
 
-      <PrimaryButton
+      {/* <PrimaryButton
         onClick={props.handleNextPage}
         disabled={props.currentPage === props.totalPages}
         text="Next"
@@ -75,7 +75,7 @@ function Pagination(props) {
           props.currentPage >= props.totalPages - 2
         }
         text="Last"
-      />
+      /> */}
     </div>
   );
 }
