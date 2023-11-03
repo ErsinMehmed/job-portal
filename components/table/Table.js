@@ -1,5 +1,7 @@
-import { HiMiniXMark } from "react-icons/hi2";
+import { AiFillEdit } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { commonStore } from "../../stores/useStore";
+import { Button } from "@nextui-org/react";
 
 const Table = (props) => {
   return (
@@ -22,6 +24,9 @@ const Table = (props) => {
                       {column}
                     </th>
                   ))}
+                  <th className="px-5 py-3.5 border-b-2 border-[#ebf4ff] bg-[#ebf4ff] text-left text-sm font-bold text-slate-700 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-white">
@@ -31,13 +36,22 @@ const Table = (props) => {
                       ([key, value], cellIndex) =>
                         key !== "_id" && (
                           <td
-                            className="px-5 py-5 border-b border-[#ebf4ff] text-sm"
+                            className="px-4 py-4 border-b border-[#ebf4ff]"
                             key={cellIndex}
                           >
                             {key === "creator" ? value.name : value}
                           </td>
                         )
                     )}
+                    <td className="px-4 py-4 border-b border-[#ebf4ff] space-x-3 flex">
+                      <Button isIconOnly color="primary">
+                        <AiFillEdit className="w-5 h-5" />
+                      </Button>
+
+                      <Button isIconOnly color="danger">
+                        <AiFillDelete className="w-5 h-5" />
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
