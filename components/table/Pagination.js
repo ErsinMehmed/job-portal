@@ -1,0 +1,83 @@
+import React from "react";
+
+function Pagination(props) {
+  let startPage = Math.max(props.currentPage - 2, 1);
+  let endPage = Math.min(props.currentPage + 2, props.totalPages);
+
+  if (props.currentPage <= 2) {
+    endPage = Math.min(props.totalPages, 5);
+  } else if (props.currentPage >= props.totalPages - 1) {
+    startPage = Math.max(1, props.totalPages - 4);
+  }
+
+  const pageButtons = [];
+
+  for (let page = startPage; page <= endPage; page++) {
+    pageButtons.push(
+      <button
+        key={page}
+        className={`btn btn-primary mx-1 ${
+          props.currentPage === page ? "active" : ""
+        }`}
+        onClick={() => handlePageClick(page)}
+      >
+        {page}
+      </button>
+    );
+  }
+
+  const handlePageClick = (page) => {
+    if (props.currentPage !== page) {
+      props.handlePageClick(page);
+    }
+  };
+
+  return (
+    <div className="d-flex align-items-center justify-content-end">
+      <div className="me-2">
+        Showing{" "}
+        <span className="fw-bold">
+          {props.currentPage * props.perPage - props.perPage + 1}
+        </span>{" "}
+        to{" "}
+        <span className="fw-bold">
+          {props.totalPages == props.currentPage
+            ? props.totalItems
+            : props.currentPage * props.perPage}
+        </span>{" "}
+        of <span className="fw-bold">{props.totalItems}</span> Entries
+      </div>
+
+      <PrimaryButton
+        onClick={() => props.handlePageClick(1)}
+        disabled={props.currentPage < 4}
+        text="First"
+      />
+
+      <PrimaryButton
+        onClick={props.handlePrevPage}
+        disabled={props.currentPage === 1}
+        text="Prev"
+      />
+
+      {pageButtons}
+
+      <PrimaryButton
+        onClick={props.handleNextPage}
+        disabled={props.currentPage === props.totalPages}
+        text="Next"
+      />
+
+      <PrimaryButton
+        onClick={() => props.handlePageClick(props.totalPages)}
+        disabled={
+          props.currentPage === props.totalPages ||
+          props.currentPage >= props.totalPages - 2
+        }
+        text="Last"
+      />
+    </div>
+  );
+}
+
+export default Pagination;

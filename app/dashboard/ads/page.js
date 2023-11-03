@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { commonStore, adStore } from "@/stores/useStore";
 import Layout from "@/components/layouts/Dashboard";
-import Table from "@/components/Table";
+import Table from "@/components/table/Table";
 
 const Ads = () => {
   const { ads, loadAds } = adStore;
@@ -16,7 +16,20 @@ const Ads = () => {
   return (
     <div>
       <Layout>
-        <Table />
+        <Table
+          title="Ads"
+          data={ads}
+          columns={[
+            "title",
+            "location",
+            "position",
+            "employment type",
+            "field",
+            "minimum salary",
+            "maximum salary",
+            "creator",
+          ]}
+        />
       </Layout>
     </div>
   );

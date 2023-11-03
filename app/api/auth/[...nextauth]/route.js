@@ -62,12 +62,14 @@ export const authOptions = {
         return token;
       }
 
-      return {
-        id: dbUser._id,
-        name: dbUser.name,
-        email: dbUser.email,
-        role: dbUser.role.name,
-      };
+      if (dbUser) {
+        token.id = dbUser._id;
+        token.name = dbUser.name;
+        token.email = dbUser.email;
+        token.role = dbUser.role.name;
+      }
+
+      return token;
     },
   },
   session: {
