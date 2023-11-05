@@ -5,15 +5,18 @@ class Ad {
   ads = [];
   currentPage = 1;
   perPage = 10;
+  isLoading = true;
 
   constructor() {
     makeObservable(this, {
       ads: observable,
       currentPage: observable,
       perPage: observable,
+      isLoading: observable,
       setAds: action,
       setCurrentPage: action,
       setPerPage: action,
+      setIsLoading: action,
     });
   }
 
@@ -41,8 +44,13 @@ class Ad {
     );
   };
 
+  setIsLoading = (loading) => {
+    this.isLoading = loading;
+  };
+
   loadAds = async (newPage) => {
     this.setAds(await adApi.getAds(newPage ?? this.currentPage, this.perPage));
+    this.setIsLoading(false);
   };
 
   handlePageChange = (direction) => {

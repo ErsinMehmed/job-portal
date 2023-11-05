@@ -11,6 +11,7 @@ const Ads = () => {
   const {
     ads,
     perPage,
+    isLoading,
     loadAds,
     handlePageChange,
     handlePageClick,
@@ -20,6 +21,8 @@ const Ads = () => {
   useEffect(() => {
     loadAds();
   }, [loadAds]);
+
+  console.log(isLoading);
 
   const filteredAds = ads.ads?.map(
     ({ title, location, position, employment_type, field, salary }) => ({
@@ -39,6 +42,7 @@ const Ads = () => {
         data={filteredAds}
         columns={["заглавие", "локация", "позиция", "тип", "сфера", "заплата"]}
         perPage={perPage}
+        isLoading={isLoading}
         setPerPage={setPerPage}
         pagination={ads.pagination}>
         {" "}

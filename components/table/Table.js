@@ -1,8 +1,7 @@
-import { AiFillEdit } from "react-icons/ai";
-import { AiFillDelete } from "react-icons/ai";
-import { commonStore } from "../../stores/useStore";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { Button, Tooltip } from "@nextui-org/react";
 import { perPageResult } from "../../app/data";
+import Loader from "./Loader";
 import Select from "./Select";
 
 const Table = (props) => {
@@ -35,50 +34,57 @@ const Table = (props) => {
               </thead>
 
               <tbody className='bg-white'>
-                {props.data?.map((row, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {Object.entries(row).map(
-                      ([key, value], cellIndex) =>
-                        key !== "_id" && (
-                          <td
-                            className={`${
-                              cellIndex === 0
-                                ? "font-semibold text-slate-800"
-                                : "text-slate-600"
-                            } px-4 py-4 border-b border-[#ebf4ff] text-sm`}
-                            key={cellIndex}>
-                            {key === "creator"
-                              ? value.name
-                              : key === "salary"
-                              ? `${value} лв.`
-                              : value}
-                          </td>
-                        )
-                    )}
+                {props.isLoading ? (
+                  <Loader
+                    numberOfRows={props.perPage}
+                    cellCount={8}
+                  />
+                ) : (
+                  props.data?.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      {Object.entries(row).map(
+                        ([key, value], cellIndex) =>
+                          key !== "_id" && (
+                            <td
+                              className={`${
+                                cellIndex === 0
+                                  ? "font-semibold text-slate-800"
+                                  : "text-slate-600"
+                              } px-4 py-4 border-b border-[#ebf4ff] text-sm`}
+                              key={cellIndex}>
+                              {key === "creator"
+                                ? value.name
+                                : key === "salary"
+                                ? `${value} лв.`
+                                : value}
+                            </td>
+                          )
+                      )}
 
-                    <td className='pl-4 py-4 border-b border-[#ebf4ff]'>
-                      <Tooltip content='Редактирай обявата'>
-                        <Button
-                          isIconOnly
-                          color='primary'>
-                          <AiFillEdit className='w-5 h-5' />
-                        </Button>
-                      </Tooltip>
-                    </td>
+                      <td className='pl-4 py-4 border-b border-[#ebf4ff]'>
+                        <Tooltip content='Редактирай обявата'>
+                          <button
+                            type='button'
+                            className='text-white bg-blue-600 hover:bg-blue-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all'>
+                            <AiFillEdit className='w-4 h-4' />
+                          </button>
+                        </Tooltip>
+                      </td>
 
-                    <td className='pr-4 py-4 border-b border-[#ebf4ff]'>
-                      <Tooltip
-                        color='danger'
-                        content='Изтрий обявата'>
-                        <Button
-                          isIconOnly
-                          color='danger'>
-                          <AiFillDelete className='w-5 h-5' />
-                        </Button>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                ))}
+                      <td className='pr-4 py-4 border-b border-[#ebf4ff]'>
+                        <Tooltip
+                          color='danger'
+                          content='Изтрий обявата'>
+                          <button
+                            type='button'
+                            className='text-white bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all'>
+                            <AiFillDelete className='w-4 h-4' />
+                          </button>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
 
