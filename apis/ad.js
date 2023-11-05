@@ -1,7 +1,9 @@
 class Ad {
-  getAds = async () => {
+  getAds = async (page, perPage) => {
     try {
-      const response = await fetch("/api/ads");
+      let url = `/api/ads?page=${page ?? 1}&per_page=${perPage ?? 10}`;
+
+      const response = await fetch(url);
 
       return response.json();
     } catch (error) {

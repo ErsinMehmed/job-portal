@@ -1,5 +1,7 @@
 import React from "react";
 
+import Button from "./PaginationButton";
+
 function Pagination(props) {
   let startPage = Math.max(props.currentPage - 2, 1);
   let endPage = Math.min(props.currentPage + 2, props.totalPages);
@@ -14,15 +16,12 @@ function Pagination(props) {
 
   for (let page = startPage; page <= endPage; page++) {
     pageButtons.push(
-      <button
+      <Button
         key={page}
-        className={`btn btn-primary mx-1 ${
-          props.currentPage === page ? "active" : ""
-        }`}
+        text={page}
+        check={props.currentPage === page}
         onClick={() => handlePageClick(page)}
-      >
-        {page}
-      </button>
+      />
     );
   }
 
@@ -33,50 +32,43 @@ function Pagination(props) {
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-end">
-      <div className="me-2">
-        Showing{" "}
-        <span className="fw-bold">
-          {props.currentPage * props.perPage - props.perPage + 1}
-        </span>{" "}
-        to{" "}
-        <span className="fw-bold">
-          {props.totalPages == props.currentPage
-            ? props.totalItems
-            : props.currentPage * props.perPage}
-        </span>{" "}
-        of <span className="fw-bold">{props.totalItems}</span> Entries
-      </div>
+    <>
+      <nav className='flex items-center space-x-1.5 h-8 text-sm'>
+        {props.totalPages > 5 && props.currentPage > 3 && (
+          <div className='flex items-end space-x-2'>
+            <Button
+              text='1'
+              check={props.currentPage === 1}
+              onClick={() => handlePageClick(1)}
+            />
 
-      {/* <PrimaryButton
-        onClick={() => props.handlePageClick(1)}
-        disabled={props.currentPage < 4}
-        text="First"
-      />
+            <Button
+              dotsButton='left'
+              check={props.currentPage === 1}
+              onClick={() => handlePageClick(1)}
+            />
+          </div>
+        )}
 
-      <PrimaryButton
-        onClick={props.handlePrevPage}
-        disabled={props.currentPage === 1}
-        text="Prev"
-      /> */}
+        {pageButtons}
 
-      {pageButtons}
+        {props.totalPages > 5 && props.currentPage <= props.totalPages - 3 && (
+          <div className='flex items-end space-x-2'>
+            <Button
+              dotsButton='right'
+              check={props.currentPage === props.totalPages}
+              onClick={() => handlePageClick(props.totalPages)}
+            />
 
-      {/* <PrimaryButton
-        onClick={props.handleNextPage}
-        disabled={props.currentPage === props.totalPages}
-        text="Next"
-      />
-
-      <PrimaryButton
-        onClick={() => props.handlePageClick(props.totalPages)}
-        disabled={
-          props.currentPage === props.totalPages ||
-          props.currentPage >= props.totalPages - 2
-        }
-        text="Last"
-      /> */}
-    </div>
+            <Button
+              text={props.totalPages}
+              check={props.currentPage === props.totalPages}
+              onClick={() => handlePageClick(props.totalPages)}
+            />
+          </div>
+        )}
+      </nav>
+    </>
   );
 }
 

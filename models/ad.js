@@ -10,8 +10,7 @@ const adSchema = new Schema(
     summary: String,
     field: String,
     details: String,
-    minimum_salary: Number,
-    maximum_salary: Number,
+    salary: Number,
     creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {

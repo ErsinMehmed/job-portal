@@ -35,12 +35,7 @@ export async function GET(request) {
   // }
 
   const totalAds = await Ad.find(queryBuilder).countDocuments();
-  const ads = await queryBuilder
-    .skip((page - 1) * perPage)
-    .limit(perPage)
-    .select(
-      "title location position employment_type field minimum_salary maximum_salary"
-    );
+  const ads = await queryBuilder.skip((page - 1) * perPage).limit(perPage);
 
   const pagination = {
     current_page: parseInt(page),

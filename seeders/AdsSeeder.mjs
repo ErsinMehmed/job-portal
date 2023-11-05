@@ -1,3 +1,4 @@
+//  "type": "module",
 import mongoose from "mongoose";
 import { faker } from "@faker-js/faker";
 import dotenv from "dotenv";
@@ -27,8 +28,7 @@ const generateFakeAd = (users) => {
     summary: faker.lorem.sentence(),
     field: faker.person.jobArea(),
     details: faker.person.jobDescriptor(),
-    minimum_salary: faker.number.int({ min: 700, max: 10000 }),
-    maximum_salary: faker.number.int({ min: 700, max: 1000000 }),
+    salary: faker.number.int({ min: 700, max: 10000 }),
     creator: randomUser._id,
   };
 };

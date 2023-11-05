@@ -12,14 +12,14 @@ const SelectComponent = (props) => {
   return (
     <Select
       label={props.label}
-      className="w-full"
+      className='w-full'
       size={"sm"}
       onChange={handleChange}
+      defaultSelectedKeys={props.selectedOption}
       isInvalid={props.errorMessage ? true : false}
-      errorMessage={props.errorMessage}
-    >
+      errorMessage={props.errorMessage}>
       {props.items?.map((item, key) => (
-        <SelectItem key={key}>{item.name}</SelectItem>
+        <SelectItem key={key}>{item.name ?? item.value}</SelectItem>
       ))}
     </Select>
   );

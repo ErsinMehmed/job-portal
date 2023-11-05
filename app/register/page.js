@@ -40,24 +40,24 @@ const Register = () => {
     <>
       <Alert />
 
-      <section className="flex items-center justify-center min-h-screen w-full bg-gray-50">
-        <div className="flex flex-col items-center justify-center px-6 py-8 w-full sm:mx-auto lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-800">
+      <section className='flex items-center justify-center min-h-screen w-full bg-gray-50'>
+        <div className='flex flex-col items-center justify-center px-6 py-8 w-full sm:mx-auto lg:py-0'>
+          <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
+            <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
+              <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-800'>
                 Създайте акаунт
               </h1>
 
               <Select
                 items={roles.roles}
-                label="Вие сте"
+                label='Вие сте'
                 errorMessage={errorFields.role}
                 getId={true}
                 onChange={(value) => handleInputChange("role", value)}
               />
 
               <Input
-                type="text"
+                type='text'
                 label={
                   userData.role === RoleEnums.EMPLOYER
                     ? "Име на фирмата"
@@ -70,8 +70,8 @@ const Register = () => {
 
               {userData.role !== RoleEnums.EMPLOYER && (
                 <Input
-                  type="date"
-                  label="Дата на раждане"
+                  type='date'
+                  label='Дата на раждане'
                   value={userData.birthday}
                   errorMessage={errorFields.birthday}
                   onChange={(value) => handleInputChange("birthday", value)}
@@ -80,8 +80,8 @@ const Register = () => {
 
               {userData.role !== RoleEnums.EMPLOYER && (
                 <Input
-                  type="text"
-                  label="Град"
+                  type='text'
+                  label='Град'
                   value={userData.city}
                   errorMessage={errorFields.city}
                   onChange={(value) => handleInputChange("city", value)}
@@ -90,8 +90,8 @@ const Register = () => {
 
               {userData.role === RoleEnums.EMPLOYER && (
                 <Input
-                  type="text"
-                  label="ДДС номер"
+                  type='text'
+                  label='ДДС номер'
                   value={userData.vat_number}
                   errorMessage={errorFields.vat_number}
                   onChange={(value) => handleInputChange("vat_number", value)}
@@ -99,15 +99,15 @@ const Register = () => {
               )}
 
               <Input
-                type="email"
-                label="Имейл"
+                type='email'
+                label='Имейл'
                 value={userData.email}
                 errorMessage={errorFields.email}
                 onChange={(value) => handleInputChange("email", value)}
               />
 
               <Input
-                label="Парола"
+                label='Парола'
                 type={"password"}
                 value={userData.password}
                 errorMessage={errorFields.password}
@@ -115,48 +115,47 @@ const Register = () => {
               />
 
               <Input
-                label="Потвърди парола"
+                label='Потвърди парола'
                 type={"password"}
                 value={userData.passwordRep}
                 errorMessage={errorFields.passwordRep}
                 onChange={(value) => handleInputChange("passwordRep", value)}
               />
 
-              <div className="flex items-start space-x-1.5">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
+              <div className='flex items-start space-x-1.5'>
+                <div className='flex items-start'>
+                  <div className='flex items-center h-5'>
                     <Checkbox
                       isSelected={termsCheckbox}
                       onValueChange={() => {
                         setTermsCheckbox(termsCheckbox ? false : true);
                       }}
-                      size="sm"
-                    >
+                      size='sm'>
                       Приемам
                     </Checkbox>
                   </div>
                 </div>
 
                 <Link
-                  href="#"
-                  className="hover:underline text-blue-600 text-sm pr-10 sm:pr-36"
-                >
+                  href='#'
+                  className='hover:underline text-blue-600 text-sm pr-10 sm:pr-36'>
                   условията
                 </Link>
               </div>
 
               <Button
-                className="w-full"
-                color="primary"
+                className='w-full'
+                color='primary'
                 isDisabled={!termsCheckbox}
-                onClick={createUserProfile}
-              >
+                onClick={createUserProfile}>
                 Регистрация
               </Button>
 
-              <p className="text-sm font-light text-gray-500">
+              <p className='text-sm font-light text-gray-500'>
                 Вече имате акаунт?{" "}
-                <Link href="/" className="hover:underline text-blue-500">
+                <Link
+                  href='/'
+                  className='hover:underline text-blue-500'>
                   Вход
                 </Link>
               </p>
