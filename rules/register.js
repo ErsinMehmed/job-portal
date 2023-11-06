@@ -42,7 +42,5 @@ export function generateRegisterRules(userRole) {
     };
   }
 
-  console.log(registerRules);
-
   return registerRules;
 }

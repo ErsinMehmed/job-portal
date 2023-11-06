@@ -22,8 +22,6 @@ const Ads = () => {
     loadAds();
   }, [loadAds]);
 
-  console.log(isLoading);
-
   const filteredAds = ads.ads?.map(
     ({ title, location, position, employment_type, field, salary }) => ({
       title,
@@ -38,13 +36,14 @@ const Ads = () => {
   return (
     <Layout>
       <Table
-        title='Обяви'
+        title="Обяви"
         data={filteredAds}
         columns={["заглавие", "локация", "позиция", "тип", "сфера", "заплата"]}
         perPage={perPage}
         isLoading={isLoading}
         setPerPage={setPerPage}
-        pagination={ads.pagination}>
+        pagination={ads.pagination}
+      >
         {" "}
         <Pagination
           currentPage={ads.pagination?.current_page}
