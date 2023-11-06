@@ -64,3 +64,11 @@ function validatePassword(field, value, errors) {
     }
   }
 }
+
+export function isAdActive(date) {
+  const adExpiredDate = new Date(date);
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  return adExpiredDate > oneMonthAgo;
+}

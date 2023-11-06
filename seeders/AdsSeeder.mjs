@@ -29,6 +29,10 @@ const generateFakeAd = (users) => {
     field: faker.person.jobArea(),
     details: faker.person.jobDescriptor(),
     salary: faker.number.int({ min: 700, max: 10000 }),
+    expired: faker.date.between({
+      from: "2023-05-01T00:00:00.000Z",
+      to: faker.date.recent(),
+    }),
     creator: randomUser._id,
   };
 };

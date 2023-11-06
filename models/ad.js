@@ -11,6 +11,7 @@ const adSchema = new Schema(
     field: String,
     details: String,
     salary: Number,
+    expired: Date,
     creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {

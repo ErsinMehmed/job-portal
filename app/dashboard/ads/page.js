@@ -23,29 +23,46 @@ const Ads = () => {
   }, [loadAds]);
 
   const filteredAds = ads.ads?.map(
-    ({ title, location, position, employment_type, field, salary }) => ({
+    ({
       title,
       location,
       position,
       employment_type,
       field,
       salary,
+      expired,
+    }) => ({
+      title,
+      location,
+      position,
+      employment_type,
+      field,
+      salary,
+      expired,
     })
   );
 
   return (
     <Layout>
       <Table
-        title="Обяви"
+        title='Обяви'
         data={filteredAds}
-        columns={["заглавие", "локация", "позиция", "тип", "сфера", "заплата"]}
+        columns={[
+          "заглавие",
+          "локация",
+          "позиция",
+          "тип",
+          "сфера",
+          "заплата",
+          "статус",
+        ]}
         perPage={perPage}
         isLoading={isLoading}
         setPerPage={setPerPage}
-        pagination={ads.pagination}
-      >
+        pagination={ads.pagination}>
         {" "}
         <Pagination
+          isLoading={isLoading}
           currentPage={ads.pagination?.current_page}
           totalPages={ads.pagination?.total_pages}
           totalItems={ads.pagination?.total_results}
