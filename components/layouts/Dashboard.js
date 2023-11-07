@@ -24,13 +24,6 @@ const DashboardLayout = (props) => {
         } transition-all duration-500 w-full min-h-screen`}
       >
         <Navbar onMenuClick={toggleMenu} show={isVisible} />
-        {/* {RoleEnums.EMPLOYER === session.user.role && (
-          <Navbar
-            onMenuClick={toggleMenu}
-            pageWidth={pageWidth}
-            show={isVisible}
-          />
-        )} */}
 
         {props.children}
       </div>

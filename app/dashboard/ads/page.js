@@ -44,36 +44,41 @@ const Ads = () => {
 
   return (
     <Layout>
-      <Table
-        title='Обяви'
-        data={filteredAds}
-        columns={[
-          "заглавие",
-          "локация",
-          "позиция",
-          "тип",
-          "сфера",
-          "заплата",
-          "статус",
-        ]}
-        perPage={perPage}
-        isLoading={isLoading}
-        setPerPage={setPerPage}
-        pagination={ads.pagination}>
-        {" "}
-        <Pagination
+      <div className="flex items-center min-h-screen">
+        <Table
+          title="Обяви"
+          data={filteredAds}
+          columns={[
+            "заглавие",
+            "локация",
+            "позиция",
+            "тип",
+            "сфера",
+            "заплата",
+            "статус",
+          ]}
+          perPage={perPage}
           isLoading={isLoading}
-          currentPage={ads.pagination?.current_page}
-          totalPages={ads.pagination?.total_pages}
-          totalItems={ads.pagination?.total_results}
-          perPage={ads.pagination?.per_page}
-          handlePrevPage={handlePageChange}
-          handleNextPage={() => handlePageChange("next")}
-          handlePageClick={(pageNumber) => {
-            handlePageClick(pageNumber);
-          }}
-        />
-      </Table>
+          setPerPage={setPerPage}
+          pagination={ads.pagination}
+          searchBarText="Нова обява"
+          searchBarPlaceholder="заглавие, локация или позиция"
+        >
+          {" "}
+          <Pagination
+            isLoading={isLoading}
+            currentPage={ads.pagination?.current_page}
+            totalPages={ads.pagination?.total_pages}
+            totalItems={ads.pagination?.total_results}
+            perPage={ads.pagination?.per_page}
+            handlePrevPage={handlePageChange}
+            handleNextPage={() => handlePageChange("next")}
+            handlePageClick={(pageNumber) => {
+              handlePageClick(pageNumber);
+            }}
+          />
+        </Table>
+      </div>
     </Layout>
   );
 };
