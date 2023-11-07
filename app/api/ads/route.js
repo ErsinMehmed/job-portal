@@ -15,9 +15,7 @@ export async function POST(request) {
 export async function GET(request) {
   const page = request.nextUrl.searchParams.get("page") || 1;
   const perPage = request.nextUrl.searchParams.get("per_page") || 10;
-  // const nameFilter = request.nextUrl.searchParams.get("name");
-  // const personalNumberFilter =
-  //   request.nextUrl.searchParams.get("personal_number");
+  const searchText = request.nextUrl.searchParams.get("search");
 
   await connectMongoDB();
 
@@ -26,13 +24,13 @@ export async function GET(request) {
     select: "name",
   });
 
-  // if (nameFilter) {
-  //   queryBuilder.where("name", new RegExp(nameFilter, "i"));
-  // }
-
-  // if (personalNumberFilter) {
-  //   queryBuilder.where("personal_number", personalNumberFilter);
-  // }
+  if (searchText) {
+    queryBuilder.or([
+      { title: new RegExp(searchText, "i") },
+      { location: new RegExp(searchText, "i") },
+      { position: new RegExp(searchText, "i") },
+    ]);
+  }
 
   const totalAds = await Ad.find(queryBuilder).countDocuments();
   const ads = await queryBuilder.skip((page - 1) * perPage).limit(perPage);

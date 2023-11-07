@@ -6,6 +6,7 @@ class Ad {
   currentPage = 1;
   perPage = 10;
   isLoading = true;
+  searchText = "";
 
   constructor() {
     makeObservable(this, {
@@ -13,10 +14,12 @@ class Ad {
       currentPage: observable,
       perPage: observable,
       isLoading: observable,
+      searchText: observable,
       setAds: action,
       setCurrentPage: action,
       setPerPage: action,
       setIsLoading: action,
+      setSearchText: action,
     });
   }
 
@@ -48,8 +51,20 @@ class Ad {
     this.isLoading = loading;
   };
 
+  setSearchText = (searchText) => {
+    this.searchText = searchText;
+    this.loadAds();
+  };
+
   loadAds = async (newPage) => {
-    this.setAds(await adApi.getAds(newPage ?? this.currentPage, this.perPage));
+    this.setAds(
+      await adApi.getAds(
+        newPage ?? this.currentPage,
+        this.perPage,
+        this.searchText
+      )
+    );
+
     this.setIsLoading(false);
   };
 
