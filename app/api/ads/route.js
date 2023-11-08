@@ -24,7 +24,7 @@ export async function GET(request) {
     select: "name",
   });
 
-  if (searchText) {
+  if (searchText?.length > 2) {
     queryBuilder.or([
       { title: new RegExp(searchText, "i") },
       { location: new RegExp(searchText, "i") },
