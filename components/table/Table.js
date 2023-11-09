@@ -1,12 +1,20 @@
+import React, { useState } from "react";
 import { MdModeEditOutline, MdDelete } from "react-icons/md";
-import { Chip, Tooltip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import { perPageResult } from "../../app/data";
 import { isAdActive } from "../../app/utils";
 import SearchBar from "./SearchBar";
+import Filter from "./Filter";
 import Loader from "./Loader";
 import Select from "./Select";
 
 const Table = (props) => {
+  const [isVisibleFilter, setIsVisibleFilter] = useState(false);
+
+  const toggleFilterSection = () => {
+    setIsVisibleFilter(!isVisibleFilter);
+  };
+
   const handleInputChange = (value) => {
     props.setSearchBarText(value);
   };
@@ -19,9 +27,16 @@ const Table = (props) => {
         value={props.searchBarValue}
         text={props.searchBarText}
         onChange={(value) => handleInputChange(value)}
+        filterButtonOnClick={toggleFilterSection}
       />
 
-      <div className="bg-white p-4 rounded-t-lg shadow">
+      <Filter show={isVisibleFilter} />
+
+      <div
+        className={`bg-white p-4 rounded-t-lg shadow border border-gray-100 ${
+          isVisibleFilter ? "mt-4" : ""
+        }`}
+      >
         {props.isLoading ? (
           <>
             <div className="h-1.5 bg-gray-200 rounded-full w-16 mb-2"></div>
@@ -105,25 +120,21 @@ const Table = (props) => {
                       )}
 
                       <td className="pl-4 py-4 border-b border-[#ebf4ff] text-center">
-                        <Tooltip content="Редактирай обявата">
-                          <button
-                            type="button"
-                            className="text-white bg-[#0071f5] hover:bg-blue-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all"
-                          >
-                            <MdModeEditOutline className="w-4 h-4" />
-                          </button>
-                        </Tooltip>
+                        <button
+                          type="button"
+                          className="text-white bg-[#0071f5] hover:bg-blue-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all active:scale-90"
+                        >
+                          <MdModeEditOutline className="w-4 h-4" />
+                        </button>
                       </td>
 
                       <td className="pr-4 py-4 border-b border-[#ebf4ff] text-center">
-                        <Tooltip color="danger" content="Изтрий обявата">
-                          <button
-                            type="button"
-                            className="text-white bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all"
-                          >
-                            <MdDelete className="w-4 h-4" />
-                          </button>
-                        </Tooltip>
+                        <button
+                          type="button"
+                          className="text-white bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all active:scale-90"
+                        >
+                          <MdDelete className="w-4 h-4" />
+                        </button>
                       </td>
                     </tr>
                   ))}
