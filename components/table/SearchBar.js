@@ -39,7 +39,8 @@ const Select = (props) => {
         type="text"
         value={props.value}
         onChange={handleChange}
-        className="bg-white border border-gray-200 focus:border-gray-300 text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-0 rounded-lg block w-full pl-10 sm:pl-12 h-12 2xl:h-14"
+        disabled={props.disabled}
+        className="bg-white border border-gray-200 disabled:bg-gray-100 focus:border-gray-300 text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-0 rounded-lg block w-full pl-10 sm:pl-12 h-12 2xl:h-14"
         placeholder={`Въведи ${props.placeholder}`}
       />
 

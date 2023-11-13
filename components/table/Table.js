@@ -28,9 +28,10 @@ const Table = (props) => {
         text={props.searchBarText}
         onChange={(value) => handleInputChange(value)}
         filterButtonOnClick={toggleFilterSection}
+        disabled={isVisibleFilter}
       />
 
-      <Filter show={isVisibleFilter} />
+      <Filter show={isVisibleFilter} close={toggleFilterSection} />
 
       <div
         className={`bg-white p-4 rounded-t-lg shadow border border-gray-100 ${
