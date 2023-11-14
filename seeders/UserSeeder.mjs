@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import chalk from "chalk";
 import User from "../models/user.js";
 import Role from "../models/role.js";
-import UserRole from "../models/userRole.js";
 
 dotenv.config({ path: new URL("../.env", import.meta.url) });
 
@@ -55,7 +54,6 @@ const generateFakeUser = async (roles) => {
 const importUserData = async () => {
   try {
     await User.deleteMany();
-    await UserRole.deleteMany();
 
     const roles = await Role.find().select("_id name");
 
@@ -64,14 +62,7 @@ const importUserData = async () => {
     );
 
     const fakeUsers = await Promise.all(fakeUsersPromises);
-    const createdUsers = await User.insertMany(fakeUsers);
-
-    const userRoles = createdUsers.map((user) => ({
-      user: user._id,
-      role: user.role,
-    }));
-
-    await UserRole.insertMany(userRoles);
+    await User.insertMany(fakeUsers);
 
     console.log(
       `${chalk.bold(

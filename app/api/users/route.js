@@ -1,6 +1,5 @@
 import connectMongoDB from "@/libs/mongodb";
 import User from "@/models/user";
-import UserRole from "@/models/userRole";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -9,7 +8,7 @@ export async function POST(request) {
 
   await connectMongoDB();
 
-  const newUser = await User.create({
+  await User.create({
     name,
     personal_number,
     role,
@@ -18,13 +17,6 @@ export async function POST(request) {
     email,
     password,
   });
-
-  if (role && newUser) {
-    await UserRole.create({
-      user: newUser._id,
-      role: role,
-    });
-  }
 
   return NextResponse.json({ message: "User Created" }, { status: 201 });
 }

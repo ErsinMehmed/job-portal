@@ -1,6 +1,5 @@
 import connectMongoDB from "@/libs/mongodb";
 import User from "@/models/user";
-import UserRole from "@/models/userRole";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { validateFields } from "../../utils";
@@ -37,17 +36,10 @@ export async function POST(request) {
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
 
-  const newUser = await User.create({
+  await User.create({
     ...data,
     password: hashedPassword,
   });
-
-  if (data.role && newUser) {
-    await UserRole.create({
-      user: newUser._id,
-      role: data.role,
-    });
-  }
 
   return NextResponse.json({ status: true, status_code: 3 }, { status: 201 });
 }
