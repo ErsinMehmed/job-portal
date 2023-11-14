@@ -20,7 +20,10 @@ const Login = () => {
   useEffect(() => {
     if (session?.user.role === RoleEnums.EMPLOYER) {
       router.push("/dashboard");
-    } else {
+    } else if (
+      session?.user.role === RoleEnums.EMPLOYEE ||
+      session?.user.role === RoleEnums.FREELANCER
+    ) {
       router.push("/");
     }
   }, [session, router]);

@@ -24,7 +24,7 @@ const Ads = () => {
     loadAds();
   }, [loadAds]);
 
-  const filteredAds = ads.ads?.map(
+  const filteredAds = ads?.ads?.map(
     ({
       title,
       location,
@@ -46,9 +46,9 @@ const Ads = () => {
 
   return (
     <Layout>
-      <div className='flex items-center min-h-screen'>
+      <div className="flex items-center min-h-screen">
         <Table
-          title='Обяви'
+          title="Обяви"
           data={filteredAds}
           columns={[
             "заглавие",
@@ -63,10 +63,11 @@ const Ads = () => {
           isLoading={isLoading}
           setPerPage={setPerPage}
           pagination={ads.pagination}
-          searchBarText='Нова обява'
-          searchBarPlaceholder='заглавие, локация или позиция'
+          searchBarText="Нова обява"
+          searchBarPlaceholder="заглавие, локация или позиция"
           searchBarValue={searchText}
-          setSearchBarText={setSearchText}>
+          setSearchBarText={setSearchText}
+        >
           {" "}
           <Pagination
             isLoading={isLoading}

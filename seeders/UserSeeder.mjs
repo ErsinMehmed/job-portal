@@ -57,7 +57,7 @@ const importUserData = async () => {
 
     const roles = await Role.find().select("_id name");
 
-    const fakeUsersPromises = Array.from({ length: 50 }, () =>
+    const fakeUsersPromises = Array.from({ length: 5 }, () =>
       generateFakeUser(roles)
     );
 
