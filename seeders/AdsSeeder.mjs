@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import chalk from "chalk";
 import Ad from "../models/ad.js";
 import User from "../models/user.js";
+import Role from "../models/role.js";
 
 dotenv.config({ path: new URL("../.env", import.meta.url) });
 
@@ -41,7 +42,9 @@ const importData = async () => {
   try {
     await Ad.deleteMany();
 
-    const users = await User.find().select("_id");
+    const employerRole = await Role.findOne({ name: "Employer" });
+
+    const users = await User.find({ role: employerRole._id }).select("_id");
 
     const fakeAdsPromises = Array.from({ length: 100 }, () =>
       generateFakeAd(users)
