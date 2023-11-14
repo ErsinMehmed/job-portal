@@ -57,11 +57,6 @@ export const authOptions = {
         select: "name",
       });
 
-      if (!dbUser) {
-        token.id = user.id;
-        return token;
-      }
-
       if (dbUser) {
         token.id = dbUser._id;
         token.name = dbUser.name;

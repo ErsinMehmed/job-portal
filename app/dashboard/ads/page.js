@@ -26,6 +26,7 @@ const Ads = () => {
 
   const filteredAds = ads?.ads?.map(
     ({
+      _id,
       title,
       location,
       position,
@@ -34,6 +35,7 @@ const Ads = () => {
       salary,
       expired,
     }) => ({
+      _id,
       title,
       location,
       position,
@@ -46,16 +48,16 @@ const Ads = () => {
 
   return (
     <Layout>
-      <div className="flex items-center min-h-screen">
+      <div className='flex items-center min-h-screen'>
         <Table
-          title="Обяви"
+          title='Обяви'
           data={filteredAds}
           columns={[
             "заглавие",
             "локация",
             "позиция",
             "тип",
-            "сфера",
+            "област",
             "заплата",
             "статус",
           ]}
@@ -63,12 +65,12 @@ const Ads = () => {
           isLoading={isLoading}
           setPerPage={setPerPage}
           pagination={ads.pagination}
-          searchBarText="Нова обява"
-          searchBarPlaceholder="заглавие, локация или позиция"
+          searchBarText='Нова обява'
+          searchBarPlaceholder='заглавие, локация или позиция'
           searchBarValue={searchText}
           setSearchBarText={setSearchText}
-        >
-          {" "}
+          filterSection={true}
+          editButtonLink='/dashboard/ads/edit'>
           <Pagination
             isLoading={isLoading}
             currentPage={ads.pagination?.current_page}

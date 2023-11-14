@@ -30,6 +30,7 @@ const InputComponent = (props) => {
       value={props.value}
       isInvalid={props.errorMessage ? true : false}
       errorMessage={props.errorMessage}
+      placeholder={props.placeholder}
       onChange={handleChange}
       endContent={
         props.type == "password" && (
