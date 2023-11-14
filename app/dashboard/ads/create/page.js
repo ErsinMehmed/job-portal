@@ -7,7 +7,7 @@ import Layout from "@/components/layouts/Dashboard";
 import Table from "@/components/table/Table";
 import Pagination from "@/components/table/Pagination";
 
-const AdsCreate = () => {
+const AdCreate = () => {
   const {
     ads,
     perPage,
@@ -29,4 +29,4 @@ const AdsCreate = () => {
   );
 };
 
-export default observer(AdsCreate);
+export default observer(AdCreate);
