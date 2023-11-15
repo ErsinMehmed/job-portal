@@ -8,6 +8,10 @@ import Select from "@/components/html/Select";
 import Autocomplete from "@/components/html/Autocomplete";
 
 function Filter(props) {
+  const handleInputChange = (name, value) => {
+    props.setData({ ...props.data, [name]: value });
+  };
+
   return (
     <AnimatePresence>
       {props.show && (
@@ -49,9 +53,17 @@ function Filter(props) {
             <div className="px-3 lg:px-4 col-span-2 mt-4 md:mt-0">
               <div className="font-semibold ml-0.5">Заплата</div>
               <div className="sm:flex space-y-4 sm:space-y-0 sm:space-x-3.5 mt-1.5">
-                <Input type="text" label="От" />
+                <Input
+                  type="text"
+                  label="От"
+                  onChange={(value) => handleInputChange("minSalary", value)}
+                />
 
-                <Input type="text" label="До" />
+                <Input
+                  type="text"
+                  label="До"
+                  onChange={(value) => handleInputChange("maxSalary", value)}
+                />
               </div>
             </div>
 
@@ -84,6 +96,7 @@ function Filter(props) {
 
               <button
                 type="button"
+                onClick={props.searchOnClick}
                 className="w-1/2 sm:w-auto text-white bg-[#0071f5] hover:bg-blue-600 focus:outline-none font-semibold rounded-full px-6 2xl:px-8 h-11 mt-7 text-center transition-all active:scale-95 flex items-center justify-center"
               >
                 <HiOutlineMagnifyingGlass className="h-5 w-5 sm:mt-[3px] mr-1" />

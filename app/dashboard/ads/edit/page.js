@@ -12,19 +12,19 @@ const AdEdit = () => {
     ads,
     perPage,
     isLoading,
-    loadAds,
+    loadUserAds,
     handlePageChange,
     handlePageClick,
     setPerPage,
   } = adStore;
 
   useEffect(() => {
-    loadAds();
-  }, [loadAds]);
+    loadUserAds();
+  }, [loadUserAds]);
 
   return (
     <Layout>
-      <div className='flex items-center min-h-screen'>ersin</div>
+      <div className="flex items-center min-h-screen">ersin</div>
     </Layout>
   );
 };

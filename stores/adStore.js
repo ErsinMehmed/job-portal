@@ -7,6 +7,15 @@ class Ad {
   perPage = 10;
   isLoading = true;
   searchText = "";
+  filterData = {
+    dateFrom: "",
+    dateTo: "",
+    status: "",
+    field: "",
+    employmentType: "",
+    minSalary: null,
+    maxSalary: null,
+  };
 
   constructor() {
     makeObservable(this, {
@@ -15,11 +24,13 @@ class Ad {
       perPage: observable,
       isLoading: observable,
       searchText: observable,
+      filterData: observable,
       setAds: action,
       setCurrentPage: action,
       setPerPage: action,
       setIsLoading: action,
       setSearchText: action,
+      setFilterData: action,
     });
   }
 
@@ -42,7 +53,7 @@ class Ad {
       this.currentPage > newTotalPages ? newTotalPages : this.currentPage
     );
 
-    this.loadAds(
+    this.loadUserAds(
       this.currentPage > newTotalPages ? newTotalPages : this.currentPage
     );
   };
@@ -53,15 +64,20 @@ class Ad {
 
   setSearchText = (searchText) => {
     this.searchText = searchText;
-    this.loadAds();
+    this.loadUserAds();
   };
 
-  loadAds = async (newPage) => {
+  setFilterData = (filterData) => {
+    this.filterData = filterData;
+  };
+
+  loadUserAds = async (newPage) => {
     this.setAds(
-      await adApi.getAds(
+      await adApi.getUserAds(
         newPage ?? this.currentPage,
         this.perPage,
-        this.searchText
+        this.searchText,
+        this.filterData
       )
     );
 
@@ -72,12 +88,16 @@ class Ad {
     const newPage =
       direction === "next" ? this.currentPage + 1 : this.currentPage - 1;
     this.setCurrentPage(newPage);
-    this.loadAds();
+    this.loadUserAds();
   };
 
   handlePageClick = (page) => {
     this.setCurrentPage(page);
-    this.loadAds();
+    this.loadUserAds();
+  };
+
+  searchAds = () => {
+    this.loadUserAds();
   };
 }
 

@@ -13,16 +13,19 @@ const Ads = () => {
     perPage,
     isLoading,
     searchText,
-    loadAds,
+    filterData,
+    loadUserAds,
     handlePageChange,
     handlePageClick,
     setPerPage,
     setSearchText,
+    setFilterData,
+    searchAds,
   } = adStore;
 
   useEffect(() => {
-    loadAds();
-  }, [loadAds]);
+    loadUserAds();
+  }, [loadUserAds]);
 
   const filteredAds = ads?.ads?.map(
     ({
@@ -62,6 +65,9 @@ const Ads = () => {
             "статус",
           ]}
           perPage={perPage}
+          filterSearchOnClick={searchAds}
+          filterData={filterData}
+          setFilterData={setFilterData}
           isLoading={isLoading}
           setPerPage={setPerPage}
           pagination={ads.pagination}
