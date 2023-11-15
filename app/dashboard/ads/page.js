@@ -48,9 +48,9 @@ const Ads = () => {
 
   return (
     <Layout>
-      <div className='flex items-center min-h-screen'>
+      <div className="flex items-center min-h-screen 2xl:px-10">
         <Table
-          title='Обяви'
+          title="Обяви"
           data={filteredAds}
           columns={[
             "заглавие",
@@ -65,12 +65,13 @@ const Ads = () => {
           isLoading={isLoading}
           setPerPage={setPerPage}
           pagination={ads.pagination}
-          searchBarText='Нова обява'
-          searchBarPlaceholder='заглавие, локация или позиция'
+          searchBarText="Нова обява"
+          searchBarPlaceholder="заглавие, локация или позиция"
           searchBarValue={searchText}
           setSearchBarText={setSearchText}
           filterSection={true}
-          editButtonLink='/dashboard/ads/edit'>
+          editButtonLink="/dashboard/ads/edit"
+        >
           <Pagination
             isLoading={isLoading}
             currentPage={ads.pagination?.current_page}

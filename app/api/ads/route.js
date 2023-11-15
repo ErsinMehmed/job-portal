@@ -19,6 +19,7 @@ export async function GET(request) {
   const dateFrom = request.nextUrl.searchParams.get("date_from");
   const dateTo = request.nextUrl.searchParams.get("date_to");
   const status = request.nextUrl.searchParams.get("status");
+  const field = request.nextUrl.searchParams.get("field");
   const employmentType = request.nextUrl.searchParams.get("employment_type");
   const minSalary = request.nextUrl.searchParams.get("min_salary");
   const maxSalary = request.nextUrl.searchParams.get("max_salary");
@@ -53,6 +54,10 @@ export async function GET(request) {
     queryBuilder.where("expired").gte(oneMonthAgo);
   } else if (status === "expired") {
     queryBuilder.where("expired").lt(oneMonthAgo);
+  }
+
+  if (field) {
+    queryBuilder.where("field").equals(field);
   }
 
   if (employmentType) {
