@@ -6,9 +6,10 @@ const perPageResult = [5, 10, 15, 20];
 const statuses = [{ value: "Активна" }, { value: "Изтекла" }];
 
 const employmentTypes = [
-  { value: "Full-Time" },
-  { value: "Part-Time" },
-  { value: "Contract" },
+  { value: "Постоянна работа" },
+  { value: "Временна работа" },
+  { value: "Работа по задание/Freelancer" },
+  { value: "Стаж" },
 ];
 
 const fields = [

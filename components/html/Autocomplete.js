@@ -2,11 +2,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 
 const SelectComponent = (props) => {
   const handleChange = (value) => {
-    // props.onChange(
-    //   props.getId ? props.items[event.target.value]?._id : event.target.value
-    // );
-
-    console.log(value);
+    props.onChange(value);
   };
 
   return (

@@ -64,6 +64,7 @@ class Ad {
 
   setSearchText = (searchText) => {
     this.searchText = searchText;
+    this.setCurrentPage(1);
     this.loadUserAds();
   };
 
@@ -97,6 +98,8 @@ class Ad {
   };
 
   searchAds = () => {
+    this.setSearchText("");
+    this.setCurrentPage(1);
     this.loadUserAds();
   };
 }

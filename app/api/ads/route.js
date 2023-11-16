@@ -1,6 +1,9 @@
 import connectMongoDB from "@/libs/mongodb";
 import Ad from "@/models/ad";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { StatusEnums } from "@/enums/status";
 
 export async function POST(request) {
   const data = await request.json();
@@ -24,12 +27,18 @@ export async function GET(request) {
   const minSalary = request.nextUrl.searchParams.get("min_salary");
   const maxSalary = request.nextUrl.searchParams.get("max_salary");
 
+  const session = await getServerSession(authOptions);
+
   await connectMongoDB();
 
   const queryBuilder = Ad.find().populate({
     path: "creator",
     select: "name",
   });
+
+  if (session && session?.user?.role === "Employer") {
+    queryBuilder.where("creator").equals(session.user.id);
+  }
 
   if (searchText?.length > 2) {
     queryBuilder.or([
@@ -47,13 +56,15 @@ export async function GET(request) {
     queryBuilder.where("createdAt").lt(new Date(dateTo));
   }
 
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+  if (status) {
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-  if (status === "active") {
-    queryBuilder.where("expired").gte(oneMonthAgo);
-  } else if (status === "expired") {
-    queryBuilder.where("expired").lt(oneMonthAgo);
+    if (Number(status) === StatusEnums.ACTIVE) {
+      queryBuilder.where("expired").lt(oneMonthAgo);
+    } else if (Number(status) === StatusEnums.EXPIRED) {
+      queryBuilder.where("expired").gte(oneMonthAgo);
+    }
   }
 
   if (field) {

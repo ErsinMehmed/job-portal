@@ -11,7 +11,7 @@ class Ad {
         return this.cachedAds.get(cacheKey);
       }
 
-      let url = `/api/user/ads?page=${page ?? 1}&per_page=${perPage ?? 10}`;
+      let url = `/api/ads?page=${page ?? 1}&per_page=${perPage ?? 10}`;
 
       if (searchText) {
         url += `&search=${searchText}`;
@@ -49,7 +49,7 @@ class Ad {
 
       const data = await response.json();
 
-      // this.cachedAds.set(cacheKey, data);
+      this.cachedAds.set(cacheKey, data);
 
       return data;
     } catch (error) {

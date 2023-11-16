@@ -66,7 +66,7 @@ class Auth {
       return;
     }
 
-    const response = await authAction.createUserApi(this.userData);
+    const response = await authAction.createUser(this.userData);
 
     switch (response.status_code) {
       case RegisterEnums.PASSWORD_NOT_MATCH:
@@ -108,10 +108,6 @@ class Auth {
     commonStore.setIsLoading(true);
 
     const res = await authAction.login(this.loginData);
-
-    if (res.ok) {
-      commonStore.setIsLoading(false);
-    }
 
     if (res.error) {
       commonStore.setErrorMessage("Потребителят не съществува");

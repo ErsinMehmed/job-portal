@@ -18,7 +18,12 @@ mongoose
   .catch((error) => console.log("DB Connection Failed", error.message));
 
 const generateFakeAd = (users) => {
-  const jobTypes = ["Full-Time", "Part-Time", "Contract"];
+  const jobTypes = [
+    "Постоянна работа",
+    "Временна/Сезонна",
+    "Стаж",
+    "Работа по задание/Freelancer",
+  ];
   const randomUser = users[Math.floor(Math.random() * users.length)];
 
   return {

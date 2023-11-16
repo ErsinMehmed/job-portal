@@ -14,7 +14,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 const AccountDropdown = () => {
   const { data: session } = useSession();
 
-  const getUserFirstName = (name) => {
+  const getUserFirstName = () => {
     return session?.user.name.split(" ")[0];
   };
 
@@ -31,9 +31,9 @@ const AccountDropdown = () => {
               src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
             />
 
-            <div className='ml-3.5 font-semibold hidden md:block'>
+            <span className='ml-3.5 font-semibold hidden md:block'>
               {getUserFirstName()}
-            </div>
+            </span>
 
             <MdKeyboardArrowDown className='ml-1 mt-0.5 text-gray-400 w-6 h-6' />
           </div>
