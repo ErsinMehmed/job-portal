@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from "mobx";
-import authApi from "@/apis/auth";
-import roleApi from "@/apis/role";
+import authApi from "@/actions/authAction";
+import roleApi from "@/actions/roleAction";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
 import { RoleEnums } from "../enums/role";

@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import adApi from "@/apis/ad";
+import adApi from "@/actions/adAction";
 
 class Ad {
   ads = [];

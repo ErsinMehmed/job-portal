@@ -83,7 +83,7 @@ const Table = (props) => {
 
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-4 overflow-x-auto">
         <div className="inline-block min-w-full shadow rounded-b-lg overflow-hidden table-fixed">
-          <table className="min-w-full leading-normal bg-white">
+          <table className="min-w-full leading-normal bg-white min-h-[500px]">
             {props.isLoading ? (
               <Loader
                 numberOfRows={props.perPage}

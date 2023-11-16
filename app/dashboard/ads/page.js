@@ -6,6 +6,7 @@ import { commonStore, adStore } from "@/stores/useStore";
 import Layout from "@/components/layouts/Dashboard";
 import Table from "@/components/table/Table";
 import Pagination from "@/components/table/Pagination";
+import LinearLoader from "@/components/LinearLoader";
 
 const Ads = () => {
   const {
@@ -92,6 +93,8 @@ const Ads = () => {
           />
         </Table>
       </div>
+
+      <LinearLoader />
     </Layout>
   );
 };
