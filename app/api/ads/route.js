@@ -1,6 +1,6 @@
 import connectMongoDB from "@/libs/mongodb";
 import Ad from "@/models/ad";
-import { npm } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const data = await request.json();
