@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import adApi from "@/actions/adAction";
+import adAction from "@/actions/adAction";
 
 class Ad {
   ads = [];
@@ -73,7 +73,7 @@ class Ad {
 
   loadUserAds = async (newPage) => {
     this.setAds(
-      await adApi.getUserAds(
+      await adAction.getUserAds(
         newPage ?? this.currentPage,
         this.perPage,
         this.searchText,

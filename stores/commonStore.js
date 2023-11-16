@@ -4,15 +4,18 @@ class Common {
   errorFields = {};
   errorMessage = "";
   successMessage = "";
+  isLoading = false;
 
   constructor() {
     makeObservable(this, {
       errorFields: observable,
       errorMessage: observable,
       successMessage: observable,
+      isLoading: observable,
       setErrorFields: action,
       setErrorMessage: action,
       setSuccessMessage: action,
+      setIsLoading: action,
     });
   }
 
@@ -26,6 +29,10 @@ class Common {
 
   setSuccessMessage = (successMessage) => {
     this.successMessage = successMessage;
+  };
+
+  setIsLoading = (isLoading) => {
+    this.isLoading = isLoading;
   };
 }
 

@@ -1,9 +1,8 @@
 import { makeObservable, observable, action } from "mobx";
-import authApi from "@/actions/authAction";
+import authAction from "@/actions/authAction";
 import roleApi from "@/actions/roleAction";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
-import { RoleEnums } from "../enums/role";
 import { validateFields } from "../app/utils";
 import { generateRegisterRules } from "../rules/register";
 
@@ -67,7 +66,7 @@ class Auth {
       return;
     }
 
-    const response = await authApi.createUserApi(this.userData);
+    const response = await authAction.createUserApi(this.userData);
 
     switch (response.status_code) {
       case RegisterEnums.PASSWORD_NOT_MATCH:
@@ -106,13 +105,21 @@ class Auth {
   login = async (e) => {
     e.preventDefault();
 
-    const res = await authApi.login(this.loginData);
+    commonStore.setIsLoading(true);
+
+    const res = await authAction.login(this.loginData);
+
+    if (res.ok) {
+      commonStore.setIsLoading(false);
+    }
 
     if (res.error) {
       commonStore.setErrorMessage("Потребителят не съществува");
       commonStore.setErrorFields({
         error: true,
       });
+      commonStore.setIsLoading(false);
+
       return;
     }
   };

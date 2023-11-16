@@ -3,7 +3,7 @@ class Ad {
     this.cachedAds = new Map();
   }
 
-  async getUserAds(page, perPage, searchText, filterData) {
+  getUserAds = async (page, perPage, searchText, filterData) => {
     try {
       const cacheKey = `${page}_${perPage}_${searchText}_${filterData?.dateFrom}_${filterData?.dateTo}_${filterData?.status}_${filterData?.field}_${filterData?.employmentType}_${filterData?.minSalary}_${filterData?.maxSalary}`;
 
@@ -55,7 +55,7 @@ class Ad {
     } catch (error) {
       throw error;
     }
-  }
+  };
 
   clearCache() {
     this.cachedAds.clear();

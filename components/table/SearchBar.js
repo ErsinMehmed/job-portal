@@ -11,20 +11,20 @@ const Select = (props) => {
   };
 
   return props.isLoading ? (
-    <div className="mt-4 2xl:mt-0 h-12 2xl:h-14 w-full bg-white px-4 rounded-lg mb-6 flex items-center border border-gray-300 shadow-sm">
+    <div className="mt-4 2xl:mt-0 h-12 2xl:h-14 w-full bg-white px-4 rounded-lg mb-5 2xl:mb-4 flex items-center border border-gray-300 shadow-sm">
       <div className="w-6 mr-4">
-        <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
-        <div className="h-1 animate-pulse bg-gray-200 rounded-full"></div>
+        <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2" />
+        <div className="h-1 animate-pulse bg-gray-200 rounded-full" />
       </div>
 
       <div className="w-full">
-        <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
-        <div className="h-1 animate-pulse bg-gray-200 rounded-full"></div>
+        <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2" />
+        <div className="h-1 animate-pulse bg-gray-200 rounded-full" />
       </div>
 
       <div className="bg-[#f4f4f5] rounded-full w-1/6 2xl:w-[9%] ml-5 px-1 sm:px-5 py-2.5 2xl:py-3">
-        <div className="sm:h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
-        <div className="sm:h-1 animate-pulse bg-gray-200 rounded-full"></div>
+        <div className="sm:h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2" />
+        <div className="sm:h-1 animate-pulse bg-gray-200 rounded-full" />
       </div>
 
       <div className="bg-[#f4f4f5] rounded-full w-[2.7%] h-10 ml-2 px-1 sm:px-5" />

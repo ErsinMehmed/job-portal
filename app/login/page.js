@@ -2,17 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
+import { RoleEnums } from "@/enums/role";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Button, Checkbox } from "@nextui-org/react";
 import { authStore, commonStore } from "@/stores/useStore";
 import Alert from "@/components/Alert";
 import Input from "@/components/html/Input";
-import { RoleEnums } from "@/enums/role";
+import LinearLoader from "@/components/LinearLoader";
 
 const Login = () => {
   const { loginData, setLoginData, login } = authStore;
-  const { userKind, errorFields, errorMessage, successMessage } = commonStore;
+  const { errorFields, errorMessage, isLoading } = commonStore;
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -34,9 +35,15 @@ const Login = () => {
 
   return (
     <>
+      <LinearLoader show={isLoading} />
+
       <Alert />
 
-      <section className="flex items-center justify-center min-h-screen w-full bg-gray-50">
+      <section
+        className={`flex items-center justify-center min-h-screen w-full bg-gray-50 ${
+          isLoading && "animate-pulse pointer-events-none"
+        }`}
+      >
         <div className="flex flex-col px-6 py-8 sm:mx-auto lg:py-0">
           <div className="w-full bg-white rounded-lg shadow md:mt-0 xl:p-0">
             <div className="p-6 space-y-5 md:space-y-6 sm:p-8">

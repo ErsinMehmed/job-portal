@@ -1,17 +1,19 @@
 import { Progress } from "@nextui-org/react";
 
-const LinearLoader = () => {
+const LinearLoader = (props) => {
   return (
-    <div className="fixed top-0 left-0 z-50 w-full">
-      <Progress
-        isIndeterminate
-        aria-label="Loading..."
-        classNames={{
-          base: "w-full h-1.5",
-          indicator: "bg-[#0071f5]",
-        }}
-      />
-    </div>
+    props.show && (
+      <div className="fixed top-0 left-0 z-50 w-full">
+        <Progress
+          isIndeterminate
+          aria-label="Loading..."
+          classNames={{
+            base: "w-full h-1.5",
+            indicator: "bg-[#0071f5]",
+          }}
+        />
+      </div>
+    )
   );
 };
 

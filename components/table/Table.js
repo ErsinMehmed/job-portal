@@ -131,7 +131,7 @@ const Table = (props) => {
                           )
                       )}
 
-                      <td className="pl-4 py-4 border-b border-[#ebf4ff] text-center">
+                      <td className="pl-4 py-1.5 border-b border-[#ebf4ff] text-center">
                         <Link
                           href={`${props.editButtonLink + row._id}`}
                           className="flex w-fit text-white  bg-[#0071f5] hover:bg-blue-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all active:scale-90"
@@ -140,7 +140,7 @@ const Table = (props) => {
                         </Link>
                       </td>
 
-                      <td className="pr-4 py-4 border-b border-[#ebf4ff] text-center">
+                      <td className="pr-4 py-1.5 border-b border-[#ebf4ff] text-center">
                         <button
                           type="button"
                           className="text-white bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all active:scale-90"
