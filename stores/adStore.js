@@ -7,6 +7,7 @@ class Ad {
   perPage = 10;
   isLoading = true;
   searchText = "";
+  showFilter = false;
   filterData = {
     dateFrom: "",
     dateTo: "",
@@ -25,12 +26,14 @@ class Ad {
       isLoading: observable,
       searchText: observable,
       filterData: observable,
+      showFilter: observable,
       setAds: action,
       setCurrentPage: action,
       setPerPage: action,
       setIsLoading: action,
       setSearchText: action,
       setFilterData: action,
+      setShowFilter: action,
     });
   }
 
@@ -70,6 +73,10 @@ class Ad {
 
   setFilterData = (filterData) => {
     this.filterData = filterData;
+  };
+
+  setShowFilter = (showFilter) => {
+    this.showFilter = showFilter;
   };
 
   loadUserAds = async (newPage) => {

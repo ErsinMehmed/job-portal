@@ -2,22 +2,34 @@ import { Select, SelectItem } from "@nextui-org/react";
 
 const SelectComponent = (props) => {
   const handleChange = (event) => {
-    if (props.onChange) {
-      props.onChange(
-        props.getId ? props.items[event.target.value]?._id : event.target.value
-      );
+    let value;
+
+    switch (true) {
+      case props.getId:
+        value = props.items[event.target.value]?._id;
+        break;
+      case props.getName:
+        value = props.items[event.target.value]?.name;
+        break;
+      case props.getValue:
+        value = props.items[event.target.value]?.value;
+        break;
+      default:
+        value = event.target.value;
     }
+
+    props.onChange(value);
   };
 
   return (
     <Select
       label={props.label}
-      className='w-full'
+      className="w-full"
       size={"sm"}
       onChange={handleChange}
-      defaultSelectedKeys={props.selectedOption}
       isInvalid={props.errorMessage ? true : false}
-      errorMessage={props.errorMessage}>
+      errorMessage={props.errorMessage}
+    >
       {props.items?.map((item, key) => (
         <SelectItem key={key}>{item.name ?? item.value}</SelectItem>
       ))}

@@ -20,7 +20,7 @@ mongoose
 const generateFakeAd = (users) => {
   const jobTypes = [
     "Постоянна работа",
-    "Временна/Сезонна",
+    "Временна работа",
     "Стаж",
     "Работа по задание/Freelancer",
   ];

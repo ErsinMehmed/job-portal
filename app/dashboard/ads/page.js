@@ -14,6 +14,7 @@ const Ads = () => {
     isLoading,
     searchText,
     filterData,
+    showFilter,
     loadUserAds,
     handlePageChange,
     handlePageClick,
@@ -21,6 +22,7 @@ const Ads = () => {
     setSearchText,
     setFilterData,
     searchAds,
+    setShowFilter,
   } = adStore;
 
   useEffect(() => {
@@ -67,6 +69,8 @@ const Ads = () => {
           perPage={perPage}
           filterSearchOnClick={searchAds}
           filterData={filterData}
+          showFilter={showFilter}
+          setShowFilter={setShowFilter}
           setFilterData={setFilterData}
           isLoading={isLoading}
           setPerPage={setPerPage}
