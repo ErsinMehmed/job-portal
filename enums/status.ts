@@ -3,8 +3,3 @@ export enum RegisterEnums {
   USER_EXIST = 2,
   USER_CREATED = 3,
 };
-
-export enum StatusEnums {
-  EXPIRED = 0,
-  ACTIVE = 1,
-};

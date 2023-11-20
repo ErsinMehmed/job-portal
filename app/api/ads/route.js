@@ -3,7 +3,6 @@ import Ad from "@/models/ad";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { StatusEnums } from "@/enums/status";
 
 export async function POST(request) {
   const data = await request.json();
@@ -60,10 +59,10 @@ export async function GET(request) {
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-    if (Number(status) === StatusEnums.ACTIVE) {
-      queryBuilder.where("expired").lt(oneMonthAgo);
-    } else if (Number(status) === StatusEnums.EXPIRED) {
+    if (status === "Активна") {
       queryBuilder.where("expired").gte(oneMonthAgo);
+    } else if (status === "Изтекла") {
+      queryBuilder.where("expired").lt(oneMonthAgo);
     }
   }
 
