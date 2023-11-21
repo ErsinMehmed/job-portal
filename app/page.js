@@ -33,7 +33,7 @@ const Home = () => {
       <button onClick={() => signOut()}>изход</button>
       <Image
         src={homeBannerImg}
-        alt="Picture of the author"
+        alt='Picture of the author'
         width={500}
         height={500}
       />

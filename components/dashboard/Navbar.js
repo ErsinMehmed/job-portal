@@ -14,7 +14,7 @@ const Navbar = (props) => {
               onClick={props.onMenuClick}
               className='p-2 mr-2 text-gray-600 rounded cursor-pointer hover:text-gray-800 hover:bg-gray-100 transition-all'>
               {props.show ? (
-                <FaXmark className='md:hidden w-6 h-6 text-slate-600' />
+                <FaXmark className='md:hidden w-6 h-6' />
               ) : (
                 <HiMenuAlt1 className='md:hidden w-6 h-6' />
               )}

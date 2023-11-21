@@ -12,6 +12,13 @@ const employmentTypes = [
   { value: "Стаж" },
 ];
 
+const homePageLinks = [
+  { link: "/", text: "Начало" },
+  { link: "/find-job", text: "Обяви" },
+  { link: "/employers", text: "Компании" },
+  { link: "/blog", text: "Блог" },
+];
+
 const fields = [
   { label: "Intranet" },
   { label: "Functionality" },
@@ -59,4 +66,4 @@ const fields = [
   { label: "Response" },
 ];
 
-export { perPageResult, statuses, fields, employmentTypes };
+export { perPageResult, statuses, fields, employmentTypes, homePageLinks };

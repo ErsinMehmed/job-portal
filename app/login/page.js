@@ -40,7 +40,7 @@ const Login = () => {
       <Alert />
 
       <section
-        className={`flex items-center justify-center min-h-screen w-full bg-gray-50 ${
+        className={`flex items-center justify-center min-h-screen w-full bg-[#f3f7fd] ${
           isLoading && "animate-pulse pointer-events-none"
         }`}>
         <div className='flex flex-col px-6 py-8 sm:mx-auto lg:py-0'>
