@@ -19,6 +19,13 @@ const homePageLinks = [
   { link: "/blog", text: "Блог" },
 ];
 
+const homePageAuthLinks = [
+  { link: "/profile", text: "Моят профил" },
+  { link: "/files", text: "Моите файлове" },
+  { link: "/applications", text: "Кандидаствания" },
+  { link: "/messages", text: "Съобщения" },
+];
+
 const fields = [
   { label: "Intranet" },
   { label: "Functionality" },
@@ -66,4 +73,11 @@ const fields = [
   { label: "Response" },
 ];
 
-export { perPageResult, statuses, fields, employmentTypes, homePageLinks };
+export {
+  perPageResult,
+  statuses,
+  fields,
+  employmentTypes,
+  homePageLinks,
+  homePageAuthLinks,
+};

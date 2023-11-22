@@ -12,18 +12,12 @@ const WebsiteLayout = (props) => {
   };
 
   return (
-    <div className='w-full bg-[#f3f7fd] min-h-screen'>
-      <Navbar
-        onMenuClick={toggleMenu}
-        show={isVisible}
-      />
+    <div className="w-full bg-[#f3f7fd] min-h-screen">
+      <Navbar onMenuClick={toggleMenu} />
 
-      <MobileMenu
-        outsideOnClick={toggleMenu}
-        show={isVisible}
-      />
+      <MobileMenu outsideOnClick={toggleMenu} show={isVisible} />
 
-      <div className='mt-16'>{props.children}</div>
+      <div className="mt-16">{props.children}</div>
     </div>
   );
 };
