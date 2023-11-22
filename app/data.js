@@ -1,6 +1,3 @@
-import { FcGraduationCap } from "react-icons/fc";
-import { FcBriefcase } from "react-icons/fc";
-
 const perPageResult = [5, 10, 15, 20];
 
 const statuses = [{ value: "Активна" }, { value: "Изтекла" }];
@@ -20,7 +17,10 @@ const homePageLinks = [
 ];
 
 const homePageAuthLinks = [
-  { link: "/profile", text: "Моят профил" },
+  {
+    link: "/profile",
+    text: "Моят профил",
+  },
   { link: "/files", text: "Моите файлове" },
   { link: "/applications", text: "Кандидаствания" },
   { link: "/messages", text: "Съобщения" },
