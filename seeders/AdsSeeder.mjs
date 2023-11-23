@@ -10,10 +10,7 @@ import Role from "../models/role.js";
 dotenv.config({ path: new URL("../.env", import.meta.url) });
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("DB Connected"))
   .catch((error) => console.log("DB Connection Failed", error.message));
 
@@ -24,6 +21,17 @@ const generateFakeAd = (users) => {
     "Стаж",
     "Работа по задание/Freelancer",
   ];
+
+  const experience = [
+    "Без опит",
+    "до 1",
+    "от 1 до 2",
+    "от 2 до 3",
+    "от 3 до 4",
+    "от 4 до 5",
+    "от 5 до 10+",
+  ];
+
   const randomUser = users[Math.floor(Math.random() * users.length)];
 
   return {
@@ -33,14 +41,53 @@ const generateFakeAd = (users) => {
     employment_type: jobTypes[Math.floor(Math.random() * jobTypes.length)],
     summary: faker.lorem.sentence(),
     field: faker.person.jobArea(),
+    experience: experience[Math.floor(Math.random() * experience.length)],
     details: faker.person.jobDescriptor(),
-    salary: faker.number.int({ min: 700, max: 10000 }),
+    salary: generateSalary(),
     expired: faker.date.between({
       from: "2023-05-01T00:00:00.000Z",
       to: faker.date.recent(),
     }),
     creator: randomUser._id,
+    keywords: generateKeywords(),
+    languages: generateLanguages(),
   };
+};
+
+const generateSalary = () => {
+  const step = 100;
+
+  const randomNumber = faker.number.int({ min: 800, max: 15000 });
+  const roundedNumber = Math.round(randomNumber / step) * step;
+
+  return roundedNumber;
+};
+
+const generateKeywords = () => {
+  const numberOfKeywords = Math.floor(Math.random() * 10) + 1;
+  const keywords = Array.from({ length: numberOfKeywords }, () =>
+    faker.person.jobArea()
+  );
+
+  return keywords;
+};
+
+const generateLanguages = () => {
+  const languages = [
+    "Английски",
+    "Немски",
+    "Френски",
+    "Испански",
+    "Италиански",
+  ];
+
+  const numberOfKeywords = Math.floor(Math.random() * 3) + 1;
+  const keywords = Array.from(
+    { length: numberOfKeywords },
+    () => languages[Math.floor(Math.random() * languages.length)]
+  );
+
+  return keywords;
 };
 
 const importData = async () => {

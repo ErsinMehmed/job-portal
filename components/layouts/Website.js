@@ -12,7 +12,7 @@ const WebsiteLayout = (props) => {
   };
 
   return (
-    <div className="w-full bg-[#f3f7fd] min-h-screen">
+    <div className="w-full min-h-screen">
       <Navbar onMenuClick={toggleMenu} />
 
       <MobileMenu outsideOnClick={toggleMenu} show={isVisible} />

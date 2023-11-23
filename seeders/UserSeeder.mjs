@@ -10,10 +10,7 @@ import Role from "../models/role.js";
 dotenv.config({ path: new URL("../.env", import.meta.url) });
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log("DB Connected"))
   .catch((error) => console.log("DB Connection Failed", error.message));
 

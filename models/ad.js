@@ -9,9 +9,12 @@ const adSchema = new Schema(
     employment_type: String,
     summary: String,
     field: String,
+    experience: String,
     details: String,
     salary: Number,
     expired: Date,
+    keywords: { type: [String] },
+    languages: { type: [String] },
     creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
