@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "data:seed": "node ./seeders/UserSeeder.mjs && node ./seeders/AdsSeeder.mjs"
+    "data:seed": "node ./seeders/UserSeeder.mjs && node ./seeders/AdSeeder.mjs"
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",

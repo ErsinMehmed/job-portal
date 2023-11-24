@@ -13,8 +13,13 @@ const adSchema = new Schema(
     details: String,
     salary: Number,
     expired: Date,
+    remote_work: Boolean,
+    education_requirements: String,
+    skills: { type: [String] },
     keywords: { type: [String] },
     languages: { type: [String] },
+    job_benefits: { type: [String] },
+    qualifications: { type: [String] },
     creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
