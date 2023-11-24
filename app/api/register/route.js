@@ -2,7 +2,7 @@ import connectMongoDB from "@/libs/mongodb";
 import User from "@/models/user";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { validateFields } from "../../utils";
+import { validateFields } from "../../../utils";
 import { generateRegisterRules } from "../../../rules/register";
 
 export async function POST(request) {

@@ -43,7 +43,7 @@ const generateFakeAd = (users) => {
     field: faker.person.jobArea(),
     experience: experience[Math.floor(Math.random() * experience.length)],
     details: faker.person.jobDescriptor(),
-    salary: generateSalary(),
+    salary: generateMinMaxNumber(100, 800, 15000),
     expired: faker.date.between({
       from: "2023-05-01T00:00:00.000Z",
       to: faker.date.recent(),
@@ -54,10 +54,8 @@ const generateFakeAd = (users) => {
   };
 };
 
-const generateSalary = () => {
-  const step = 100;
-
-  const randomNumber = faker.number.int({ min: 800, max: 15000 });
+const generateMinMaxNumber = (step, min, max) => {
+  const randomNumber = faker.number.int({ min: min, max: max });
   const roundedNumber = Math.round(randomNumber / step) * step;
 
   return roundedNumber;

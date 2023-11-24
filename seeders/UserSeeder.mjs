@@ -24,6 +24,8 @@ const generateFakeUser = async (roles) => {
     email: email,
     password: hashedPassword,
     role: randomRole._id,
+    city: faker.location.city(),
+    phone_number: faker.phone.number(),
   };
 
   if (randomRole.name === "Employer") {
@@ -31,13 +33,17 @@ const generateFakeUser = async (roles) => {
       ...userData,
       name: faker.company.name(),
       vat_number: faker.finance.accountNumber({ length: 10 }),
+      company_size: `${generateMinMaxNumber(5, 5, 50)}-${generateMinMaxNumber(
+        10,
+        50,
+        500
+      )}`,
     };
   } else {
     userData = {
       ...userData,
       name: faker.person.fullName(),
       birthday: faker.date.past(),
-      city: faker.location.city(),
       personal_number: faker.number.int({
         min: 1000000000,
         max: 9999999999,
@@ -46,6 +52,13 @@ const generateFakeUser = async (roles) => {
   }
 
   return userData;
+};
+
+const generateMinMaxNumber = (step, min, max) => {
+  const randomNumber = faker.number.int({ min: min, max: max });
+  const roundedNumber = Math.round(randomNumber / step) * step;
+
+  return roundedNumber;
 };
 
 const importUserData = async () => {

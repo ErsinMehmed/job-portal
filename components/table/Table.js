@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdModeEditOutline, MdDelete } from "react-icons/md";
 import { Chip } from "@nextui-org/react";
 import { perPageResult } from "../../app/data";
-import { isAdActive } from "../../app/utils";
+import { isAdActive } from "../../utils";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
 import Loader from "./Loader";

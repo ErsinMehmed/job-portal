@@ -3,7 +3,7 @@ import authAction from "@/actions/authAction";
 import roleApi from "@/actions/roleAction";
 import commonStore from "./commonStore";
 import { RegisterEnums } from "../enums/status";
-import { validateFields } from "../app/utils";
+import { validateFields } from "../utils";
 import { generateRegisterRules } from "../rules/register";
 
 class Auth {
