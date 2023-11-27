@@ -1,3 +1,5 @@
+import { BsCoin, BsMegaphone, BsPencil, BsCodeSlash } from "react-icons/bs";
+
 const perPageResult = [5, 10, 15, 20];
 
 const statuses = [{ value: "Активна" }, { value: "Изтекла" }];
@@ -73,6 +75,29 @@ const fields = [
   { label: "Response" },
 ];
 
+const categories = [
+  {
+    title: "Счетоводство / Финанси",
+    positions: "(2 отворени позиции)",
+    icon: <BsCoin className='w-9 h-9 text-blue-500' />,
+  },
+  {
+    title: "Маркетинг",
+    positions: "(85 отворени позиции)",
+    icon: <BsMegaphone className='w-9 h-9 text-blue-500' />,
+  },
+  {
+    title: "Дизайн",
+    positions: "(26 отворени позиции)",
+    icon: <BsPencil className='w-9 h-9 text-blue-500' />,
+  },
+  {
+    title: "Програмиране",
+    positions: "(51 отворени позиции)",
+    icon: <BsCodeSlash className='w-9 h-9 text-blue-500' />,
+  },
+];
+
 export {
   perPageResult,
   statuses,
@@ -80,4 +105,5 @@ export {
   employmentTypes,
   homePageLinks,
   homePageAuthLinks,
+  categories,
 };
