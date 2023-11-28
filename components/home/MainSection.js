@@ -13,6 +13,7 @@ const MainSection = () => {
       opacity: 1,
       transition: { duration: duration, delay: delay },
     };
+
     return animationValue;
   };
 
@@ -27,12 +28,12 @@ const MainSection = () => {
               opacity: 1,
               transition: { duration: 1 },
             }}>
-            <h2 className='text-4xl text-slate-700 font-bold font-mono'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl text-slate-700 font-bold font-mono text-center sm:text-left'>
               Тук има <span className='text-[#1967d2]'>93,178</span> публикации
               за теб!
             </h2>
 
-            <div className='text-slate-400 text-sm font-semibold mt-2.5'>
+            <div className='text-slate-400 text-sm font-semibold mt-2.5 text-center sm:text-left'>
               Намери Работа, Служители & Възможност за кариера
             </div>
 

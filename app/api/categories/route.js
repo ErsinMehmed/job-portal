@@ -19,5 +19,16 @@ export async function POST(request) {
     })
   );
 
-  return NextResponse.json(categories);
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+
+  const totalAdsCount = await Ad.countDocuments({
+    createdAt: { $gte: currentDate },
+  });
+
+  const overallAdsCount = await Ad.countDocuments();
+
+  const response = { categories, totalAdsCount, overallAdsCount };
+
+  return NextResponse.json(response);
 }

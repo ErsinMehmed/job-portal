@@ -1,3 +1,18 @@
+import {
+  BsCoin,
+  BsMegaphone,
+  BsTruck,
+  BsCodeSlash,
+  BsPeople,
+  BsHeartPulse,
+  BsBuilding,
+  BsCashStack,
+  BsShield,
+  BsReception4,
+  BsKanban,
+} from "react-icons/bs";
+import { PiCarProfile } from "react-icons/pi";
+
 const perPageResult = [5, 10, 15, 20];
 
 const statuses = [{ value: "Активна" }, { value: "Изтекла" }];
@@ -66,6 +81,58 @@ const dashboardCategories = [
   { label: "Информационни технологии" },
 ];
 
+const categoriesIconClasses = "w-9 h-9 text-blue-500 group-hover:text-white";
+const categoriesData = [
+  {
+    title: "Счетоводство и Финанси",
+    icon: <BsCoin className={categoriesIconClasses} />,
+  },
+  {
+    title: "Маркетинг, Реклама, ПР",
+    icon: <BsMegaphone className={categoriesIconClasses} />,
+  },
+  {
+    title: "Информационни технологии",
+    icon: <BsCodeSlash className={categoriesIconClasses} />,
+  },
+  {
+    title: "Логистика, Спедиция",
+    icon: <BsTruck className={categoriesIconClasses} />,
+  },
+  {
+    title: "Шофьори, Куриери",
+    icon: <PiCarProfile className={categoriesIconClasses} />,
+  },
+  {
+    title: "Човешки ресурси (HR)",
+    icon: <BsPeople className={categoriesIconClasses} />,
+  },
+  {
+    title: "Здравеопазване и Фармация",
+    icon: <BsHeartPulse className={categoriesIconClasses} />,
+  },
+  {
+    title: "Недвижими имоти",
+    icon: <BsBuilding className={categoriesIconClasses} />,
+  },
+  {
+    title: "Търговия и Продажби",
+    icon: <BsCashStack className={categoriesIconClasses} />,
+  },
+  {
+    title: "Сигурност и Охрана",
+    icon: <BsShield className={categoriesIconClasses} />,
+  },
+  {
+    title: "Телекоми",
+    icon: <BsReception4 className={categoriesIconClasses} />,
+  },
+  {
+    title: "Мениджмънт",
+    icon: <BsKanban className={categoriesIconClasses} />,
+  },
+];
+
 export {
   perPageResult,
   statuses,
@@ -73,4 +140,5 @@ export {
   employmentTypes,
   homePageLinks,
   homePageAuthLinks,
+  categoriesData,
 };
