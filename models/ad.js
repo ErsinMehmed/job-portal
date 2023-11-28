@@ -8,7 +8,7 @@ const adSchema = new Schema(
     position: String,
     employment_type: String,
     summary: String,
-    field: String,
+    category: String,
     experience: String,
     details: String,
     salary: Number,

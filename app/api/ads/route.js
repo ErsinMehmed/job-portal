@@ -67,7 +67,7 @@ export async function GET(request) {
   }
 
   if (field) {
-    queryBuilder.where("field").equals(field);
+    queryBuilder.where("category").equals(field);
   }
 
   if (employmentType) {
