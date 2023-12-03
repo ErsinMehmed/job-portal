@@ -28,8 +28,10 @@ const Navbar = (props) => {
   return (
     <nav
       className={`${
-        scrollY > 90 ? "bg-white border-gray-200 border-b" : "bg-[#f3f7fd]"
-      } fixed w-full z-20 top-0 start-0 `}>
+        scrollY > 90
+          ? "bg-white border-gray-200 border-b"
+          : ` ${pathname.startsWith("/ad/") ? "bg-white" : "bg-[#f3f7fd]"}`
+      } fixed w-full z-20 top-0 start-0`}>
       <div className='max-w-screen-xl 2xl:max-w-screen-2xl flex items-center justify-between mx-auto p-4 2xl:p-5'>
         <div className='flex items-center'>
           <div className='flex items-center space-x-3'>
