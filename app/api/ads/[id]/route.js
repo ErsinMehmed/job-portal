@@ -9,5 +9,5 @@ export async function GET(request, { params }) {
 
   const ad = await Ad.findOne({ _id: id });
 
-  return NextResponse.json({ ad }, { status: 200 });
+  return NextResponse.json(ad);
 }

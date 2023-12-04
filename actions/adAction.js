@@ -61,6 +61,12 @@ class Ad {
     this.cachedAds.clear();
   }
 
+  getAd = async (id) => {
+    const response = await fetch(`/api/ads/${id}`);
+
+    return response.json();
+  };
+
   getAdCategories = async (categories) => {
     try {
       const response = await fetch("/api/categories", {

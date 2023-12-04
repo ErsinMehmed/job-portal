@@ -66,9 +66,11 @@ const CategorySection = () => {
           Популярни категории
         </h2>
 
-        <div className="text-slate-500 text-center mb-10">
-          {overallAdsCount} обяви от, които {adCount} обяви добавени днес
-        </div>
+        {overallAdsCount !== undefined && adCount !== undefined && (
+          <div className="text-slate-500 text-center mb-10">
+            {overallAdsCount} обяви от, които {adCount} обяви добавени днес
+          </div>
+        )}
 
         <motion.div
           initial={{ y: 50, opacity: 0 }}
