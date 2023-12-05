@@ -91,7 +91,7 @@ const generateFakeAd = (users) => {
     summary: faker.lorem.sentence(),
     category: categories[Math.floor(Math.random() * categories.length)],
     experience: experience[Math.floor(Math.random() * experience.length)],
-    details: faker.person.jobDescriptor(),
+    details: faker.lorem.sentences({ min: 5, max: 10 }),
     salary: generateMinMaxNumber(100, 800, 15000),
     remote_work: faker.datatype.boolean(0.5),
     education_requirements:
@@ -103,6 +103,7 @@ const generateFakeAd = (users) => {
     paid_leave: generateMinMaxNumber(5, 15, 30),
     creator: randomUser._id,
     skills: generateSkills(),
+    soft_skills: generateSoftSkills(),
     keywords: generateKeywords(),
     languages: generateLanguages(),
     job_benefits: generateJobBenefits(),
@@ -201,7 +202,68 @@ const generateSkills = () => {
     "Работа със статистически инструменти и езици като R или MATLAB",
   ];
 
-  const numberOfSkills = Math.floor(Math.random() * 5) + 1;
+  const numberOfSkills = Math.floor(Math.random() * 6) + 1;
+  const skill = Array.from(
+    { length: numberOfSkills },
+    () => skills[Math.floor(Math.random() * skills.length)]
+  );
+
+  return skill;
+};
+
+const generateSoftSkills = () => {
+  const skills = [
+    "Целеустремен",
+    "Амбициозен",
+    "Внимателен",
+    "Организиран",
+    "Аналитичен",
+    "Комуникативен",
+    "Трудолюбив",
+    "Адаптивен",
+    "Отговорен",
+    "Креативен",
+    "Инициативен",
+    "Емпатичен",
+    "Колaбoративен",
+    "Фокусиран",
+    "Стресоустойчив",
+    "Проблеморешаващ",
+    "Лидерски умения",
+    "Ефективен слушател",
+    "Етчайлд",
+    "Оптимистичен",
+    "Тимски играч",
+    "Лоялен",
+    "Дипломатичен",
+    "Проактивен",
+    "Креативен мислител",
+    "Интегритет",
+    "Ентусиазиран",
+    "Гъвкав",
+    "Ефективено преговарящ",
+    "Интелектуална личност",
+    "Умение за менторство",
+    "Работа в екип",
+    "Ефективен презентатор",
+    "Стратегическо мислене",
+    "Продуктивен",
+    "Детайлен",
+    "Сътрудничество",
+    "Позитивен подход",
+    "Креативен",
+    "Времеуправление",
+    "Аналитично мислене",
+    "Адаптируем",
+    "Дисциплиниран",
+    "Опит за учене",
+    "Иновативен",
+    "Толерантен",
+    "Енергичен",
+    "Отдаден",
+  ];
+
+  const numberOfSkills = Math.floor(Math.random() * 6) + 1;
   const skill = Array.from(
     { length: numberOfSkills },
     () => skills[Math.floor(Math.random() * skills.length)]
@@ -242,7 +304,7 @@ const generateQualifications = () => {
     "Демонстрирана способност за обучение и наставничество на младши разработчици",
   ];
 
-  const numberOfQualifications = Math.floor(Math.random() * 5) + 1;
+  const numberOfQualifications = Math.floor(Math.random() * 6) + 1;
   const qualification = Array.from(
     { length: numberOfQualifications },
     () => qualifications[Math.floor(Math.random() * qualifications.length)]

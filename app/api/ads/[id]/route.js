@@ -9,8 +9,10 @@ export async function GET(request, { params }) {
 
   const ad = await Ad.findOne({ _id: id }).populate({
     path: "creator",
-    select: "name company_size",
+    select: "name company_size company_created company_description",
   });
 
-  return NextResponse.json(ad);
+  const adCount = await Ad.countDocuments({ creator: ad.creator._id });
+
+  return NextResponse.json({ ad, adCount });
 }

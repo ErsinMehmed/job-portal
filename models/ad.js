@@ -18,6 +18,7 @@ const adSchema = new Schema(
     paid_leave: Number,
     education_requirements: String,
     skills: { type: [String] },
+    soft_skills: { type: [String] },
     keywords: { type: [String] },
     languages: { type: [String] },
     job_benefits: { type: [String] },

@@ -20,6 +20,7 @@ import {
 } from "react-icons/ci";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { getWords, getRemainingWords } from "@/utils";
 import adAction from "@/actions/adAction";
 import Image from "next/image";
 import moment from "moment";
@@ -30,17 +31,15 @@ import "moment/locale/bg";
 const ShowEditCreate = () => {
   const { data: session } = useSession();
   const params = useParams();
-  const [adData, setAdData] = useState();
+  const [adData, setadData] = useState();
 
   useEffect(() => {
-    getAdData(params.id);
+    getadData(params.id);
   }, []);
 
-  const getAdData = async (id) => {
-    setAdData(await adAction.getAd(id));
+  const getadData = async (id) => {
+    setadData(await adAction.getAd(id));
   };
-
-  console.log(adData);
 
   return (
     <div className="w-full max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative">
@@ -73,16 +72,16 @@ const ShowEditCreate = () => {
           </div>
 
           <h2 className="font-semibold text-2xl sm:text-4xl text-center text-slate-700 mb-1.5 mt-7">
-            {adData?.title}
+            {adData?.ad?.title}
           </h2>
 
           <div className="flex justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2">
-            <Chip isDisabled color="primary" size="sm">
-              {adData?.category}
+            <Chip isDisabled color="primary" size="sm" variant="shadow">
+              {adData?.ad?.category}
             </Chip>
 
-            <Chip isDisabled color="primary" size="sm">
-              {adData?.position}
+            <Chip isDisabled color="primary" size="sm" variant="shadow">
+              {adData?.ad?.position}
             </Chip>
 
             <Chip
@@ -90,8 +89,9 @@ const ShowEditCreate = () => {
               isDisabled
               color="primary"
               size="sm"
+              variant="shadow"
             >
-              {adData?.employment_type}
+              {adData?.ad?.employment_type}
             </Chip>
           </div>
 
@@ -108,23 +108,19 @@ const ShowEditCreate = () => {
               Публикувано на
               <span className="text-slate-500">
                 {" "}
-                {moment(adData?.updatedAt).locale("bg").format("D MMMM YYYY")}
+                {moment(adData?.ad?.updatedAt)
+                  .locale("bg")
+                  .format("D MMMM YYYY")}
               </span>
             </h2>
           </div>
 
           <div className="px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus
-            augue sagittis erat consectetur est. Blandit blandit nec mauris
-            pulvinar. Lectus duis amet tortor, sit tincidunt. Rhoncus tincidunt
-            imperdiet penatibus vitae risus, vitae. Blandit auctor justo nisl
-            massa.
+            {getWords(adData?.ad.details ?? "", 40)}
           </div>
 
           <div className="px-6 sm:px-12 text-slate-600 mt-3 text-justify sm:text-left">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus
-            dictum ultrices lacus sodales nunc felis eu, consectetur arcu. Vitae
-            nulla scelerisque id pellentesque feugiat vel eu.
+            {getRemainingWords(adData?.ad.details ?? "", 40)}
           </div>
 
           <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
@@ -132,43 +128,38 @@ const ShowEditCreate = () => {
           </h2>
 
           <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
-            <li className="list-disc">
-              Neque sodales ut etiam sit amet nisl purus. Non tellus orci ac
-              auctor.
-            </li>
-            <li className="list-disc">
-              Neque sodales ut etiam sit amet nisl purus. Non tellus orci ac
-              auctor.
-            </li>
-            <li className="list-disc">
-              Mauris commodo quis imperdiet massa tincidunt nunc pulvinar
-            </li>
-            <li className="list-disc">
-              Neque sodales ut etiam sit amet nisl purus. Non tellus orci ac
-              auctor.
-            </li>
+            {adData?.ad?.qualifications &&
+              adData?.ad.qualifications.map((qualification, index) => (
+                <li key={index} className="list-disc">
+                  {qualification}
+                </li>
+              ))}
           </ul>
 
           <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
-            Предлагаме ти:
+            Търсени умения
+          </h2>
+
+          <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
+            {adData?.ad?.skills &&
+              adData?.ad.skills.map((skill, index) => (
+                <li key={index} className="list-disc">
+                  {skill}
+                </li>
+              ))}
+          </ul>
+
+          <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
+            Предлагаме ти
           </h2>
 
           <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600 mb-10">
-            <li className="list-disc">
-              Neque sodales ut etiam sit amet nisl purus. Non tellus orci ac
-              auctor.
-            </li>
-            <li className="list-disc">
-              Neque sodales ut etiam sit amet nisl purus. Non tellus orci ac
-              auctor.
-            </li>
-            <li className="list-disc">
-              Mauris commodo quis imperdiet massa tincidunt nunc pulvinar
-            </li>
-            <li className="list-disc">
-              Neque sodales ut etiam sit amet nisl purus. Non tellus orci ac
-              auctor.
-            </li>
+            {adData?.ad?.job_benefits &&
+              adData?.ad.job_benefits.map((benefit, index) => (
+                <li key={index} className="list-disc">
+                  {benefit}
+                </li>
+              ))}
           </ul>
 
           <div className="flex gap-2 mb-5 px-6 sm:px-20 lg:hidden">
@@ -187,12 +178,12 @@ const ShowEditCreate = () => {
         <div className="orde-1 lg:order-2">
           <div className="lg:sticky top-24 lg:w-96">
             <div className="flex gap-2 mb-3.5">
-              <button className="bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] lg:hover:scale-105 font-semibold">
+              <button className="bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] font-semibold active:scale-95">
                 Кандидаствай
               </button>
 
               {session?.user && (
-                <button className="bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all lg:hover:scale-110">
+                <button className="bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all active:scale-95">
                   <FiBookmark className="w-5 h-5" />
                 </button>
               )}
@@ -207,7 +198,7 @@ const ShowEditCreate = () => {
                 <CiLocationOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.location}
+                  {adData?.ad?.location}
                 </div>
               </div>
 
@@ -215,12 +206,12 @@ const ShowEditCreate = () => {
                 <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.languages &&
-                    adData.languages.map((language, index) => (
+                  {adData?.ad?.languages &&
+                    adData?.ad.languages.map((language, index) => (
                       <span key={index}>
                         {index === 0 ? "" : " "}
                         {language}
-                        {index !== adData.languages.length - 1 && ","}
+                        {index !== adData?.ad.languages.length - 1 && ","}
                       </span>
                     ))}
                 </div>
@@ -230,7 +221,7 @@ const ShowEditCreate = () => {
                 <CiAlignBottom className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.employment_type}
+                  {adData?.ad?.employment_type}
                 </div>
               </div>
 
@@ -238,7 +229,7 @@ const ShowEditCreate = () => {
                 <CiSettings className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.education_requirements}
+                  {adData?.ad?.education_requirements}
                 </div>
               </div>
 
@@ -246,7 +237,7 @@ const ShowEditCreate = () => {
                 <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  Години опит {adData?.experience}
+                  Години опит {adData?.ad?.experience}
                 </div>
               </div>
 
@@ -254,7 +245,7 @@ const ShowEditCreate = () => {
                 <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.employment}
+                  {adData?.ad?.employment}
                 </div>
               </div>
 
@@ -262,16 +253,35 @@ const ShowEditCreate = () => {
                 <CiUmbrella className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  Отпуска: {adData?.paid_leave} дни
+                  Отпуска: {adData?.ad?.paid_leave} дни
                 </div>
               </div>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 border-b-2 pb-2.5">
                 <CiDollar className="text-slate-600 w-5 h-5 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  Заплата: {adData?.salary} лв.
+                  Заплата: {adData?.ad?.salary} лв.
                 </div>
+              </div>
+
+              <h2 className="font-semibold text-lg text-slate-700">
+                Меки умения
+              </h2>
+
+              <div className="flex flex-wrap gap-2">
+                {adData?.ad?.soft_skills &&
+                  adData?.ad.soft_skills.map((skill, index) => (
+                    <Chip
+                      key={index}
+                      size="sm"
+                      color="primary"
+                      variant="shadow"
+                      isDisabled
+                    >
+                      {skill}
+                    </Chip>
+                  ))}
               </div>
             </div>
 
@@ -285,24 +295,26 @@ const ShowEditCreate = () => {
               />
 
               <h2 className="font-semibold sm:text-lg border-b-2 pb-3 pt-2">
-                {adData?.creator.name}
+                {adData?.ad?.creator.name}
               </h2>
 
               <p className="text-sm sm:text-base">
-                International telesales company working with global brands in
-                English, Italian and Spanish speaking.
+                {getWords(adData?.ad?.creator.company_description ?? "", 20)}
               </p>
 
               <p className="text-sm sm:text-base">
-                No cold calls! We only work with warm high-quality leads and
-                trusted international partners.
+                {getRemainingWords(
+                  adData?.ad?.creator.company_description ?? "",
+                  20
+                )}
               </p>
 
               <div className="flex items-center gap-1 text-sm sm:text-base">
                 <CiCalendar className="text-slate-600 w-4 h-4 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  В България от 2020
+                  В България
+                  {" " + moment(adData?.ad?.creator.company_created).year()}
                 </div>
               </div>
 
@@ -310,7 +322,7 @@ const ShowEditCreate = () => {
                 <CiUser className="text-slate-600 w-4 h-4 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.creator.company_size} служители
+                  {adData?.ad?.creator.company_size} служители
                 </div>
               </div>
 
@@ -318,7 +330,7 @@ const ShowEditCreate = () => {
                 <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
                   <CiCircleList className="w-4 h-4 mt-0.5" />
 
-                  <div className="font-semibold">ОБЯВИ (7)</div>
+                  <div className="font-semibold">ОБЯВИ ({adData?.adCount})</div>
                 </button>
 
                 <button className="flex items-center gap-1 hover:text-blue-400 transition-all">

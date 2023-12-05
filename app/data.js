@@ -37,6 +37,7 @@ const homePageAuthLinks = [
     text: "Моят профил",
   },
   { link: "/files", text: "Моите файлове" },
+  { link: "/favorite-ad", text: "Запазени обяви" },
   { link: "/applications", text: "Кандидаствания" },
   { link: "/messages", text: "Съобщения" },
 ];

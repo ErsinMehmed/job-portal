@@ -72,3 +72,19 @@ export function isAdActive(date) {
 
   return adExpiredDate > oneMonthAgo;
 }
+
+export function getWords(text, count) {
+  const words = text.split(/\s+/);
+  const selectedWords = words.slice(0, count);
+  const paragraph = selectedWords.join(" ");
+
+  return paragraph;
+}
+
+export function getRemainingWords(text, startWordIndex) {
+  const words = text.split(/\s+/);
+  const remainingWords = words.slice(startWordIndex);
+  const paragraph = remainingWords.join(" ");
+
+  return paragraph;
+}
