@@ -38,6 +38,8 @@ const generateFakeUser = async (roles) => {
         50,
         500
       )}`,
+      company_created: faker.date.past(),
+      company_description: faker.lorem.sentences({ min: 2, max: 8 }),
     };
   } else {
     userData = {

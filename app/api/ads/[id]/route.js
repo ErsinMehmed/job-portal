@@ -7,7 +7,10 @@ export async function GET(request, { params }) {
 
   await connectMongoDB();
 
-  const ad = await Ad.findOne({ _id: id });
+  const ad = await Ad.findOne({ _id: id }).populate({
+    path: "creator",
+    select: "name company_size",
+  });
 
   return NextResponse.json(ad);
 }

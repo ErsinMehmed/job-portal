@@ -9,6 +9,8 @@ const userSchema = new Schema(
     vat_number: String,
     phone_number: String,
     role: { type: Schema.Types.ObjectId, ref: "Role" },
+    company_created: Date,
+    company_description: String,
     birthday: Date,
     city: String,
     email: String,

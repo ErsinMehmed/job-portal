@@ -53,7 +53,7 @@ const ShowEditCreate = () => {
       </Link>
 
       <div className="w-full px-4 2xl:px-5 pb-10 pt-8 flex flex-col-reverse lg:flex-row gap-8 relative">
-        <div className="rounded-2xl shadow-md border">
+        <div className="rounded-2xl shadow-md border order-2 lg:order-1">
           <Image
             src={adBannerImg}
             alt="Ad banner"
@@ -184,136 +184,149 @@ const ShowEditCreate = () => {
           </div>
         </div>
 
-        <div className="lg:sticky top-24 lg:h-[53.6rem] lg:w-[50rem] xl:w-[45rem]">
-          <div className="flex gap-2 mb-3.5">
-            <button className="bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] lg:hover:scale-105 font-semibold">
-              Кандидаствай
-            </button>
-
-            {session?.user && (
-              <button className="bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all lg:hover:scale-110">
-                <FiBookmark className="w-5 h-5" />
-              </button>
-            )}
-          </div>
-
-          <div className="rounded-2xl shadow-md border p-5 space-y-3">
-            <h2 className="font-semibold text-lg text-slate-700 border-b-2 pb-2.5">
-              ДЕТАЙЛИ
-            </h2>
-
-            <div className="flex items-center gap-1">
-              <CiLocationOn className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                {adData?.location}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                Английски, Немски
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiAlignBottom className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                Постоянна работа
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiSettings className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">Бакалавър</div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                Години опит от 5 до 10
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                Пълно работно време
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiUmbrella className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                Отпуска: 25 дни
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <CiDollar className="text-slate-600 w-5 h-5 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                Заплата: 1800 лв. (Бруто)
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-2xl shadow-md border p-5 space-y-3 mt-5 text-slate-700">
-            <Image
-              src={adProfileImg}
-              alt="Ad banner"
-              width={"100%"}
-              height={"100%"}
-              className="rounded-xl bg-white"
-            />
-
-            <h2 className="font-semibold border-b-2 pb-3 pt-2">
-              Bulgaria IT Company
-            </h2>
-
-            <p className="text-sm">
-              International telesales company working with global brands in
-              English, Italian and Spanish speaking.
-            </p>
-
-            <p className="text-sm">
-              No cold calls! We only work with warm high-quality leads and
-              trusted international partners.
-            </p>
-
-            <div className="flex items-center gap-1 text-sm">
-              <CiCalendar className="text-slate-600 w-4 h-4 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">
-                В България от 2020
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1 border-b-2 pb-3  text-sm">
-              <CiUser className="text-slate-600 w-4 h-4 mt-0.5" />
-
-              <div className="text-slate-700 font-semibold">200 служители</div>
-            </div>
-
-            <div className="flex text-sm items-center justify-between text-blue-600 pt-1">
-              <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
-                <CiCircleList className="w-4 h-4 mt-0.5" />
-
-                <div className="font-semibold">ОБЯВИ (7)</div>
+        <div className="orde-1 lg:order-2">
+          <div className="lg:sticky top-24 lg:w-96">
+            <div className="flex gap-2 mb-3.5">
+              <button className="bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] lg:hover:scale-105 font-semibold">
+                Кандидаствай
               </button>
 
-              <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
-                <CiSearch className="w-4 h-4 mt-0.5" />
+              {session?.user && (
+                <button className="bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all lg:hover:scale-110">
+                  <FiBookmark className="w-5 h-5" />
+                </button>
+              )}
+            </div>
 
-                <div className="font-semibold">ВИЖ ПРОФИЛА</div>
-              </button>
+            <div className="rounded-2xl shadow-md border p-5 space-y-3">
+              <h2 className="font-semibold text-lg text-slate-700 border-b-2 pb-2.5">
+                ДЕТАЙЛИ
+              </h2>
+
+              <div className="flex items-center gap-1">
+                <CiLocationOn className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  {adData?.location}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  {adData?.languages &&
+                    adData.languages.map((language, index) => (
+                      <span key={index}>
+                        {index === 0 ? "" : " "}
+                        {language}
+                        {index !== adData.languages.length - 1 && ","}
+                      </span>
+                    ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiAlignBottom className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  {adData?.employment_type}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiSettings className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  {adData?.education_requirements}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  Години опит {adData?.experience}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  {adData?.employment}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiUmbrella className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  Отпуска: {adData?.paid_leave} дни
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <CiDollar className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  Заплата: {adData?.salary} лв.
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl shadow-md border p-5 space-y-3 mt-5 text-slate-700">
+              <Image
+                src={adProfileImg}
+                alt="Ad banner"
+                width={"100%"}
+                height={"100%"}
+                className="rounded-xl bg-white"
+              />
+
+              <h2 className="font-semibold sm:text-lg border-b-2 pb-3 pt-2">
+                {adData?.creator.name}
+              </h2>
+
+              <p className="text-sm sm:text-base">
+                International telesales company working with global brands in
+                English, Italian and Spanish speaking.
+              </p>
+
+              <p className="text-sm sm:text-base">
+                No cold calls! We only work with warm high-quality leads and
+                trusted international partners.
+              </p>
+
+              <div className="flex items-center gap-1 text-sm sm:text-base">
+                <CiCalendar className="text-slate-600 w-4 h-4 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  В България от 2020
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1 border-b-2 pb-3 text-sm sm:text-base">
+                <CiUser className="text-slate-600 w-4 h-4 mt-0.5" />
+
+                <div className="text-slate-700 font-semibold">
+                  {adData?.creator.company_size} служители
+                </div>
+              </div>
+
+              <div className="flex text-sm sm:text-base items-center justify-between text-blue-600 pt-1">
+                <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
+                  <CiCircleList className="w-4 h-4 mt-0.5" />
+
+                  <div className="font-semibold">ОБЯВИ (7)</div>
+                </button>
+
+                <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
+                  <CiSearch className="w-4 h-4 mt-0.5" />
+
+                  <div className="font-semibold">ВИЖ ПРОФИЛА</div>
+                </button>
+              </div>
             </div>
           </div>
         </div>

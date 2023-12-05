@@ -15,6 +15,13 @@ mongoose
   .catch((error) => console.log("DB Connection Failed", error.message));
 
 const generateFakeAd = (users) => {
+  const employmentTypes = [
+    "Пълно работно време",
+    "Непълно работно време",
+    "Гъвкаво работно време",
+    "Подходяща за студенти",
+  ];
+
   const jobTypes = [
     "Постоянна работа",
     "Временна работа",
@@ -24,7 +31,7 @@ const generateFakeAd = (users) => {
 
   const experience = [
     "Без опит",
-    "до 1",
+    "до 1 година",
     "от 1 до 2",
     "от 2 до 3",
     "от 3 до 4",
@@ -79,6 +86,8 @@ const generateFakeAd = (users) => {
     location: faker.location.city(),
     position: faker.person.jobType(),
     employment_type: jobTypes[Math.floor(Math.random() * jobTypes.length)],
+    employment:
+      employmentTypes[Math.floor(Math.random() * employmentTypes.length)],
     summary: faker.lorem.sentence(),
     category: categories[Math.floor(Math.random() * categories.length)],
     experience: experience[Math.floor(Math.random() * experience.length)],
@@ -91,6 +100,7 @@ const generateFakeAd = (users) => {
       from: "2023-05-01T00:00:00.000Z",
       to: faker.date.recent(),
     }),
+    paid_leave: generateMinMaxNumber(5, 15, 30),
     creator: randomUser._id,
     skills: generateSkills(),
     keywords: generateKeywords(),
