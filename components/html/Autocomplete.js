@@ -8,14 +8,16 @@ const SelectComponent = (props) => {
   return (
     <Autocomplete
       label={props.label}
-      className='w-full'
+      className="w-full"
       size={"sm"}
       onInputChange={handleChange}
-      defaultSelectedKeys={props.selectedOption}
+      onBlur={props.onBlur}
       isInvalid={props.errorMessage ? true : false}
-      errorMessage={props.errorMessage}>
-      {props.items?.map((item, key) => (
-        <AutocompleteItem key={key}>
+      defaultSelectedKey={props.value}
+      errorMessage={props.errorMessage}
+    >
+      {props.items?.map((item) => (
+        <AutocompleteItem key={item.label ?? item.value}>
           {item.label ?? item.value}
         </AutocompleteItem>
       ))}

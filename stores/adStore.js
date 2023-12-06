@@ -17,6 +17,12 @@ class Ad {
     minSalary: null,
     maxSalary: null,
   };
+  adDataCreate = {
+    title: "Заглавие",
+    category: "Категория",
+    position: "Длъжност",
+    employment_type: "Тип заетоест",
+  };
 
   constructor() {
     makeObservable(this, {
@@ -27,6 +33,7 @@ class Ad {
       searchText: observable,
       filterData: observable,
       showFilter: observable,
+      adDataCreate: observable,
       setAds: action,
       setCurrentPage: action,
       setPerPage: action,
@@ -34,15 +41,16 @@ class Ad {
       setSearchText: action,
       setFilterData: action,
       setShowFilter: action,
+      setAdDataCreate: action,
     });
   }
 
-  setAds = (ads) => {
-    this.ads = ads;
+  setAds = (data) => {
+    this.ads = data;
   };
 
-  setCurrentPage = (currentPage) => {
-    this.currentPage = currentPage;
+  setCurrentPage = (data) => {
+    this.currentPage = data;
   };
 
   setPerPage = (perPage) => {
@@ -61,22 +69,26 @@ class Ad {
     );
   };
 
-  setIsLoading = (loading) => {
-    this.isLoading = loading;
+  setIsLoading = (data) => {
+    this.isLoading = data;
   };
 
-  setSearchText = (searchText) => {
-    this.searchText = searchText;
+  setSearchText = (data) => {
+    this.searchText = data;
     this.setCurrentPage(1);
     this.loadUserAds();
   };
 
-  setFilterData = (filterData) => {
-    this.filterData = filterData;
+  setFilterData = (data) => {
+    this.filterData = data;
   };
 
-  setShowFilter = (showFilter) => {
-    this.showFilter = showFilter;
+  setShowFilter = (data) => {
+    this.showFilter = data;
+  };
+
+  setAdDataCreate = (data) => {
+    this.adDataCreate = data;
   };
 
   loadUserAds = async (newPage) => {

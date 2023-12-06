@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import { FiBookmark } from "react-icons/fi";
@@ -20,18 +21,48 @@ import {
 } from "react-icons/ci";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { adStore } from "@/stores/useStore";
 import { getWords, getRemainingWords } from "@/utils";
 import adAction from "@/actions/adAction";
 import Image from "next/image";
 import moment from "moment";
 import adBannerImg from "@/public/images/ad-show-banner.png";
 import adProfileImg from "@/public/images/ad-profile-logo.png";
+import Autocomplete from "@/components/html/Autocomplete";
+import { dashboardCategories, employmentTypes } from "@/app/data";
 import "moment/locale/bg";
 
-const ShowEditCreate = () => {
+const ShowEditCreate = (props) => {
+  const { adDataCreate, setAdDataCreate } = adStore;
   const { data: session } = useSession();
   const params = useParams();
   const [adData, setadData] = useState();
+  const [activeElement, setActiveElement] = useState(null);
+  const inputRef = useRef(null);
+
+  const handleElementClick = (element) => {
+    setActiveElement(element);
+  };
+
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.focus();
+  }, [activeElement]);
+
+  const handleInputChange = (name, value) => {
+    setAdDataCreate({ ...adDataCreate, [name]: value });
+  };
+
+  const renderInputElement = (field, width) => {
+    return (
+      <input
+        ref={inputRef}
+        value={adDataCreate[field]}
+        onChange={(event) => handleInputChange(field, event.target.value)}
+        className={`text-center focus:outline-none border border-slate-100 shadow-lg rounded-lg w-${width} py-0`}
+        onBlur={() => setActiveElement(null)}
+      />
+    );
+  };
 
   useEffect(() => {
     getadData(params.id);
@@ -71,28 +102,96 @@ const ShowEditCreate = () => {
             />
           </div>
 
-          <h2 className="font-semibold text-2xl sm:text-4xl text-center text-slate-700 mb-1.5 mt-7">
-            {adData?.ad?.title}
+          <h2
+            className={`font-semibold text-2xl sm:text-4xl text-center text-slate-700 mt-7 ${
+              activeElement !== "title" && "mb-1.5"
+            } ${props.editable && "cursor-pointer"}`}
+            onClick={() => handleElementClick("title")}
+          >
+            {props.editable
+              ? activeElement === "title"
+                ? renderInputElement("title")
+                : adDataCreate.title
+              : adData?.ad?.title ?? ""}
           </h2>
 
-          <div className="flex justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2">
-            <Chip isDisabled color="primary" size="sm" variant="shadow">
-              {adData?.ad?.category}
-            </Chip>
+          <div className="flex flex-wrap justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2">
+            {props.editable ? (
+              <div
+                onClick={() => handleElementClick("category")}
+                className="cursor-pointer"
+              >
+                {activeElement === "category" ? (
+                  <Autocomplete
+                    onChange={(value) => handleInputChange("category", value)}
+                    items={dashboardCategories}
+                    value={adDataCreate.category}
+                    label="Избери категория"
+                    onBlur={() => setActiveElement(null)}
+                  />
+                ) : (
+                  <Chip isDisabled color="primary" variant="shadow">
+                    {adDataCreate.category}
+                  </Chip>
+                )}
+              </div>
+            ) : (
+              <Chip isDisabled color="primary" variant="shadow">
+                {adData?.ad?.category}
+              </Chip>
+            )}
 
-            <Chip isDisabled color="primary" size="sm" variant="shadow">
-              {adData?.ad?.position}
-            </Chip>
+            {props.editable ? (
+              <div
+                onClick={() => handleElementClick("position")}
+                className="cursor-pointer"
+              >
+                {activeElement === "position" ? (
+                  <Autocomplete
+                    onChange={(value) => handleInputChange("position", value)}
+                    items={dashboardCategories}
+                    value={adDataCreate.position}
+                    label="Избери джлъжност"
+                    onBlur={() => setActiveElement(null)}
+                  />
+                ) : (
+                  <Chip isDisabled color="primary" variant="shadow">
+                    {adDataCreate.position}
+                  </Chip>
+                )}
+              </div>
+            ) : (
+              <Chip isDisabled color="primary" variant="shadow">
+                {adData?.ad?.position}
+              </Chip>
+            )}
 
-            <Chip
-              className="hidden sm:flex"
-              isDisabled
-              color="primary"
-              size="sm"
-              variant="shadow"
-            >
-              {adData?.ad?.employment_type}
-            </Chip>
+            {props.editable ? (
+              <div
+                onClick={() => handleElementClick("employment_type")}
+                className="cursor-pointer"
+              >
+                {activeElement === "employment_type" ? (
+                  <Autocomplete
+                    onChange={(value) =>
+                      handleInputChange("employment_type", value)
+                    }
+                    items={employmentTypes}
+                    value={adDataCreate.employment_type}
+                    label="Избери тип заетост"
+                    onBlur={() => setActiveElement(null)}
+                  />
+                ) : (
+                  <Chip isDisabled color="primary" variant="shadow">
+                    {adDataCreate.employment_type}
+                  </Chip>
+                )}
+              </div>
+            ) : (
+              <Chip isDisabled color="primary" variant="shadow">
+                {adData?.ad?.employment_type}
+              </Chip>
+            )}
           </div>
 
           <div className="px-6 sm:px-12 py-10">
@@ -347,4 +446,4 @@ const ShowEditCreate = () => {
   );
 };
 
-export default ShowEditCreate;
+export default observer(ShowEditCreate);
