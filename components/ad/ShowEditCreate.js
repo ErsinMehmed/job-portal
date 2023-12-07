@@ -28,8 +28,12 @@ import Image from "next/image";
 import moment from "moment";
 import adBannerImg from "@/public/images/ad-show-banner.png";
 import adProfileImg from "@/public/images/ad-profile-logo.png";
-import Autocomplete from "@/components/html/Autocomplete";
-import { dashboardCategories, employmentTypes } from "@/app/data";
+import EditableBadge from "@/components/ad/EditableBadge";
+import {
+  dashboardCategories,
+  employmentTypes,
+  workPositions,
+} from "@/app/data";
 import "moment/locale/bg";
 
 const ShowEditCreate = (props) => {
@@ -44,25 +48,99 @@ const ShowEditCreate = (props) => {
     setActiveElement(element);
   };
 
+  const handleOutsideClick = (e) => {
+    if (!e.target.closest(".editable-element")) {
+      setActiveElement(null);
+    }
+  };
+
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, [activeElement]);
 
-  const handleInputChange = (name, value) => {
-    setAdDataCreate({ ...adDataCreate, [name]: value });
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  const handleInputChange = (name, value, index) => {
+    if (index !== undefined) {
+      const updatedArray = [...adDataCreate[name]];
+      updatedArray[index] = value;
+
+      setAdDataCreate({ ...adDataCreate, [name]: updatedArray });
+    } else {
+      setAdDataCreate({ ...adDataCreate, [name]: value });
+    }
   };
 
-  const renderInputElement = (field, width) => {
+  const renderInputElement = (field, index, width) => {
     return (
       <input
         ref={inputRef}
-        value={adDataCreate[field]}
-        onChange={(event) => handleInputChange(field, event.target.value)}
-        className={`text-center focus:outline-none border border-slate-100 shadow-lg rounded-lg w-${width} py-0`}
+        value={
+          index || index === 0
+            ? adDataCreate[field][index]
+            : adDataCreate[field]
+        }
+        onChange={(event) =>
+          handleInputChange(
+            field,
+            event.target.value,
+            index || index === 0 ? index : undefined
+          )
+        }
+        className={`text-center focus:outline-none border border-slate-100 shadow-lg rounded-lg w-${
+          width ?? "full"
+        } py-0 editable-element`}
         onBlur={() => setActiveElement(null)}
       />
     );
   };
+
+  const renderTextareaElement = (field) => {
+    return (
+      <textarea
+        ref={inputRef}
+        value={adDataCreate[field]}
+        onChange={(event) => handleInputChange(field, event.target.value)}
+        className={`focus:outline-none border border-slate-100 shadow-lg rounded-lg w-full editable-element h-60 sm:h-44 md:h-40 lg:h-36 xl:h-32 resize-none p-1.5`}
+        onBlur={() => setActiveElement(null)}
+      />
+    );
+  };
+
+  const renderListItems = (items) => (
+    <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
+      {items &&
+        items.map((item, index) => (
+          <li key={index} className="list-disc">
+            {item}
+          </li>
+        ))}
+    </ul>
+  );
+  console.log(activeElement);
+  const renderListCreateEditItems = (items) => (
+    <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
+      {items &&
+        items.map((item, index) =>
+          activeElement === index ? (
+            renderInputElement("qualifications", index)
+          ) : (
+            <li
+              onClick={() => handleElementClick(`${index}`)}
+              key={index}
+              className="list-disc cursor-pointer"
+            >
+              {item}
+            </li>
+          )
+        )}
+    </ul>
+  );
 
   useEffect(() => {
     getadData(params.id);
@@ -83,7 +161,7 @@ const ShowEditCreate = (props) => {
       </Link>
 
       <div className="w-full px-4 2xl:px-5 pb-10 pt-8 flex flex-col-reverse lg:flex-row gap-8 relative">
-        <div className="rounded-2xl shadow-md border order-2 lg:order-1">
+        <div className="rounded-2xl shadow-md border order-2 lg:order-1 pb-10">
           <Image
             src={adBannerImg}
             alt="Ad banner"
@@ -116,82 +194,35 @@ const ShowEditCreate = (props) => {
           </h2>
 
           <div className="flex flex-wrap justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2">
-            {props.editable ? (
-              <div
-                onClick={() => handleElementClick("category")}
-                className="cursor-pointer"
-              >
-                {activeElement === "category" ? (
-                  <Autocomplete
-                    onChange={(value) => handleInputChange("category", value)}
-                    items={dashboardCategories}
-                    value={adDataCreate.category}
-                    label="Избери категория"
-                    onBlur={() => setActiveElement(null)}
-                  />
-                ) : (
-                  <Chip isDisabled color="primary" variant="shadow">
-                    {adDataCreate.category}
-                  </Chip>
-                )}
-              </div>
-            ) : (
-              <Chip isDisabled color="primary" variant="shadow">
-                {adData?.ad?.category}
-              </Chip>
-            )}
+            <EditableBadge
+              editable={props.editable}
+              editCreateValue={adDataCreate.category}
+              onChange={(value) => handleInputChange("category", value)}
+              items={dashboardCategories}
+              value={adDataCreate.category}
+              label="Избери категория"
+              text={adData?.ad?.category}
+            />
 
-            {props.editable ? (
-              <div
-                onClick={() => handleElementClick("position")}
-                className="cursor-pointer"
-              >
-                {activeElement === "position" ? (
-                  <Autocomplete
-                    onChange={(value) => handleInputChange("position", value)}
-                    items={dashboardCategories}
-                    value={adDataCreate.position}
-                    label="Избери джлъжност"
-                    onBlur={() => setActiveElement(null)}
-                  />
-                ) : (
-                  <Chip isDisabled color="primary" variant="shadow">
-                    {adDataCreate.position}
-                  </Chip>
-                )}
-              </div>
-            ) : (
-              <Chip isDisabled color="primary" variant="shadow">
-                {adData?.ad?.position}
-              </Chip>
-            )}
+            <EditableBadge
+              editable={props.editable}
+              editCreateValue={adDataCreate.position}
+              onChange={(value) => handleInputChange("position", value)}
+              items={workPositions}
+              value={adDataCreate.position}
+              label="Избери длъжност"
+              text={adData?.ad?.position}
+            />
 
-            {props.editable ? (
-              <div
-                onClick={() => handleElementClick("employment_type")}
-                className="cursor-pointer"
-              >
-                {activeElement === "employment_type" ? (
-                  <Autocomplete
-                    onChange={(value) =>
-                      handleInputChange("employment_type", value)
-                    }
-                    items={employmentTypes}
-                    value={adDataCreate.employment_type}
-                    label="Избери тип заетост"
-                    onBlur={() => setActiveElement(null)}
-                  />
-                ) : (
-                  <Chip isDisabled color="primary" variant="shadow">
-                    {adDataCreate.employment_type}
-                  </Chip>
-                )}
-              </div>
-            ) : (
-              <Chip isDisabled color="primary" variant="shadow">
-                {adData?.ad?.employment_type}
-              </Chip>
-            )}
+            <EditableBadge
+              editable={props.editable}
+              editCreateValue={adDataCreate.employment_type}
+              onChange={(value) => handleInputChange("employment_type", value)}
+              items={employmentTypes}
+              value={adDataCreate.employment_type}
+              label="Избери тип заетост"
+              text={adData?.ad?.employment_type}
+            />
           </div>
 
           <div className="px-6 sm:px-12 py-10">
@@ -207,59 +238,54 @@ const ShowEditCreate = (props) => {
               Публикувано на
               <span className="text-slate-500">
                 {" "}
-                {moment(adData?.ad?.updatedAt)
-                  .locale("bg")
-                  .format("D MMMM YYYY")}
+                {props.editable
+                  ? moment().locale("bg").format("D MMMM YYYY")
+                  : moment(adData?.ad?.updatedAt)
+                      .locale("bg")
+                      .format("D MMMM YYYY")}
               </span>
             </h2>
           </div>
 
-          <div className="px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left">
-            {getWords(adData?.ad.details ?? "", 40)}
-          </div>
+          {props.editable ? (
+            <div
+              className="px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left cursor-pointer"
+              onClick={() => handleElementClick("details")}
+            >
+              {activeElement === "details"
+                ? renderTextareaElement("details")
+                : adDataCreate.details}
+            </div>
+          ) : (
+            <>
+              <div className="px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left">
+                {getWords(adData?.ad.details ?? "", 40)}
+              </div>
 
-          <div className="px-6 sm:px-12 text-slate-600 mt-3 text-justify sm:text-left">
-            {getRemainingWords(adData?.ad.details ?? "", 40)}
-          </div>
+              <div className="px-6 sm:px-12 text-slate-600 mt-3 text-justify sm:text-left">
+                {getRemainingWords(adData?.ad.details ?? "", 40)}
+              </div>
+            </>
+          )}
 
           <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
             Изисквания за позицията
           </h2>
-
-          <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
-            {adData?.ad?.qualifications &&
-              adData?.ad.qualifications.map((qualification, index) => (
-                <li key={index} className="list-disc">
-                  {qualification}
-                </li>
-              ))}
-          </ul>
+          {props.editable
+            ? renderListCreateEditItems(adDataCreate.qualifications)
+            : renderListItems(adData?.ad?.qualifications)}
 
           <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
             Търсени умения
           </h2>
 
-          <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
-            {adData?.ad?.skills &&
-              adData?.ad.skills.map((skill, index) => (
-                <li key={index} className="list-disc">
-                  {skill}
-                </li>
-              ))}
-          </ul>
+          {renderListItems(adData?.ad?.skills)}
 
           <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
             Предлагаме ти
           </h2>
 
-          <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600 mb-10">
-            {adData?.ad?.job_benefits &&
-              adData?.ad.job_benefits.map((benefit, index) => (
-                <li key={index} className="list-disc">
-                  {benefit}
-                </li>
-              ))}
-          </ul>
+          {renderListItems(adData?.ad?.job_benefits)}
 
           <div className="flex gap-2 mb-5 px-6 sm:px-20 lg:hidden">
             <button className="bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] lg:hover:scale-105 font-semibold">
