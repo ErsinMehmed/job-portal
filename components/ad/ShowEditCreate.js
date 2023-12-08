@@ -20,6 +20,7 @@ import {
   CiSearch,
 } from "react-icons/ci";
 import { BsTrash3 } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { HiOutlinePlus } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
@@ -44,6 +45,30 @@ const ShowEditCreate = (props) => {
   const params = useParams();
   const [adData, setAdData] = useState();
   const [activeElement, setActiveElement] = useState(null);
+  const [renderSectionData, setRenderSectionData] = useState([
+    {
+      title: "Търсени умения",
+      key: "skills",
+      placeholder: "Примерно търсено умение",
+      order: adDataCreate.qualification_section_order,
+      orderName: "qualification_section_order",
+    },
+    {
+      title: "Изисквания за позицията",
+
+      key: "qualifications",
+      placeholder: "Примерно изискване за длъжността",
+      order: adDataCreate.skill_section_order,
+      orderName: "skill_section_order",
+    },
+    {
+      title: "Предлагаме ти",
+      key: "job_benefits",
+      placeholder: "Какво предлагате",
+      order: adDataCreate.job_benefit_section_order,
+      orderName: "job_benefit_section_order",
+    },
+  ]);
   const inputRef = useRef(null);
 
   const handleElementClick = (element) => {
@@ -142,14 +167,14 @@ const ShowEditCreate = (props) => {
     </ul>
   );
 
-  const renderListCreateEditItems = (items, fieldName, text) => (
+  const renderListCreateEditItems = (fieldName, text) => (
     <ul
       className={` ${
-        items.length > 1 ? "px-11" : "px-16"
+        adDataCreate[fieldName].length > 1 ? "px-11" : "px-16"
       }  space-y-2 text-slate-600`}
     >
-      {items &&
-        items.map((item, index) =>
+      {adDataCreate[fieldName] &&
+        adDataCreate[fieldName].map((item, index) =>
           activeElement === fieldName + index ? (
             renderInputElement(fieldName, index)
           ) : (
@@ -157,15 +182,15 @@ const ShowEditCreate = (props) => {
               <li
                 key={index}
                 className={`list-disc cursor-pointer ${
-                  items.length > 1 && "flex items-center"
+                  adDataCreate[fieldName].length > 1 && "flex items-center"
                 }`}
               >
-                {items.length > 1 && (
+                {adDataCreate[fieldName].length > 1 && (
                   <span>
                     <button
                       className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mr-2"
                       onClick={() => {
-                        items.splice(index, 1);
+                        adDataCreate[fieldName].splice(index, 1);
                         removeArrayEmptyValue();
                       }}
                     >
@@ -183,33 +208,102 @@ const ShowEditCreate = (props) => {
                 </span>
               </li>
 
-              {index === items.length - 1 && items.length < 10 && (
-                <div className="flex justify-center mt-4 w-full">
-                  <button
-                    className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95"
-                    onClick={() => {
-                      items.push(text);
-                      removeArrayEmptyValue();
-                    }}
-                  >
-                    <HiOutlinePlus />
-                  </button>
-                </div>
-              )}
+              {index === adDataCreate[fieldName].length - 1 &&
+                adDataCreate[fieldName].length < 10 && (
+                  <div className="flex justify-center mt-4 w-full">
+                    <button
+                      className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95"
+                      onClick={() => {
+                        adDataCreate[fieldName].push(text);
+                        removeArrayEmptyValue();
+                      }}
+                    >
+                      <HiOutlinePlus />
+                    </button>
+                  </div>
+                )}
             </>
           )
         )}
     </ul>
   );
 
-  const renderSection = (title, data, key, placeholder) => {
+  const renderSection = (title, key, placeholder, order, orderFieldName) => {
+    const isFirst = order === 1;
+    const isLast =
+      order === Math.max(...renderSectionData.map((section) => section.order));
+
+    const handleArrowClick = (direction) => {
+      const sections = [...renderSectionData];
+      const index = sections.findIndex((section) => section.key === key);
+
+      if (direction === "up" && index > 0) {
+        sections[index].order = sections[index - 1].order;
+        sections[index - 1].order = order;
+      } else if (direction === "down" && index < sections.length - 1) {
+        sections[index].order = sections[index + 1].order;
+        sections[index + 1].order = order;
+      }
+
+      setAdDataCreate({
+        ...adDataCreate,
+        [orderFieldName]: sections,
+      });
+    };
+
     return (
       <div key={key}>
-        <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
-          {title}
-        </h2>
+        {props.editable ? (
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
+              {title}
+            </h2>
+
+            {isFirst && (
+              <button
+                className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12"
+                onClick={() => handleArrowClick("down")}
+              >
+                <IoIosArrowDown className="w-5 h-5" />
+              </button>
+            )}
+
+            {!isFirst && !isLast && (
+              <div>
+                <div>
+                  <button
+                    className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12"
+                    onClick={() => handleArrowClick("up")}
+                  >
+                    <IoIosArrowUp className="w-5 h-5" />
+                  </button>
+                </div>
+                <button
+                  className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-2 mr-12"
+                  onClick={() => handleArrowClick("down")}
+                >
+                  <IoIosArrowDown className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+
+            {isLast && (
+              <button
+                className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12"
+                onClick={() => handleArrowClick("up")}
+              >
+                <IoIosArrowUp className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+        ) : (
+          <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
+            {title}
+          </h2>
+        )}
+
         {props.editable
-          ? renderListCreateEditItems(data, key, placeholder)
+          ? renderListCreateEditItems(key, placeholder)
           : renderListItems(adData?.ad?.[key])}
       </div>
     );
@@ -342,26 +436,19 @@ const ShowEditCreate = (props) => {
           )}
 
           <div>
-            {renderSection(
-              "Изисквания за позицията",
-              adDataCreate.qualifications,
-              "qualifications",
-              "Примерно изискване за длъжността"
-            )}
-
-            {renderSection(
-              "Търсени умения",
-              adDataCreate.skills,
-              "skills",
-              "Примерно търсено умение"
-            )}
-
-            {renderSection(
-              "Предлагаме ти",
-              adDataCreate.job_benefits,
-              "job_benefits",
-              "Какво предлагате"
-            )}
+            <div>
+              {renderSectionData
+                .sort((a, b) => a.order - b.order)
+                .map((section) =>
+                  renderSection(
+                    section.title,
+                    section.key,
+                    section.placeholder,
+                    section.order,
+                    section.orderName
+                  )
+                )}
+            </div>
           </div>
 
           <div className="flex gap-2 mt-8 px-6 sm:px-20 lg:hidden">
