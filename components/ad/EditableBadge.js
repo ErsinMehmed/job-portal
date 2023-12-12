@@ -1,28 +1,60 @@
-import { Chip } from "@nextui-org/react";
 import Autocomplete from "@/components/html/Autocomplete";
 import Tooltip from "@/components/Tooltip";
+import { adStore } from "@/stores/useStore";
+import { FaCheck } from "react-icons/fa6";
+import { badgeColors } from "@/app/data";
 
 const EditableBadge = (props) => {
+  const { adDataCreate, setAdDataCreate } = adStore;
+
   return props.editable ? (
     <Tooltip
+      width="w-64"
       buttonChild={
-        <Chip isDisabled color="primary" variant="shadow">
+        <div
+          className={`rounded-xl px-3.5 py-0.5 ${props.badgeColor} text-white text-sm font-semibold`}
+        >
           {props.editCreateValue}
-        </Chip>
+        </div>
       }
       position="bottom"
     >
+      <div className="text-slate-600 font-semibold mb-1.5">Избери тип:</div>
+
       <Autocomplete
         onChange={props.onChange}
         items={props.items}
         value={props.value}
         label={props.label}
       />
+
+      <div className="text-slate-600 font-semibold mt-4">Избери цвят:</div>
+
+      <div className="w-full grid grid-cols-4 gap-2 mt-1.5">
+        {badgeColors.map((color, index) => (
+          <div
+            key={index}
+            className={`h-10 w-10 rounded-full shodow-lg transition-all cursor-pointer ${color} flex items-center justify-center`}
+            onClick={() =>
+              setAdDataCreate({
+                ...adDataCreate,
+                badge_color: color,
+              })
+            }
+          >
+            {adDataCreate.badge_color === color && (
+              <FaCheck className="w-5 h-5" />
+            )}
+          </div>
+        ))}
+      </div>
     </Tooltip>
   ) : (
-    <Chip isDisabled color="primary" variant="shadow">
+    <div
+      className={`rounded-xl px-3.5 py-0.5 ${props.badgeColor} text-white text-sm font-semibold`}
+    >
       {props.text}
-    </Chip>
+    </div>
   );
 };
 

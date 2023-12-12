@@ -26,6 +26,7 @@ const adSchema = new Schema(
     job_benefit_section_order: Number,
     qualifications: { type: [String] },
     qualification_section_order: Number,
+    apply_button_color: String,
     creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {

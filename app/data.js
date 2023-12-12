@@ -17,6 +17,13 @@ const perPageResult = [5, 10, 15, 20];
 
 const statuses = [{ value: "Активна" }, { value: "Изтекла" }];
 
+const educationTypes = [
+  { value: "Средно образование" },
+  { value: "Бакалавър" },
+  { value: "Магистър" },
+  { value: "Доктор" },
+];
+
 const employmentTypes = [
   { value: "Постоянна работа" },
   { value: "Временна работа" },
@@ -40,6 +47,44 @@ const homePageAuthLinks = [
   { link: "/favorite-ad", text: "Запазени обяви" },
   { link: "/applications", text: "Кандидаствания" },
   { link: "/messages", text: "Съобщения" },
+];
+
+const badgeColors = [
+  "bg-slate-300",
+  "bg-neutral-300",
+  "bg-stone-300",
+  "bg-yellow-300",
+  "bg-amber-300",
+  "bg-orange-300",
+  "bg-lime-300",
+  "bg-emerald-300",
+  "bg-cyan-300",
+  "bg-sky-300",
+  "bg-blue-300",
+  "bg-indigo-300",
+  "bg-purple-300",
+  "bg-red-300",
+  "bg-pink-300",
+  "bg-rose-300",
+];
+
+const buttonColors = [
+  "bg-slate-500 hover:bg-slate-600",
+  "bg-neutral-500 hover:bg-neutral-600",
+  "bg-stone-500 hover:bg-stone-600",
+  "bg-yellow-500 hover:bg-yellow-600",
+  "bg-amber-500 hover:bg-amber-600",
+  "bg-orange-500 hover:bg-orange-600",
+  "bg-lime-500 hover:bg-lime-600",
+  "bg-emerald-500 hover:bg-emerald-600",
+  "bg-cyan-500 hover:bg-cyan-600",
+  "bg-sky-500 hover:bg-sky-600",
+  "bg-blue-500 hover:bg-blue-600",
+  "bg-indigo-500 hover:bg-indigo-600",
+  "bg-purple-500 hover:bg-purple-600",
+  "bg-red-500 hover:bg-red-600",
+  "bg-pink-500 hover:bg-pink-600",
+  "bg-rose-500 hover:bg-rose-600",
 ];
 
 const workPositions = [
@@ -246,4 +291,7 @@ export {
   homePageLinks,
   homePageAuthLinks,
   categoriesData,
+  buttonColors,
+  badgeColors,
+  educationTypes,
 };

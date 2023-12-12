@@ -211,6 +211,9 @@ const generateFakeAd = (users) => {
     languages: generateLanguages(),
     job_benefits: generateJobBenefits(),
     qualifications: generateQualifications(),
+    qualification_section_order: 1,
+    skill_section_order: 2,
+    job_benefit_section_order: 3,
   };
 };
 
