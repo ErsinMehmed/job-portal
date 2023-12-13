@@ -88,3 +88,14 @@ export function getRemainingWords(text, startWordIndex) {
 
   return paragraph;
 }
+
+export function formatCurrency(amount, fractionDigits) {
+  const formatter = new Intl.NumberFormat("bg-BG", {
+    style: "currency",
+    currency: "BGN",
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  });
+
+  return formatter.format(amount);
+}

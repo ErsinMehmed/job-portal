@@ -24,11 +24,30 @@ const educationTypes = [
   { value: "Доктор" },
 ];
 
+const languages = ["Английски", "Немски", "Френски", "Испански", "Италиански"];
+
+const experience = [
+  { value: "Без опит" },
+  { value: "до 1 година" },
+  { value: "от 1 до 2" },
+  { value: "от 2 до 3" },
+  { value: "от 3 до 4" },
+  { value: "от 4 до 5" },
+  { value: "от 5 до 10+" },
+];
+
 const employmentTypes = [
   { value: "Постоянна работа" },
   { value: "Временна работа" },
   { value: "Работа по задание/Freelancer" },
   { value: "Стаж" },
+];
+
+const employment = [
+  { value: "Пълно работно време" },
+  { value: "Непълно работно време" },
+  { value: "Гъвкаво работно време" },
+  { value: "Подходяща за студенти" },
 ];
 
 const homePageLinks = [
@@ -294,4 +313,7 @@ export {
   buttonColors,
   badgeColors,
   educationTypes,
+  languages,
+  employment,
+  experience,
 };

@@ -27,6 +27,7 @@ const adSchema = new Schema(
     qualifications: { type: [String] },
     qualification_section_order: Number,
     apply_button_color: String,
+    badge_color: String,
     creator: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {

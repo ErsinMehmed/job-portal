@@ -214,6 +214,8 @@ const generateFakeAd = (users) => {
     qualification_section_order: 1,
     skill_section_order: 2,
     job_benefit_section_order: 3,
+    apply_button_color: "bg-blue-500 hover:bg-blue-600",
+    badge_color: "bg-blue-300",
   };
 };
 

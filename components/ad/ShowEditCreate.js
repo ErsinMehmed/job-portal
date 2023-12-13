@@ -24,7 +24,7 @@ import { HiOutlinePlus } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { adStore } from "@/stores/useStore";
-import { getWords, getRemainingWords } from "@/utils";
+import { getWords, getRemainingWords, formatCurrency } from "@/utils";
 import adAction from "@/actions/adAction";
 import Image from "next/image";
 import moment from "moment";
@@ -41,6 +41,9 @@ import {
   workPositions,
   buttonColors,
   educationTypes,
+  languages,
+  employment,
+  experience,
 } from "@/app/data";
 import "moment/locale/bg";
 
@@ -49,6 +52,7 @@ const ShowEditCreate = (props) => {
   const { data: session } = useSession();
   const params = useParams();
   const [activeElement, setActiveElement] = useState(null);
+  const [adData, setAdData] = useState(null);
   const [renderSectionData, setRenderSectionData] = useState([
     {
       title: "Търсени умения",
@@ -87,18 +91,39 @@ const ShowEditCreate = (props) => {
   };
 
   const removeArrayEmptyValue = () => {
-    Object.keys(adDataCreate).forEach((field) => {
-      const fieldValue = adDataCreate[field];
+    if (adData?.ad) {
+      Object.keys(adData?.ad).forEach((field) => {
+        const fieldValue = adDataCreate[field];
 
-      if (Array.isArray(fieldValue)) {
-        const emptyValueIndex = fieldValue.findIndex((value) => value === "");
+        if (Array.isArray(fieldValue)) {
+          const emptyValueIndex = fieldValue.findIndex((value) => value === "");
 
-        if (emptyValueIndex !== -1 && fieldValue.length > 1) {
-          const updatedArray = fieldValue.filter((value) => value !== "");
-          setAdDataCreate({ ...adDataCreate, [field]: updatedArray });
+          if (emptyValueIndex !== -1 && fieldValue.length > 1) {
+            const updatedArray = fieldValue.filter((value) => value !== "");
+            setAdData({
+              ...adData,
+              ad: {
+                ...adData.ad,
+                [field]: updatedArray,
+              },
+            });
+          }
         }
-      }
-    });
+      });
+    } else {
+      Object.keys(adDataCreate).forEach((field) => {
+        const fieldValue = adDataCreate[field];
+
+        if (Array.isArray(fieldValue)) {
+          const emptyValueIndex = fieldValue.findIndex((value) => value === "");
+
+          if (emptyValueIndex !== -1 && fieldValue.length > 1) {
+            const updatedArray = fieldValue.filter((value) => value !== "");
+            setAdDataCreate({ ...adDataCreate, [field]: updatedArray });
+          }
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -114,12 +139,39 @@ const ShowEditCreate = (props) => {
 
   const handleInputChange = (name, value, index) => {
     if (index !== undefined) {
-      const updatedArray = [...adDataCreate[name]];
+      const updatedArray = [...(adData?.ad?.[name] ?? adDataCreate[name])];
+      updatedArray[index] = value;
+    }
+
+    if (index !== undefined) {
+      const updatedArray = [...(adData?.ad?.[name] ?? adDataCreate[name])];
       updatedArray[index] = value;
 
-      setAdDataCreate({ ...adDataCreate, [name]: updatedArray });
+      if (adData?.ad?.[name]) {
+        setAdData({
+          ...adData,
+          ad: {
+            ...adData.ad,
+            [name]: updatedArray,
+          },
+        });
+      } else {
+        setAdDataCreate({ ...adDataCreate, [name]: updatedArray });
+      }
     } else {
-      setAdDataCreate({ ...adDataCreate, [name]: value });
+      if (adData?.ad?.[name]) {
+        setAdData({ ...adData?.ad, [name]: value });
+
+        setAdData({
+          ...adData,
+          ad: {
+            ...adData.ad,
+            [name]: value,
+          },
+        });
+      } else {
+        setAdDataCreate({ ...adDataCreate, [name]: value });
+      }
     }
   };
 
@@ -129,8 +181,8 @@ const ShowEditCreate = (props) => {
         ref={inputRef}
         value={
           index || index === 0
-            ? adDataCreate[field][index]
-            : adDataCreate[field]
+            ? adData?.ad[field][index] ?? adDataCreate[field][index]
+            : adData?.ad[field] ?? adDataCreate[field]
         }
         onChange={(event) => {
           handleInputChange(
@@ -141,9 +193,9 @@ const ShowEditCreate = (props) => {
         }}
         className={`text-${
           align ?? "left"
-        } focus:outline-none border border-slate-100 shadow-lg rounded-lg w-${
+        } focus:outline-none border border-slate-100 shadow-lg rounded-lg px-2 w-${
           width ?? "full"
-        } py-0 editable-element`}
+        } ${!width && !align && "mr-20"} py-0 editable-element`}
       />
     );
   };
@@ -171,66 +223,104 @@ const ShowEditCreate = (props) => {
     </ul>
   );
 
-  const renderListCreateEditItems = (fieldName, text) => (
-    <ul
-      className={` ${
-        adDataCreate[fieldName].length > 1 ? "px-11" : "px-16"
-      }  space-y-2 text-slate-600`}
-    >
-      {adDataCreate[fieldName] &&
-        adDataCreate[fieldName].map((item, index) =>
-          activeElement === fieldName + index ? (
-            renderInputElement(fieldName, index)
-          ) : (
-            <>
-              <li
-                key={index}
-                className={`list-disc cursor-pointer ${
-                  adDataCreate[fieldName].length > 1 && "flex items-center"
-                }`}
-              >
-                {adDataCreate[fieldName].length > 1 && (
-                  <span>
-                    <button
-                      className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mr-2"
-                      onClick={() => {
-                        adDataCreate[fieldName].splice(index, 1);
-                        removeArrayEmptyValue();
-                      }}
-                    >
-                      <BsTrash3 />
-                    </button>
-                  </span>
-                )}
+  const renderListCreateEditItems = (fieldName, text) => {
+    const data = adData?.ad?.[fieldName] ?? adDataCreate[fieldName];
 
-                <span
-                  onClick={() => {
-                    handleElementClick(fieldName + index);
-                  }}
+    const addData = () => {
+      if (adData?.ad) {
+        setAdData((prevData) => {
+          const newData = [...prevData.ad[fieldName], text];
+
+          return {
+            ...prevData,
+            ad: {
+              ...prevData.ad,
+              [fieldName]: newData,
+            },
+          };
+        });
+      } else {
+        data.push(text);
+      }
+
+      removeArrayEmptyValue();
+    };
+
+    const removeData = (indexToRemove) => {
+      if (adData?.ad) {
+        setAdData((prevData) => {
+          const newData = [...prevData.ad[fieldName]];
+          newData.splice(indexToRemove, 1);
+
+          return {
+            ...prevData,
+            ad: {
+              ...prevData.ad,
+              [fieldName]: newData,
+            },
+          };
+        });
+      } else {
+        data.splice(indexToRemove, 1);
+      }
+
+      removeArrayEmptyValue();
+    };
+
+    return (
+      <ul
+        className={`${
+          data?.length > 1 ? "px-11" : "px-16"
+        }  space-y-2 text-slate-600`}
+      >
+        {data &&
+          data.map((item, index) =>
+            activeElement === fieldName + index ? (
+              renderInputElement(fieldName, index)
+            ) : (
+              <>
+                <li
+                  key={index}
+                  className={`list-disc cursor-pointer ${
+                    data.length > 1 && "flex items-center"
+                  }`}
                 >
-                  {item}
-                </span>
-              </li>
+                  {data.length > 1 && (
+                    <span>
+                      <button
+                        className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mr-2"
+                        onClick={() => removeData(index)}
+                      >
+                        <BsTrash3 />
+                      </button>
+                    </span>
+                  )}
 
-              {index === adDataCreate[fieldName].length - 1 &&
-                adDataCreate[fieldName].length < 10 && (
+                  <span
+                    onClick={() => {
+                      handleElementClick(fieldName + index);
+                    }}
+                  >
+                    {item}
+                  </span>
+                </li>
+
+                {index === data.length - 1 && data.length < 10 && (
                   <div className="flex justify-center mt-4 w-full">
                     <button
                       className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95"
-                      onClick={() => {
-                        adDataCreate[fieldName].push(text);
-                        removeArrayEmptyValue();
-                      }}
+                      onClick={() => addData()}
                     >
                       <HiOutlinePlus />
                     </button>
                   </div>
                 )}
-            </>
-          )
-        )}
-    </ul>
-  );
+              </>
+            )
+          )}
+      </ul>
+    );
+  };
 
   const renderSection = (title, key, placeholder, order, orderFieldName) => {
     const isFirst = order === 1;
@@ -249,11 +339,19 @@ const ShowEditCreate = (props) => {
         sections[index + 1].order = order;
       }
 
-      setAdDataCreate({
-        ...adDataCreate,
-        [orderFieldName]: sections,
+      const updatedAdDataCreate = { ...adDataCreate };
+
+      updatedAdDataCreate[orderFieldName] = sections.map((section) => {
+        return {
+          ...section,
+          [orderFieldName]: section.order,
+        };
       });
+
+      setAdDataCreate(updatedAdDataCreate);
     };
+
+    console.log(adDataCreate);
 
     return (
       <div key={key}>
@@ -313,29 +411,37 @@ const ShowEditCreate = (props) => {
     );
   };
 
-  const [adData, setAdData] = useState(null);
-
   useEffect(() => {
-    //if (!props.editable) {
-    const fetchData = async () => {
-      const data = await adAction.getAd(params.id);
-      setAdData(data);
-
-      // if (data) {
-      //   setRenderSectionData((prevRenderSectionData) => {
-      //     return prevRenderSectionData.map((section) => {
-      //       return {
-      //         ...section,
-      //         order: data.ad[section.orderName],
-      //       };
-      //     });
-      //   });
-      // }
-    };
-
-    fetchData();
-    //}
+    if (props.editable) {
+      const fetchData = async () => {
+        const data = await adAction.getAd(params.id);
+        setAdData(data);
+        if (data) {
+          setRenderSectionData((prevRenderSectionData) => {
+            return prevRenderSectionData.map((section) => {
+              return {
+                ...section,
+                order: data.ad[section.orderName],
+              };
+            });
+          });
+        }
+      };
+      fetchData();
+    }
   }, [params.id]);
+
+  const handleLanguageClick = (language) => {
+    const languageIndex = adDataCreate.languages.indexOf(language);
+
+    if (adDataCreate.languages.includes(language)) {
+      if (adDataCreate.languages.length > 1) {
+        adDataCreate.languages.splice(languageIndex, 1);
+      }
+    } else {
+      adDataCreate.languages.push(language);
+    }
+  };
 
   return (
     <div className="w-full max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative">
@@ -560,7 +666,7 @@ const ShowEditCreate = (props) => {
 
                   <div className="text-slate-700 font-semibold">
                     {activeElement === "location"
-                      ? renderInputElement("location")
+                      ? renderInputElement("location", undefined, "left", 56)
                       : adDataCreate.location}
                   </div>
                 </div>
@@ -574,20 +680,68 @@ const ShowEditCreate = (props) => {
                 </div>
               )}
 
-              <div className="flex items-center gap-1">
-                <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
+              {props.editable ? (
+                <div>
+                  <Tooltip
+                    width="w-64"
+                    buttonChild={
+                      <div className="flex items-center gap-1">
+                        <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                <div className="text-slate-700 font-semibold">
-                  {adData?.ad?.languages &&
-                    adData?.ad.languages.map((language, index) => (
-                      <span key={index}>
-                        {index === 0 ? "" : " "}
-                        {language}
-                        {index !== adData?.ad.languages.length - 1 && ","}
-                      </span>
-                    ))}
+                        <div className="text-slate-700 font-semibold">
+                          {adDataCreate.languages.map((language, index) => (
+                            <span key={index}>
+                              {index === 0 ? "" : " "}
+                              {language}
+                              {index !== adData?.ad.languages.length - 1 &&
+                                adDataCreate.languages.length > 1 &&
+                                ","}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    }
+                    position="bottom"
+                  >
+                    <div className="text-slate-600 font-semibold mb-1.5">
+                      Избери еизици:
+                    </div>
+
+                    <div className="flex gap-1.5 flex-wrap">
+                      {languages.map((language, index) => (
+                        <span
+                          className={`shadow-lg rounded-lg border border-slate-200 p-1.5 text-sm cursor-pointer transition-all active:scale-95 ${
+                            adDataCreate.languages.includes(language)
+                              ? "bg-blue-300 hover:bg-blue-400 text-white"
+                              : "bg-white hover:bg-blue-300 hover:text-white text-slate-600"
+                          }`}
+                          key={index}
+                          onClick={() => handleLanguageClick(language)}
+                        >
+                          {language}
+                        </span>
+                      ))}
+                    </div>
+                  </Tooltip>
                 </div>
-              </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                  <div className="text-slate-700 font-semibold">
+                    {adData?.ad?.languages &&
+                      adData?.ad.languages.map((language, index) => (
+                        <span key={index}>
+                          {index === 0 ? "" : " "}
+                          {language}
+                          {index !== adData?.ad.languages.length - 1 &&
+                            adData?.ad.languages.length > 1 &&
+                            ","}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              )}
 
               {props.editable ? (
                 <Tooltip
@@ -597,7 +751,8 @@ const ShowEditCreate = (props) => {
                       <CiSettings className="text-slate-600 w-5 h-5 mt-0.5" />
 
                       <div className="text-slate-700 font-semibold">
-                        {adDataCreate.education_requirements}
+                        {adData?.ad?.education_requirements ??
+                          adDataCreate.education_requirements}
                       </div>
                     </div>
                   }
@@ -610,7 +765,10 @@ const ShowEditCreate = (props) => {
                   <Select
                     items={educationTypes}
                     label="Избери образование"
-                    value={adDataCreate.education_requirements || ""}
+                    value={
+                      (adData?.ad?.education_requirements || "") ??
+                      adDataCreate.education_requirements
+                    }
                     onChange={(value) =>
                       handleInputChange("education_requirements", value)
                     }
@@ -626,21 +784,83 @@ const ShowEditCreate = (props) => {
                 </div>
               )}
 
-              <div className="flex items-center gap-1">
-                <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
+              {props.editable ? (
+                <div>
+                  <Tooltip
+                    width="w-64"
+                    buttonChild={
+                      <div className="flex items-center gap-1 cursor-pointer">
+                        <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                <div className="text-slate-700 font-semibold">
-                  Години опит {adData?.ad?.experience}
+                        <div className="text-slate-700 font-semibold">
+                          Години опит{" "}
+                          {adData?.ad?.experience ?? adDataCreate.experience}
+                        </div>
+                      </div>
+                    }
+                    position="bottom"
+                  >
+                    <div className="text-slate-600 font-semibold mb-1.5">
+                      Избери години опит:
+                    </div>
+
+                    <Select
+                      items={experience}
+                      label="Избери годни опит"
+                      value={
+                        (adData?.ad?.experience || "") ??
+                        adDataCreate.experience
+                      }
+                      onChange={(value) =>
+                        handleInputChange("experience", value)
+                      }
+                    />
+                  </Tooltip>
                 </div>
-              </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
 
-              <div className="flex items-center gap-1">
-                <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
-
-                <div className="text-slate-700 font-semibold">
-                  {adData?.ad?.employment}
+                  <div className="text-slate-700 font-semibold">
+                    Години опит {adData?.ad?.experience}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {props.editable ? (
+                <Tooltip
+                  width="w-64"
+                  buttonChild={
+                    <div className="flex items-center gap-1 cursor-pointer">
+                      <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                      <div className="text-slate-700 font-semibold">
+                        {adDataCreate.employment}
+                      </div>
+                    </div>
+                  }
+                  position="bottom"
+                >
+                  <div className="text-slate-600 font-semibold mb-1.5">
+                    Избери работно време:
+                  </div>
+
+                  <Select
+                    items={employment}
+                    label="Избери работно време"
+                    value={adDataCreate.employment || ""}
+                    onChange={(value) => handleInputChange("employment", value)}
+                  />
+                </Tooltip>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
+
+                  <div className="text-slate-700 font-semibold">
+                    {adData?.ad?.employment}
+                  </div>
+                </div>
+              )}
 
               {props.editable ? (
                 <div
@@ -651,7 +871,12 @@ const ShowEditCreate = (props) => {
 
                   <div className="text-slate-700 font-semibold">
                     {activeElement === "paid_leave"
-                      ? renderInputElement("paid_leave")
+                      ? renderInputElement(
+                          "paid_leave",
+                          undefined,
+                          "center",
+                          10
+                        )
                       : `Отпуска: ${adDataCreate.paid_leave} дни`}
                   </div>
                 </div>
@@ -674,8 +899,8 @@ const ShowEditCreate = (props) => {
 
                   <div className="text-slate-700 font-semibold">
                     {activeElement === "salary"
-                      ? renderInputElement("salary")
-                      : `Заплата: ${adDataCreate.salary} лв.`}
+                      ? renderInputElement("salary", undefined, "center", 20)
+                      : `Заплата: ${formatCurrency(adDataCreate.salary, 0)}`}
                   </div>
                 </div>
               ) : (
@@ -683,7 +908,7 @@ const ShowEditCreate = (props) => {
                   <CiDollar className="text-slate-600 w-5 h-5 mt-0.5" />
 
                   <div className="text-slate-700 font-semibold">
-                    Заплата: {adData?.ad?.salary} лв.
+                    Заплата: {formatCurrency(adData?.ad?.salary, 0)}
                   </div>
                 </div>
               )}
