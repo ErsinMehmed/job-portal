@@ -422,7 +422,7 @@ const ShowEditCreate = (props) => {
   };
 
   useEffect(() => {
-    if (props.editable && params.id) {
+    if (props.editable || params.id) {
       const fetchData = async () => {
         const data = await adAction.getAd(params.id);
         setAdData(data);
