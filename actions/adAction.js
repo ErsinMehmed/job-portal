@@ -1,16 +1,6 @@
 class Ad {
-  constructor() {
-    this.cachedAds = new Map();
-  }
-
   getUserAds = async (page, perPage, searchText, filterData) => {
     try {
-      const cacheKey = `${page}_${perPage}_${searchText}_${filterData?.dateFrom}_${filterData?.dateTo}_${filterData?.status}_${filterData?.field}_${filterData?.employmentType}_${filterData?.minSalary}_${filterData?.maxSalary}`;
-
-      if (this.cachedAds.has(cacheKey)) {
-        return this.cachedAds.get(cacheKey);
-      }
-
       let url = `/api/ads?page=${page ?? 1}&per_page=${perPage ?? 10}`;
 
       if (searchText) {
@@ -49,17 +39,11 @@ class Ad {
 
       const data = await response.json();
 
-      this.cachedAds.set(cacheKey, data);
-
       return data;
     } catch (error) {
       throw error;
     }
   };
-
-  clearCache() {
-    this.cachedAds.clear();
-  }
 
   getAd = async (id) => {
     const response = await fetch(`/api/ads/${id}`);
@@ -84,6 +68,22 @@ class Ad {
       const data = await response.json();
 
       return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  deleteAd = async (id) => {
+    try {
+      const response = await fetch(`/api/ads?id=${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      return await response.json();
     } catch (error) {
       throw error;
     }

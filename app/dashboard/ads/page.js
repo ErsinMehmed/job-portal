@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { adStore } from "@/stores/useStore";
+import { commonStore, adStore } from "@/stores/useStore";
 import Layout from "@/components/layouts/Dashboard";
 import Table from "@/components/table/Table";
 import Pagination from "@/components/table/Pagination";
 import LinearLoader from "@/components/LinearLoader";
+import Alert from "@/components/Alert";
 
 const Ads = () => {
+  const { successMessage } = commonStore;
   const {
     ads,
     perPage,
@@ -23,11 +25,17 @@ const Ads = () => {
     setFilterData,
     searchAds,
     setShowFilter,
+    deleteAd,
   } = adStore;
 
   useEffect(() => {
     loadUserAds();
   }, [loadUserAds]);
+
+  const handleDeleteAd = (id) => {
+    deleteAd(id);
+    loadUserAds();
+  };
 
   const filteredAds = ads?.ads?.map(
     ({
@@ -53,7 +61,9 @@ const Ads = () => {
 
   return (
     <Layout>
-      <div className="flex items-center min-h-screen 2xl:px-10">
+      <Alert />
+
+      <div className="flex items-center min-h-screen 2xl:px-10 mt-16">
         <Table
           title="Обяви"
           data={filteredAds}
@@ -66,21 +76,22 @@ const Ads = () => {
             "заплата",
             "статус",
           ]}
+          deleteAd={handleDeleteAd}
           perPage={perPage}
           filterSearchOnClick={searchAds}
           filterData={filterData}
           showFilter={showFilter}
           setShowFilter={setShowFilter}
           setFilterData={setFilterData}
+          totalPages={ads.pagination?.total_pages}
           isLoading={isLoading}
           setPerPage={setPerPage}
-          pagination={ads.pagination}
           searchBarText="Нова обява"
           searchBarPlaceholder="заглавие, локация или позиция"
           searchBarValue={searchText}
           setSearchBarText={setSearchText}
           filterSection={true}
-          editButtonLink="/dashboard/ads/edit"
+          editButtonLink="/dashboard/ads/edit/"
         >
           <Pagination
             isLoading={isLoading}

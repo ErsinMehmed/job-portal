@@ -1,5 +1,6 @@
 import { makeObservable, observable, action } from "mobx";
 import adAction from "@/actions/adAction";
+import commonStore from "./commonStore";
 
 class Ad {
   ads = [];
@@ -153,6 +154,11 @@ class Ad {
     this.setSearchText("");
     this.setCurrentPage(1);
     this.loadUserAds();
+  };
+
+  deleteAd = async (id) => {
+    const response = await adAction.deleteAd(id);
+    commonStore.setSuccessMessage(response.message);
   };
 }
 

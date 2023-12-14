@@ -30,6 +30,16 @@ class Auth {
       throw error;
     }
   };
+
+  authUser = async () => {
+    try {
+      const response = await fetch("api/current");
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 export default new Auth();

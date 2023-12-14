@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { MdModeEditOutline, MdDelete } from "react-icons/md";
-import { Chip } from "@nextui-org/react";
-import { perPageResult } from "../../app/data";
-import { isAdActive } from "../../utils";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+  Chip,
+  ModalFooter,
+} from "@nextui-org/react";
+import { perPageResult } from "@/app/data";
+import { isAdActive } from "@/utils";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
 import Loader from "./Loader";
@@ -10,13 +18,21 @@ import Select from "./Select";
 import Link from "next/link";
 
 const Table = (props) => {
+  const [adId, setAdId] = useState(null);
+
   const toggleFilterSection = () => {
     props.setShowFilter(!props.showFilter);
+  };
+
+  const handleDeleteAd = (id) => {
+    props.deleteAd(id);
   };
 
   const handleInputChange = (value) => {
     props.setSearchBarText(value);
   };
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const renderCellValue = (key, value) => {
     switch (key) {
@@ -43,6 +59,40 @@ const Table = (props) => {
 
   return (
     <div className="container mx-auto px-4 sm:px-8 2xl:px-0">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 text-2xl mt-3">
+                Изтрий обявата
+              </ModalHeader>
+              <ModalBody>
+                <div>Сигурни ли сте, че искате да изтриете обявата ?</div>
+
+                <div className="flex flex-row mt-3 mb-4 space-x-3 justify-evenly">
+                  <button
+                    onClick={() => {
+                      onClose();
+                      handleDeleteAd(adId);
+                    }}
+                    className="w-full py-2.5 text-sm font-semibold text-center text-white transition-all bg-red-600 border border-red-600 rounded-lg hover:bg-red-500 active:scale-95"
+                  >
+                    Изтрий
+                  </button>
+
+                  <button
+                    onClick={onClose}
+                    className="w-full py-2.5 text-sm font-semibold text-center text-gray-700 transition-all bg-white border border-gray-200 rounded-lg hover:bg-gray-100 active:scale-95"
+                  >
+                    Откажи
+                  </button>
+                </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
       <SearchBar
         isLoading={props.isLoading}
         placeholder={props.searchBarPlaceholder}
@@ -78,7 +128,6 @@ const Table = (props) => {
           <h2 className="text-lg font-semibold leading-tight">{props.title}</h2>
         )}
       </div>
-
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-4 overflow-x-auto">
         <div className="inline-block min-w-full shadow rounded-b-lg overflow-hidden table-fixed">
           <table className="min-w-full leading-normal bg-white">
@@ -141,6 +190,10 @@ const Table = (props) => {
                       <td className="pr-4 py-1.5 border-b border-[#ebf4ff] text-center">
                         <button
                           type="button"
+                          onClick={() => {
+                            setAdId(row._id);
+                            onOpen();
+                          }}
                           className="text-white bg-red-600 hover:bg-red-700 focus:outline-none font-medium rounded-lg text-sm p-2.5 text-center transition-all active:scale-90"
                         >
                           <MdDelete className="w-4 h-4" />
@@ -153,24 +206,26 @@ const Table = (props) => {
             )}
           </table>
 
-          <div className="px-5 py-4 bg-white border-t flex  items-center justify-between">
-            <div className="w-32 h-0 -mt-10">
-              {props.isLoading ? (
-                <div className="bg-[#f4f4f5] w-14 h-8 rounded-lg px-2 pt-2 mt-1">
-                  <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
-                  <div className="h-1 animate-pulse bg-gray-200 rounded-full"></div>
-                </div>
-              ) : (
-                <Select
-                  options={perPageResult}
-                  value={props.perPage}
-                  onChange={(event) => props.setPerPage(event)}
-                />
-              )}
-            </div>
+          {props.totalPages > 1 && (
+            <div className="px-5 py-4 bg-white border-t flex  items-center justify-between">
+              <div className="w-32 h-0 -mt-10">
+                {props.isLoading ? (
+                  <div className="bg-[#f4f4f5] w-14 h-8 rounded-lg px-2 pt-2 mt-1">
+                    <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
+                    <div className="h-1 animate-pulse bg-gray-200 rounded-full"></div>
+                  </div>
+                ) : (
+                  <Select
+                    options={perPageResult}
+                    value={props.perPage}
+                    onChange={(event) => props.setPerPage(event)}
+                  />
+                )}
+              </div>
 
-            {props.children}
-          </div>
+              {props.children}
+            </div>
+          )}
         </div>
       </div>
     </div>

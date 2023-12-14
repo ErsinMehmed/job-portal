@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { HiOutlineArrowLeft } from "react-icons/hi";
 import { FiBookmark } from "react-icons/fi";
 import {
@@ -34,7 +35,6 @@ import EditableBadge from "@/components/ad/EditableBadge";
 import Tooltip from "@/components/Tooltip";
 import Colors from "@/components/Colors";
 import Select from "@/components/html/Select";
-import Autocomplete from "@/components/html/Autocomplete";
 import {
   dashboardCategories,
   employmentTypes,
@@ -51,6 +51,7 @@ const ShowEditCreate = (props) => {
   const { adDataCreate, setAdDataCreate } = adStore;
   const { data: session } = useSession();
   const params = useParams();
+  const pathname = usePathname();
   const [activeElement, setActiveElement] = useState(null);
   const [adData, setAdData] = useState(null);
   const [renderSectionData, setRenderSectionData] = useState([
@@ -327,6 +328,16 @@ const ShowEditCreate = (props) => {
     const isLast =
       order === Math.max(...renderSectionData.map((section) => section.order));
 
+    const updateAdDataCreate = () => {
+      const updatedAdDataCreate = { ...adDataCreate };
+
+      renderSectionData.forEach((section) => {
+        updatedAdDataCreate[section.orderName] = section.order;
+      });
+
+      setAdDataCreate(updatedAdDataCreate);
+    };
+
     const handleArrowClick = (direction) => {
       const sections = [...renderSectionData];
       const index = sections.findIndex((section) => section.key === key);
@@ -339,19 +350,18 @@ const ShowEditCreate = (props) => {
         sections[index + 1].order = order;
       }
 
-      const updatedAdDataCreate = { ...adDataCreate };
+      updateAdDataCreate();
 
-      updatedAdDataCreate[orderFieldName] = sections.map((section) => {
-        return {
-          ...section,
-          [orderFieldName]: section.order,
-        };
-      });
+      if (props.editable && pathname.includes("/edit")) {
+        const updatedAdDataCreate = { ...adData };
 
-      setAdDataCreate(updatedAdDataCreate);
+        renderSectionData.forEach((section) => {
+          updatedAdDataCreate.ad[section.orderName] = section.order;
+        });
+
+        setAdData(updatedAdDataCreate);
+      }
     };
-
-    console.log(adDataCreate);
 
     return (
       <div key={key}>
@@ -412,7 +422,7 @@ const ShowEditCreate = (props) => {
   };
 
   useEffect(() => {
-    if (props.editable) {
+    if (props.editable && params.id) {
       const fetchData = async () => {
         const data = await adAction.getAd(params.id);
         setAdData(data);
@@ -444,17 +454,23 @@ const ShowEditCreate = (props) => {
   };
 
   return (
-    <div className="w-full max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative">
+    <div
+      className={`w-full ${
+        pathname.includes("/dashboard") && "mt-16"
+      } max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative`}
+    >
       <Link
-        href="/ads"
+        href={pathname.includes("/dashboard") ? "/dashboard/ads" : "/ads"}
         className="flex items-center pl-4 2xl:pl-5 pt-8 text-blue-600 font-semibold hover:ml-1.5 hover:text-blue-400 transition-all w-fit"
       >
         <HiOutlineArrowLeft className="mt-0.5 mr-1 w-5 h-5" />
-        Виж всички обяви
+        {pathname.includes("/dashboard")
+          ? "Към всички обяви"
+          : "Виж всички обяви"}
       </Link>
 
       <div className="w-full px-4 2xl:px-5 pb-10 pt-8 flex flex-col-reverse lg:flex-row gap-8 relative">
-        <div className="rounded-2xl shadow-md border pb-10">
+        <div className="rounded-2xl shadow-md border pb-10 bg-white">
           <Image
             src={adBannerImg}
             alt="Ad banner"
@@ -482,40 +498,50 @@ const ShowEditCreate = (props) => {
             {props.editable
               ? activeElement === "title"
                 ? renderInputElement("title", undefined, "center")
-                : adDataCreate.title
+                : adData?.ad?.title ?? adDataCreate.title
               : adData?.ad?.title ?? ""}
           </h2>
 
           <div className="flex flex-wrap justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2">
             <EditableBadge
               editable={props.editable}
-              editCreateValue={adDataCreate.category}
-              badgeColor={adDataCreate.badge_color}
+              editCreateValue={adData?.ad?.category ?? adDataCreate.category}
+              badgeColor={adData?.ad?.badge_color ?? adDataCreate.badge_color}
+              setAdData={setAdData}
+              adData={adData}
               onChange={(value) => handleInputChange("category", value)}
               items={dashboardCategories}
-              value={adDataCreate.category}
+              value={adData?.ad?.category ?? adDataCreate.category}
               label="Избери категория"
               text={adData?.ad?.category}
             />
 
             <EditableBadge
               editable={props.editable}
-              editCreateValue={adDataCreate.position}
-              badgeColor={adDataCreate.badge_color}
+              editCreateValue={adData?.ad?.position ?? adDataCreate.position}
+              badgeColor={adData?.ad?.badge_color ?? adDataCreate.badge_color}
+              setAdData={setAdData}
+              adData={adData}
               onChange={(value) => handleInputChange("position", value)}
               items={workPositions}
-              value={adDataCreate.position}
+              value={adData?.ad?.position ?? adDataCreate.position}
               label="Избери длъжност"
               text={adData?.ad?.position}
             />
 
             <EditableBadge
               editable={props.editable}
-              editCreateValue={adDataCreate.employment_type}
-              badgeColor={adDataCreate.badge_color}
+              editCreateValue={
+                adData?.ad?.employment_type ?? adDataCreate.employment_type
+              }
+              badgeColor={adData?.ad?.badge_color ?? adDataCreate.badge_color}
+              setAdData={setAdData}
+              adData={adData}
               onChange={(value) => handleInputChange("employment_type", value)}
               items={employmentTypes}
-              value={adDataCreate.employment_type}
+              value={
+                adData?.ad?.employment_type ?? adDataCreate.employment_type
+              }
               label="Избери тип заетост"
               text={adData?.ad?.employment_type}
             />
@@ -550,7 +576,7 @@ const ShowEditCreate = (props) => {
             >
               {activeElement === "details"
                 ? renderTextareaElement("details")
-                : adDataCreate.details}
+                : adData?.ad.details ?? adDataCreate.details}
             </div>
           ) : (
             <>
@@ -606,7 +632,10 @@ const ShowEditCreate = (props) => {
                   space="11"
                   buttonChild={
                     <div
-                      className={`${adDataCreate.apply_button_color} text-white py-2 rounded-full w-full text-center transition-all font-semibold cursor-pointer`}
+                      className={`${
+                        adData?.ad?.apply_button_color ??
+                        adDataCreate.apply_button_color
+                      } text-white py-2 rounded-full w-full text-center transition-all font-semibold cursor-pointer`}
                     >
                       Кандидаствай
                     </div>
@@ -622,14 +651,25 @@ const ShowEditCreate = (props) => {
                       <div
                         key={index}
                         className={`h-10 w-10 rounded-full shodow-lg transition-all cursor-pointer ${color} flex items-center justify-center`}
-                        onClick={() =>
-                          setAdDataCreate({
-                            ...adDataCreate,
-                            apply_button_color: color,
-                          })
-                        }
+                        onClick={() => {
+                          if (adData?.ad) {
+                            setAdData({
+                              ...adData,
+                              ad: {
+                                ...adData.ad,
+                                apply_button_color: color,
+                              },
+                            });
+                          } else {
+                            setAdDataCreate({
+                              ...adDataCreate,
+                              apply_button_color: color,
+                            });
+                          }
+                        }}
                       >
-                        {adDataCreate.apply_button_color === color && (
+                        {(adData?.ad?.apply_button_color ??
+                          adDataCreate.apply_button_color) === color && (
                           <FaCheck className="w-5 h-5" />
                         )}
                       </div>
@@ -639,7 +679,10 @@ const ShowEditCreate = (props) => {
               ) : (
                 <button
                   type="button"
-                  className={`${adDataCreate.apply_button_color} text-white py-2 rounded-full w-full transition-all lg:hover:scale-105 font-semibold`}
+                  className={`${
+                    adData?.ad?.apply_button_color ??
+                    adDataCreate.apply_button_color
+                  } text-white py-2 rounded-full w-full transition-all lg:hover:scale-105 font-semibold`}
                 >
                   Кандидаствай
                 </button>
@@ -652,7 +695,7 @@ const ShowEditCreate = (props) => {
               )}
             </div>
 
-            <div className="rounded-2xl shadow-md border p-5 space-y-3">
+            <div className="rounded-2xl shadow-md border p-5 space-y-3 bg-white">
               <h2 className="font-semibold text-lg text-slate-700 border-b-2 pb-2.5">
                 ДЕТАЙЛИ
               </h2>
@@ -667,7 +710,7 @@ const ShowEditCreate = (props) => {
                   <div className="text-slate-700 font-semibold">
                     {activeElement === "location"
                       ? renderInputElement("location", undefined, "left", 56)
-                      : adDataCreate.location}
+                      : adData?.ad?.location ?? adDataCreate.location}
                   </div>
                 </div>
               ) : (
@@ -689,12 +732,14 @@ const ShowEditCreate = (props) => {
                         <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
                         <div className="text-slate-700 font-semibold">
-                          {adDataCreate.languages.map((language, index) => (
+                          {(
+                            adData?.ad?.languages ?? adDataCreate.languages
+                          ).map((language, index, array) => (
                             <span key={index}>
                               {index === 0 ? "" : " "}
                               {language}
-                              {index !== adData?.ad.languages.length - 1 &&
-                                adDataCreate.languages.length > 1 &&
+                              {index !== array.length - 1 &&
+                                array.length > 1 &&
                                 ","}
                             </span>
                           ))}
@@ -766,7 +811,7 @@ const ShowEditCreate = (props) => {
                     items={educationTypes}
                     label="Избери образование"
                     value={
-                      (adData?.ad?.education_requirements || "") ??
+                      adData?.ad?.education_requirements ??
                       adDataCreate.education_requirements
                     }
                     onChange={(value) =>
@@ -835,7 +880,7 @@ const ShowEditCreate = (props) => {
                       <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
 
                       <div className="text-slate-700 font-semibold">
-                        {adDataCreate.employment}
+                        {adData?.ad?.employment ?? adDataCreate.employment}
                       </div>
                     </div>
                   }
@@ -877,7 +922,9 @@ const ShowEditCreate = (props) => {
                           "center",
                           10
                         )
-                      : `Отпуска: ${adDataCreate.paid_leave} дни`}
+                      : `Отпуска: ${
+                          adData?.ad?.paid_leave ?? adDataCreate.paid_leave
+                        } дни`}
                   </div>
                 </div>
               ) : (
@@ -900,7 +947,10 @@ const ShowEditCreate = (props) => {
                   <div className="text-slate-700 font-semibold">
                     {activeElement === "salary"
                       ? renderInputElement("salary", undefined, "center", 20)
-                      : `Заплата: ${formatCurrency(adDataCreate.salary, 0)}`}
+                      : `Заплата: ${formatCurrency(
+                          adData?.ad?.salary ?? adDataCreate.salary,
+                          0
+                        )}`}
                   </div>
                 </div>
               ) : (
@@ -930,7 +980,7 @@ const ShowEditCreate = (props) => {
               </div>
             </div>
 
-            <div className="rounded-2xl shadow-md border p-5 space-y-3 mt-8 sm:mt-0 sm:ml-8 lg:ml-0 lg:mt-5 text-slate-700">
+            <div className="rounded-2xl shadow-md border p-5 space-y-3 mt-8 sm:mt-0 sm:ml-8 lg:ml-0 lg:mt-5 text-slate-700 bg-white">
               <Image
                 src={adProfileImg}
                 alt="Ad banner"

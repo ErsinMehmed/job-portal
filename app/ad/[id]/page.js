@@ -20,7 +20,7 @@ const AdShow = () => {
 
   return (
     <Layout>
-      <ShowEditCreate editable={true} />
+      <ShowEditCreate />
     </Layout>
   );
 };

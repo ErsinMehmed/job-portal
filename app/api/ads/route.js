@@ -94,3 +94,15 @@ export async function GET(request) {
 
   return NextResponse.json({ ads, pagination });
 }
+
+export async function DELETE(request) {
+  const id = request.nextUrl.searchParams.get("id");
+
+  await connectMongoDB();
+  await Ad.findByIdAndDelete(id);
+
+  return NextResponse.json(
+    { message: "Обявата е изтрита успешно" },
+    { status: 200 }
+  );
+}

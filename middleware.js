@@ -21,4 +21,6 @@ export default withAuth(
 );
 
 // export const config = { matcher: [] };
-export const config = { matcher: ["/dashboard", "/dashboard/ads"] };
+export const config = {
+  matcher: ["/dashboard", "/dashboard/ads", "/dashboard/ads/create"],
+};

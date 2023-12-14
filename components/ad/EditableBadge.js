@@ -3,9 +3,11 @@ import Tooltip from "@/components/Tooltip";
 import { adStore } from "@/stores/useStore";
 import { FaCheck } from "react-icons/fa6";
 import { badgeColors } from "@/app/data";
+import { usePathname } from "next/navigation";
 
 const EditableBadge = (props) => {
   const { adDataCreate, setAdDataCreate } = adStore;
+  const pathname = usePathname();
 
   return props.editable ? (
     <Tooltip
@@ -35,14 +37,24 @@ const EditableBadge = (props) => {
           <div
             key={index}
             className={`h-10 w-10 rounded-full shodow-lg transition-all cursor-pointer ${color} flex items-center justify-center`}
-            onClick={() =>
-              setAdDataCreate({
-                ...adDataCreate,
-                badge_color: color,
-              })
-            }
+            onClick={() => {
+              if (pathname.includes("/edit")) {
+                props.setAdData({
+                  ...props.adData,
+                  ad: {
+                    ...props.adData.ad,
+                    badge_color: color,
+                  },
+                });
+              } else {
+                setAdDataCreate({
+                  ...adDataCreate,
+                  badge_color: color,
+                });
+              }
+            }}
           >
-            {adDataCreate.badge_color === color && (
+            {(props.adData?.ad ?? adDataCreate).badge_color === color && (
               <FaCheck className="w-5 h-5" />
             )}
           </div>

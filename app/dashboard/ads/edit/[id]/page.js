@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import Layout from "@/components/layouts/Dashboard";
 import ShowEditCreate from "@/components/ad/ShowEditCreate";
 
-const AdCreate = () => {
+const AdEdit = () => {
   return (
     <Layout>
       <ShowEditCreate editable={true} />
@@ -11,4 +11,4 @@ const AdCreate = () => {
   );
 };
 
-export default observer(AdCreate);
+export default observer(AdEdit);
