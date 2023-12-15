@@ -12,6 +12,8 @@ import {
   BsKanban,
 } from "react-icons/bs";
 import { PiCarProfile } from "react-icons/pi";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoDocumentsOutline } from "react-icons/io5";
 
 const perPageResult = [5, 10, 15, 20];
 
@@ -66,6 +68,19 @@ const homePageAuthLinks = [
   { link: "/favorite-ad", text: "Запазени обяви" },
   { link: "/applications", text: "Кандидаствания" },
   { link: "/messages", text: "Съобщения" },
+];
+
+const dashboardLinks = [
+  {
+    link: "/dashboard",
+    text: "Табло",
+    icon: <AiOutlineHome className="w-5 h-5" />,
+  },
+  {
+    link: "/dashboard/ads",
+    text: "Обяви",
+    icon: <IoDocumentsOutline className="w-5 h-5" />,
+  },
 ];
 
 const badgeColors = [
@@ -309,6 +324,7 @@ export {
   employmentTypes,
   homePageLinks,
   homePageAuthLinks,
+  dashboardLinks,
   categoriesData,
   buttonColors,
   badgeColors,

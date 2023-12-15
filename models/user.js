@@ -3,8 +3,17 @@ import Role from "./role.js";
 
 const userSchema = new Schema(
   {
-    name: String,
-    personal_number: String,
+    name: {
+      type: String,
+      required: true,
+      minlength: 2,
+      maxlength: 100,
+    },
+    personal_number: {
+      type: String,
+      minlength: 3,
+      maxlength: 20,
+    },
     company_size: String,
     vat_number: String,
     phone_number: String,
@@ -13,8 +22,15 @@ const userSchema = new Schema(
     company_description: String,
     birthday: Date,
     city: String,
-    email: String,
-    password: String,
+    email: {
+      type: String,
+      minlength: 3,
+      maxlength: 100,
+    },
+    password: {
+      type: String,
+      minlength: 8,
+    },
   },
   {
     timestamps: true,

@@ -4,6 +4,12 @@ import { IoIosArrowForward } from "react-icons/io";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import {
+  FaFacebookSquare,
+  FaTwitter,
+  FaInstagram,
+  FaViber,
+} from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 
@@ -145,6 +151,24 @@ const MobileMenu = (props) => {
 
           <div className="text-[#7e7e7e] text-sm px-3.5 pt-2.5 font-semibold">
             <a href="mailto:support@jobportal.com">support@jobportal.com</a>
+          </div>
+
+          <div className="flex items-center gap-x-2.5 px-3.5 pt-3">
+            <a href="https://www.facebook.com" target="blank">
+              <FaFacebookSquare className="text-[#4267B2] w-6 h-6" />
+            </a>
+
+            <a href="https://twitter.com/?lang=en" target="blank">
+              <FaTwitter className="text-[#1DA1F2] w-6 h-6" />
+            </a>
+
+            <a href="https://www.instagram.com" target="blank">
+              <FaInstagram className="text-[#C13584] w-6 h-6" />
+            </a>
+
+            <a href="https://www.viber.com/en/" target="blank">
+              <FaViber className="text-[#8f5db7] w-6 h-6" />
+            </a>
           </div>
         </div>
       </div>

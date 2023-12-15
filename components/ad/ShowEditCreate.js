@@ -19,19 +19,18 @@ import {
   CiSearch,
 } from "react-icons/ci";
 import { FaCheck } from "react-icons/fa6";
-import { BsTrash3 } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { HiOutlinePlus } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { adStore } from "@/stores/useStore";
+import { adStore, userStore } from "@/stores/useStore";
 import { getWords, getRemainingWords, formatCurrency } from "@/utils";
 import adAction from "@/actions/adAction";
 import Image from "next/image";
 import moment from "moment";
 import adBannerImg from "@/public/images/ad-show-banner.png";
 import adProfileImg from "@/public/images/ad-profile-logo.png";
-import EditableBadge from "@/components/ad/EditableBadge";
+import EditableBadge from "@/components/ad/showEditCreate/EditableBadge";
+import EditableSection from "@/components/ad/showEditCreate/EditableSection";
 import Tooltip from "@/components/Tooltip";
 import Colors from "@/components/Colors";
 import Select from "@/components/html/Select";
@@ -49,6 +48,10 @@ import "moment/locale/bg";
 
 const ShowEditCreate = (props) => {
   const { adDataCreate, setAdDataCreate } = adStore;
+  const { user } = userStore;
+
+  console.log(user);
+
   const { data: session } = useSession();
   const params = useParams();
   const pathname = usePathname();
@@ -64,7 +67,6 @@ const ShowEditCreate = (props) => {
     },
     {
       title: "Изисквания за позицията",
-
       key: "qualifications",
       placeholder: "Примерно изискване за длъжността",
       order: adDataCreate.skill_section_order,
@@ -94,13 +96,14 @@ const ShowEditCreate = (props) => {
   const removeArrayEmptyValue = () => {
     if (adData?.ad) {
       Object.keys(adData?.ad).forEach((field) => {
-        const fieldValue = adDataCreate[field];
+        const fieldValue = adData?.ad[field];
 
         if (Array.isArray(fieldValue)) {
           const emptyValueIndex = fieldValue.findIndex((value) => value === "");
 
           if (emptyValueIndex !== -1 && fieldValue.length > 1) {
             const updatedArray = fieldValue.filter((value) => value !== "");
+
             setAdData({
               ...adData,
               ad: {
@@ -205,10 +208,9 @@ const ShowEditCreate = (props) => {
     return (
       <textarea
         ref={inputRef}
-        value={adDataCreate[field]}
+        value={adData?.ad[field] ?? adDataCreate[field]}
         onChange={(event) => handleInputChange(field, event.target.value)}
         className={`focus:outline-none border border-slate-100 shadow-lg rounded-lg w-full editable-element h-60 sm:h-44 md:h-40 lg:h-36 xl:h-32 resize-none p-1.5`}
-        onBlur={() => setActiveElement(null)}
       />
     );
   };
@@ -224,106 +226,7 @@ const ShowEditCreate = (props) => {
     </ul>
   );
 
-  const renderListCreateEditItems = (fieldName, text) => {
-    const data = adData?.ad?.[fieldName] ?? adDataCreate[fieldName];
-
-    const addData = () => {
-      if (adData?.ad) {
-        setAdData((prevData) => {
-          const newData = [...prevData.ad[fieldName], text];
-
-          return {
-            ...prevData,
-            ad: {
-              ...prevData.ad,
-              [fieldName]: newData,
-            },
-          };
-        });
-      } else {
-        data.push(text);
-      }
-
-      removeArrayEmptyValue();
-    };
-
-    const removeData = (indexToRemove) => {
-      if (adData?.ad) {
-        setAdData((prevData) => {
-          const newData = [...prevData.ad[fieldName]];
-          newData.splice(indexToRemove, 1);
-
-          return {
-            ...prevData,
-            ad: {
-              ...prevData.ad,
-              [fieldName]: newData,
-            },
-          };
-        });
-      } else {
-        data.splice(indexToRemove, 1);
-      }
-
-      removeArrayEmptyValue();
-    };
-
-    return (
-      <ul
-        className={`${
-          data?.length > 1 ? "px-11" : "px-16"
-        }  space-y-2 text-slate-600`}
-      >
-        {data &&
-          data.map((item, index) =>
-            activeElement === fieldName + index ? (
-              renderInputElement(fieldName, index)
-            ) : (
-              <>
-                <li
-                  key={index}
-                  className={`list-disc cursor-pointer ${
-                    data.length > 1 && "flex items-center"
-                  }`}
-                >
-                  {data.length > 1 && (
-                    <span>
-                      <button
-                        className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mr-2"
-                        onClick={() => removeData(index)}
-                      >
-                        <BsTrash3 />
-                      </button>
-                    </span>
-                  )}
-
-                  <span
-                    onClick={() => {
-                      handleElementClick(fieldName + index);
-                    }}
-                  >
-                    {item}
-                  </span>
-                </li>
-
-                {index === data.length - 1 && data.length < 10 && (
-                  <div className="flex justify-center mt-4 w-full">
-                    <button
-                      className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95"
-                      onClick={() => addData()}
-                    >
-                      <HiOutlinePlus />
-                    </button>
-                  </div>
-                )}
-              </>
-            )
-          )}
-      </ul>
-    );
-  };
-
-  const renderSection = (title, key, placeholder, order, orderFieldName) => {
+  const renderSection = (title, key, placeholder, order) => {
     const isFirst = order === 1;
     const isLast =
       order === Math.max(...renderSectionData.map((section) => section.order));
@@ -414,15 +317,26 @@ const ShowEditCreate = (props) => {
           </h2>
         )}
 
-        {props.editable
-          ? renderListCreateEditItems(key, placeholder)
-          : renderListItems(adData?.ad?.[key])}
+        {props.editable ? (
+          <EditableSection
+            adData={adData}
+            adDataCreate={adDataCreate}
+            fieldName={key}
+            text={placeholder}
+            setAdDataCreate={setAdDataCreate}
+            setAdData={setAdData}
+            removeArrayEmptyValue={removeArrayEmptyValue}
+            renderInputElement={renderInputElement}
+          />
+        ) : (
+          renderListItems(adData?.ad?.[key])
+        )}
       </div>
     );
   };
 
   useEffect(() => {
-    if (props.editable || params.id) {
+    if ((props.editable && params.id) || params.id) {
       const fetchData = async () => {
         const data = await adAction.getAd(params.id);
         setAdData(data);
@@ -437,6 +351,7 @@ const ShowEditCreate = (props) => {
           });
         }
       };
+
       fetchData();
     }
   }, [params.id]);
@@ -469,7 +384,11 @@ const ShowEditCreate = (props) => {
           : "Виж всички обяви"}
       </Link>
 
-      <div className="w-full px-4 2xl:px-5 pb-10 pt-8 flex flex-col-reverse lg:flex-row gap-8 relative">
+      <div
+        className={`w-full px-4 2xl:px-5 pb-10 pt-8 ${
+          pathname.includes("/dashboard") ? "xl:flex-row" : "lg:flex-row"
+        } flex flex-col-reverse gap-8 relative`}
+      >
         <div className="rounded-2xl shadow-md border pb-10 bg-white">
           <Image
             src={adBannerImg}
@@ -599,8 +518,7 @@ const ShowEditCreate = (props) => {
                     section.title,
                     section.key,
                     section.placeholder,
-                    section.order,
-                    section.orderName
+                    section.order
                   )
                 )}
             </div>
@@ -623,8 +541,22 @@ const ShowEditCreate = (props) => {
         </div>
 
         <div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-1 lg:sticky top-24 w-full lg:w-96">
-            <div className="hidden lg:flex gap-2 mb-3.5">
+          <div
+            className={`grid ${
+              pathname.includes("/dashboard")
+                ? "sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-1 xl:w-96"
+                : "lg:grid-cols-1 lg:w-96"
+            } sm:grid-cols-2 lg:sticky w-full ${
+              pathname.includes("/edit") || pathname.includes("/create")
+                ? "top-20"
+                : "top-24"
+            }`}
+          >
+            <div
+              className={`hidden gap-2 mb-3.5 ${
+                pathname.includes("/dashboard") ? "xl:flex" : "lg:flex"
+              }`}
+            >
               {props.editable ? (
                 <Tooltip
                   width="w-56"
@@ -980,7 +912,13 @@ const ShowEditCreate = (props) => {
               </div>
             </div>
 
-            <div className="rounded-2xl shadow-md border p-5 space-y-3 mt-8 sm:mt-0 sm:ml-8 lg:ml-0 lg:mt-5 text-slate-700 bg-white">
+            <div
+              className={`${
+                pathname.includes("/dashboard")
+                  ? "sm:ml-0 sm:mt-5 md:ml-8 md:mt-0 xl:ml-0 xl:mt-5"
+                  : "sm:mt-0 sm:ml-8 lg:ml-0 lg:mt-5"
+              } rounded-2xl shadow-md border p-5 space-y-3 mt-8  text-slate-700 bg-white`}
+            >
               <Image
                 src={adProfileImg}
                 alt="Ad banner"
@@ -990,16 +928,23 @@ const ShowEditCreate = (props) => {
               />
 
               <h2 className="font-semibold sm:text-lg border-b-2 pb-3 pt-2">
-                {adData?.ad?.creator.name}
+                {adData?.ad?.creator.name ?? user?.name}
               </h2>
 
               <p className="text-sm sm:text-base">
-                {getWords(adData?.ad?.creator.company_description ?? "", 20)}
+                {getWords(
+                  adData?.ad?.creator.company_description ??
+                    user?.company_description ??
+                    "",
+                  20
+                )}
               </p>
 
               <p className="text-sm sm:text-base">
                 {getRemainingWords(
-                  adData?.ad?.creator.company_description ?? "",
+                  adData?.ad?.creator.company_description ??
+                    user?.company_description ??
+                    "",
                   20
                 )}
               </p>
@@ -1009,7 +954,11 @@ const ShowEditCreate = (props) => {
 
                 <div className="text-slate-700 font-semibold">
                   В България
-                  {" " + moment(adData?.ad?.creator.company_created).year()}
+                  {" " +
+                    moment(
+                      adData?.ad?.creator.company_created ??
+                        user?.company_created
+                    ).year()}
                 </div>
               </div>
 
@@ -1017,7 +966,8 @@ const ShowEditCreate = (props) => {
                 <CiUser className="text-slate-600 w-4 h-4 mt-0.5" />
 
                 <div className="text-slate-700 font-semibold">
-                  {adData?.ad?.creator.company_size} служители
+                  {adData?.ad?.creator.company_size ?? user?.company_size}{" "}
+                  служители
                 </div>
               </div>
 

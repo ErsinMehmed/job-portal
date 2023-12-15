@@ -1,41 +1,37 @@
 "use client";
 import Link from "next/link";
-import { AiOutlineHome } from "react-icons/ai";
-import { IoDocumentsOutline } from "react-icons/io5";
+import { usePathname } from "next/navigation";
+import { dashboardLinks } from "@/app/data";
 
 const SideBar = (props) => {
+  const pathname = usePathname();
+
   return (
     <aside
       className={`fixed hidden sm:block top-0 left-0 z-40 ${
         props.show ? "w-16" : "w-56 2xl:w-72"
-      } transition-all duration-500 h-screen sm:translate-x-0 bg-gradient-to-r from-[#534bed] via-[#4d44ef] to-[#4b43e7]`}>
-      <div className='h-full px-3 py-4 overflow-y-auto border-r border-gray-200'>
-        <ul className='space-y-2 font-medium'>
-          <li>
-            <Link
-              href='/dashboard'
-              className={`flex items-center ${
-                props.show && "justify-center"
-              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group transition-all`}>
-              <AiOutlineHome className='w-5 h-5' />
-              <span className={`${props.show ? "hidden" : "block"} ml-3`}>
-                Табло
-              </span>
-            </Link>
-          </li>
+      } transition-all duration-500 h-screen sm:translate-x-0 bg-gradient-to-r from-[#534bed] via-[#4d44ef] to-[#4b43e7]`}
+    >
+      <div className="h-full px-3 py-4 overflow-y-auto border-r border-gray-200">
+        <ul className="space-y-2 font-medium">
+          {dashboardLinks.map((item, index) => (
+            <li key={index}>
+              <Link
+                href={item.link}
+                className={`flex items-center ${
+                  props.show && "justify-center"
+                } ${
+                  pathname === item.link && "bg-[#4338ca]"
+                }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group transition-all`}
+              >
+                {item.icon}
 
-          <li>
-            <Link
-              href='/dashboard/ads'
-              className={`flex items-center ${
-                props.show && "justify-center"
-              }  p-2 text-white rounded-lg font-semibold hover:bg-[#4338ca] group transition-all`}>
-              <IoDocumentsOutline className='w-5 h-5' />
-              <span className={`${props.show ? "hidden" : "block"} ml-3`}>
-                Обяви
-              </span>
-            </Link>
-          </li>
+                <span className={`${props.show ? "hidden" : "block"} ml-3`}>
+                  {item.text}
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>

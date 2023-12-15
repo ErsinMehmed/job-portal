@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
 import { Button, Checkbox, Input } from "@nextui-org/react";
-import { authStore, userStore, commonStore } from "@/stores/useStore";
+import { authStore, commonStore } from "@/stores/useStore";
 import Layout from "@/components/layouts/Dashboard";
 
 import dynamic from "next/dynamic";
@@ -18,8 +18,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     setIsLoading(false);
-
-    userStore.loadCurrentUserData();
   }, [setIsLoading]);
 
   const [chartOptions, setChartOptions] = useState({

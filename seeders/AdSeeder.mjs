@@ -191,10 +191,9 @@ const generateFakeAd = (users) => {
     employment_type: jobTypes[Math.floor(Math.random() * jobTypes.length)],
     employment:
       employmentTypes[Math.floor(Math.random() * employmentTypes.length)],
-    summary: faker.lorem.sentence(),
     category: categories[Math.floor(Math.random() * categories.length)],
     experience: experience[Math.floor(Math.random() * experience.length)],
-    details: faker.lorem.sentences({ min: 5, max: 10 }),
+    details: faker.lorem.sentences({ min: 5, max: 9 }),
     salary: generateMinMaxNumber(100, 800, 15000),
     remote_work: faker.datatype.boolean(0.5),
     education_requirements:
@@ -203,7 +202,7 @@ const generateFakeAd = (users) => {
       from: "2023-05-01T00:00:00.000Z",
       to: faker.date.recent(),
     }),
-    paid_leave: generateMinMaxNumber(5, 15, 30),
+    paid_leave: generateMinMaxNumber(5, 15, 40),
     creator: randomUser._id,
     skills: generateSkills(),
     soft_skills: generateSoftSkills(),

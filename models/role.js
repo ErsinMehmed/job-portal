@@ -2,7 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const roleSchema = new Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

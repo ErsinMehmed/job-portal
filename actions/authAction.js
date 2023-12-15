@@ -1,6 +1,8 @@
 import { signIn } from "next-auth/react";
 
 class Auth {
+  userCache = new Map();
+
   createUser = async (data) => {
     try {
       const response = await fetch("api/register", {
@@ -33,9 +35,16 @@ class Auth {
 
   authUser = async () => {
     try {
-      const response = await fetch("api/current");
+      if (this.userCache.has("cachedUser")) {
+        return this.userCache.get("cachedUser");
+      }
 
-      return response;
+      const response = await fetch("/api/current");
+      const user = await response.json();
+
+      this.userCache.set("cachedUser", user);
+
+      return user;
     } catch (error) {
       throw error;
     }
