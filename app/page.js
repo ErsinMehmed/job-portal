@@ -1,30 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { motion } from "framer-motion";
-import { authStore, commonStore } from "../stores/useStore";
+import { commonStore } from "../stores/useStore";
 import Layout from "@/components/layouts/Website";
 import MainSection from "@/components/home/MainSection";
 import CategorySection from "@/components/home/CategorySection";
+import PopularJobsSection from "@/components/home/PopularJobsSection";
 
 const Home = () => {
-  const { loginData, setLoginData, login } = authStore;
-  const { userKind, errorFields, errorMessage, successMessage, setIsLoading } =
-    commonStore;
-
   useEffect(() => {
-    setIsLoading(false);
-  }, [setIsLoading]);
-
-  const handleInputChange = (name, value) => {
-    setLoginData({ ...loginData, [name]: value });
-  };
+    commonStore.setIsLoading(false);
+  }, []);
 
   return (
     <Layout>
       <MainSection />
 
       <CategorySection />
+
+      <PopularJobsSection />
     </Layout>
   );
 };

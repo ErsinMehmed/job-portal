@@ -327,6 +327,8 @@ const ShowEditCreate = (props) => {
             setAdData={setAdData}
             removeArrayEmptyValue={removeArrayEmptyValue}
             renderInputElement={renderInputElement}
+            handleElementClick={handleElementClick}
+            activeElement={activeElement}
           />
         ) : (
           renderListItems(adData?.ad?.[key])
@@ -971,14 +973,14 @@ const ShowEditCreate = (props) => {
                 </div>
               </div>
 
-              <div className="flex text-sm sm:text-base items-center justify-between text-blue-600 pt-1">
-                <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
+              <div className="flex sm:flex-col md:flex-row text-sm sm:text-base items-center justify-between sm:justify-start md:justify-between text-blue-600 pt-1">
+                <button className="flex items-center gap-1 hover:text-blue-400 transition-all sm:w-full md:w-auto">
                   <CiCircleList className="w-4 h-4 mt-0.5" />
 
                   <div className="font-semibold">ОБЯВИ ({adData?.adCount})</div>
                 </button>
 
-                <button className="flex items-center gap-1 hover:text-blue-400 transition-all">
+                <button className="flex items-center gap-1 hover:text-blue-400 transition-all sm:w-full md:w-auto">
                   <CiSearch className="w-4 h-4 mt-0.5" />
 
                   <div className="font-semibold">ВИЖ ПРОФИЛА</div>

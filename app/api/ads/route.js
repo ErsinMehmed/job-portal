@@ -7,6 +7,17 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export async function POST(request) {
   const data = await request.json();
 
+  const session = await getServerSession(authOptions);
+
+  if (session && session.user && session.user.id) {
+    data.creator = session.user.id;
+  } else {
+    return NextResponse.json(
+      { message: "User information not available" },
+      { status: 400 }
+    );
+  }
+
   await connectMongoDB();
 
   await Ad.create(data);

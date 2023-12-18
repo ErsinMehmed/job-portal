@@ -61,7 +61,7 @@ const CategorySection = () => {
       }
       className="w-full py-10 md:py-16 border-b flex justify-center"
     >
-      <div className="w-full md:w-auto md:max-w-screen-2xl">
+      <div className="w-full md:max-w-screen-2xl">
         <h2 className="font-bold text-2xl sm:text-3xl text-center text-slate-700 mb-1.5">
           Популярни категории
         </h2>

@@ -1,4 +1,20 @@
 class Ad {
+  createAd = async (data) => {
+    try {
+      const response = await fetch("/api/ads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  };
+
   getUserAds = async (page, perPage, searchText, filterData) => {
     try {
       let url = `/api/ads?page=${page ?? 1}&per_page=${perPage ?? 10}`;
@@ -47,6 +63,12 @@ class Ad {
 
   getAd = async (id) => {
     const response = await fetch(`/api/ads/${id}`);
+
+    return response.json();
+  };
+
+  getPopularAds = async () => {
+    const response = await fetch("/api/popular-ads");
 
     return response.json();
   };

@@ -70,36 +70,57 @@ class Auth {
 
     switch (response.status_code) {
       case RegisterEnums.PASSWORD_NOT_MATCH:
-        commonStore.setErrorMessage("Въведените пароли не съвпадат");
-        commonStore.setErrorFields({
-          password: true,
-          passwordRep: true,
-        });
-
+        this.handlePasswordNotMatchError();
         break;
       case RegisterEnums.USER_EXIST:
-        commonStore.setErrorMessage("Потребителят вече съществува");
-        commonStore.setErrorFields({
-          email: true,
-        });
-
+        this.handleUserExistError();
         break;
       case RegisterEnums.USER_CREATED:
-        commonStore.setSuccessMessage("Потребителят е създаден");
-        this.userData = {
-          name: "",
-          role: "",
-          vat_number: "",
-          city: "",
-          email: "",
-          password: "",
-          passwordRep: "",
-        };
-
+        this.handleUserCreatedSuccess();
         break;
       default:
-        commonStore.setErrorFields(response.errorFields);
+        this.handleDefaultError(response.errorFields);
     }
+  };
+
+  handleValidationErrors = (errorFields) => {
+    commonStore.setErrorFields(errorFields);
+  };
+
+  handlePasswordNotMatchError = () => {
+    commonStore.setErrorMessage("Въведените пароли не съвпадат");
+    commonStore.setErrorFields({
+      password: true,
+      passwordRep: true,
+    });
+  };
+
+  handleUserExistError = () => {
+    commonStore.setErrorMessage("Потребителят вече съществува");
+    commonStore.setErrorFields({
+      email: true,
+    });
+  };
+
+  handleUserCreatedSuccess = () => {
+    commonStore.setSuccessMessage("Потребителят е създаден");
+    this.resetUserData();
+  };
+
+  handleDefaultError = (errorFields) => {
+    commonStore.setErrorFields(errorFields);
+  };
+
+  resetUserData = () => {
+    this.userData = {
+      name: "",
+      role: "",
+      vat_number: "",
+      city: "",
+      email: "",
+      password: "",
+      passwordRep: "",
+    };
   };
 
   login = async (e) => {
