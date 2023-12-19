@@ -60,7 +60,7 @@ const PopularJobsSection = () => {
           className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6 lg:gap-5 xl:gap-8 px-5 lg:px-5 xl:px-16"
         >
           {popularAds?.map((ad, index) => (
-            <AdBox index={index} data={ad} />
+            <AdBox key={index} data={ad} />
           ))}
         </motion.div>
       </div>
