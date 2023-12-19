@@ -1,6 +1,3 @@
-import { HiMiniXMark } from "react-icons/hi2";
-import { commonStore } from "../stores/useStore";
-
 const Colors = () => {
   return (
     <>
