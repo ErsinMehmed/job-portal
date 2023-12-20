@@ -16,7 +16,7 @@ const AccountDropdown = () => {
 
   const getUserFirstName = () => {
     let firstName = session?.user.name.split(" ")[0];
-    const lastChar = firstName.charAt(firstName.length - 1);
+    const lastChar = firstName?.charAt(firstName.length - 1);
 
     if (lastChar === "," || lastChar === "-") {
       firstName = firstName.slice(0, -1);
