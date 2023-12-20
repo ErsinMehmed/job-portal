@@ -181,9 +181,8 @@ const MobileMenu = (props) => {
                 borderRadius: "14px",
                 boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
               }}
-              allowfullscreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
         </div>

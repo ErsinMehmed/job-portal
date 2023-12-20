@@ -26,6 +26,7 @@ function Filter(props) {
             collapsed: { opacity: 0, height: 0 },
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
+          style={{ overflow: "hidden" }}
         >
           <div className="flex items-center justify-between border-b-2 text-slate-700">
             <div className="p-4 text-lg font-semibold leading-tight">

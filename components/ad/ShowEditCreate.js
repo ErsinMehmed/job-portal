@@ -49,9 +49,6 @@ import "moment/locale/bg";
 const ShowEditCreate = (props) => {
   const { adDataCreate, setAdDataCreate } = adStore;
   const { user } = userStore;
-
-  console.log(user);
-
   const { data: session } = useSession();
   const params = useParams();
   const pathname = usePathname();
@@ -359,14 +356,25 @@ const ShowEditCreate = (props) => {
   }, [params.id]);
 
   const handleLanguageClick = (language) => {
-    const languageIndex = adDataCreate.languages.indexOf(language);
+    const languageIndex =
+      adData?.ad?.languages ?? adDataCreate.languages.indexOf(language);
 
-    if (adDataCreate.languages.includes(language)) {
-      if (adDataCreate.languages.length > 1) {
-        adDataCreate.languages.splice(languageIndex, 1);
+    if (adData?.ad?.languages) {
+      if (adData?.ad?.languages.includes(language)) {
+        if (adData?.ad?.languages.length > 1) {
+          adData?.ad?.languages.splice(languageIndex, 1);
+        }
+      } else {
+        adData?.ad?.languages.push(language);
       }
     } else {
-      adDataCreate.languages.push(language);
+      if (adDataCreate.languages.includes(language)) {
+        if (adDataCreate.languages.length > 1) {
+          adDataCreate.languages.splice(languageIndex, 1);
+        }
+      } else {
+        adDataCreate.languages.push(language);
+      }
     }
   };
 
@@ -377,7 +385,7 @@ const ShowEditCreate = (props) => {
       } max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative`}
     >
       <Link
-        href={pathname.includes("/dashboard") ? "/dashboard/ads" : "/ads"}
+        href={pathname.includes("/dashboard") ? "/dashboard/ads" : "/find-job"}
         className="flex items-center pl-4 2xl:pl-5 pt-8 text-blue-600 font-semibold hover:ml-1.5 hover:text-blue-400 transition-all w-fit"
       >
         <HiOutlineArrowLeft className="mt-0.5 mr-1 w-5 h-5" />
@@ -616,7 +624,7 @@ const ShowEditCreate = (props) => {
                   className={`${
                     adData?.ad?.apply_button_color ??
                     adDataCreate.apply_button_color
-                  } text-white py-2 rounded-full w-full transition-all lg:hover:scale-105 font-semibold`}
+                  } text-white py-2 rounded-full w-full transition-all font-semibold`}
                 >
                   Кандидаствай
                 </button>
@@ -690,7 +698,9 @@ const ShowEditCreate = (props) => {
                       {languages.map((language, index) => (
                         <span
                           className={`shadow-lg rounded-lg border border-slate-200 p-1.5 text-sm cursor-pointer transition-all active:scale-95 ${
-                            adDataCreate.languages.includes(language)
+                            (
+                              adData?.ad?.languages ?? adDataCreate.languages
+                            ).includes(language)
                               ? "bg-blue-300 hover:bg-blue-400 text-white"
                               : "bg-white hover:bg-blue-300 hover:text-white text-slate-600"
                           }`}

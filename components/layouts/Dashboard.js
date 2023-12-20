@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../dashboard/Navbar";
 import SideBar from "../dashboard/Sidebar";
 import MobileMenu from "../dashboard/MobileMenu";
-import { useSession } from "next-auth/react";
 import { userStore } from "@/stores/useStore";
 
 const DashboardLayout = (props) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { data: session } = useSession();
 
   const toggleMenu = () => {
     setIsVisible(!isVisible);
