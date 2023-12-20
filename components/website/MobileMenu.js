@@ -170,6 +170,22 @@ const MobileMenu = (props) => {
               <FaViber className="text-[#8f5db7] w-6 h-6" />
             </a>
           </div>
+
+          <div className="px-3.5 rounded-md mt-3.5">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.4036269572575!2d23.3293523!3d42.6951736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa856e1dfbc955%3A0xa34f77d80f5da03a!2zdWxpdHNhIOKAnkdlb3JnaSBTLiBSYWtvdnNraeKAnCwgU29maWE!5e0!3m2!1sen!2sbg!4v1703052947960!5m2!1sen!2sbg"
+              width="100%"
+              height="280"
+              style={{
+                border: "2px solid #E5E4E2",
+                borderRadius: "14px",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+              }}
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </div>
     </aside>
