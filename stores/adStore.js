@@ -4,6 +4,8 @@ import commonStore from "./commonStore";
 
 class Ad {
   ads = [];
+  siteAds = [];
+  currentPageSite = 0;
   currentPage = 1;
   perPage = 10;
   isLoading = true;
@@ -15,8 +17,8 @@ class Ad {
     status: "",
     field: "",
     employmentType: "",
-    minSalary: null,
-    maxSalary: null,
+    minSalary: "",
+    maxSalary: "",
   };
   adDataCreate = {
     title: "Заглавие",
@@ -61,6 +63,7 @@ class Ad {
   constructor() {
     makeObservable(this, {
       ads: observable,
+      siteAds: observable,
       currentPage: observable,
       perPage: observable,
       isLoading: observable,
@@ -68,6 +71,8 @@ class Ad {
       filterData: observable,
       showFilter: observable,
       adDataCreate: observable,
+      currentPageSite: observable,
+      setSiteAds: action,
       setAds: action,
       setCurrentPage: action,
       setPerPage: action,
@@ -76,11 +81,21 @@ class Ad {
       setFilterData: action,
       setShowFilter: action,
       setAdDataCreate: action,
+      setCurrentPageSite: action,
     });
   }
 
   setAds = (data) => {
     this.ads = data;
+  };
+
+  setSiteAds = (data) => {
+    this.siteAds = data;
+  };
+
+  setCurrentPageSite = (data) => {
+    console.log(data);
+    this.currentPageSite = data;
   };
 
   setCurrentPage = (data) => {
@@ -125,6 +140,12 @@ class Ad {
     this.adDataCreate = data;
   };
 
+  loadAds = async (newPage) => {
+    this.setSiteAds(await adAction.getAllAds(newPage ?? this.currentPageSite));
+
+    this.setIsLoading(false);
+  };
+
   loadUserAds = async (newPage) => {
     this.setAds(
       await adAction.getUserAds(
@@ -159,6 +180,18 @@ class Ad {
   deleteAd = async (id) => {
     const response = await adAction.deleteAd(id);
     commonStore.setSuccessMessage(response.message);
+  };
+
+  clearFilterData = () => {
+    this.filterData = {
+      dateFrom: "",
+      dateTo: "",
+      status: "",
+      field: "",
+      employmentType: "",
+      minSalary: "",
+      maxSalary: "",
+    };
   };
 }
 

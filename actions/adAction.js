@@ -61,6 +61,18 @@ class Ad {
     }
   };
 
+  getAllAds = async (page) => {
+    try {
+      let url = `/api/get-ads?page=${page ?? 1}`;
+
+      const response = await fetch(url);
+
+      return response.json();
+    } catch (error) {
+      throw error;
+    }
+  };
+
   getAd = async (id) => {
     const response = await fetch(`/api/ads/${id}`);
 

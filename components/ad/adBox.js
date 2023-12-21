@@ -7,7 +7,7 @@ import companyImg from "@/public/images/up-logo.png";
 
 const Colors = (props) => {
   return (
-    <div className="border rounded-lg shadow w-full p-4 relative z-0 group/button hover:bg-slate-50 transition-all active:scale-95">
+    <div className="border rounded-lg shadow w-full p-4 relative z-0 group/button hover:bg-slate-50 transition-all">
       <button className="absolute top-6 right-6 sm:top-3 sm:right-3 border rounded-full p-1.5 group bg-white sm:bg-transparent group-hover/button:border-gray-300 hover:sm:bg-blue-300 hover:sm:border-blue-300 transition-all z-20 active:sm:scale-95">
         <FiBookmark className="w-5 h-5 sm:w-4 sm:h-4 text-slate-500 group-hover:sm:text-white" />
       </button>

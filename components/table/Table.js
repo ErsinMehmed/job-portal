@@ -108,6 +108,7 @@ const Table = (props) => {
         <Filter
           show={props.showFilter}
           close={toggleFilterSection}
+          clearFilterData={props.clearFilterData}
           searchOnClick={props.filterSearchOnClick}
           data={props.filterData}
           setData={props.setFilterData}
@@ -206,26 +207,24 @@ const Table = (props) => {
             )}
           </table>
 
-          {props.totalPages > 1 && (
-            <div className="px-5 py-4 bg-white border-t flex  items-center justify-between">
-              <div className="w-32 h-0 -mt-10">
-                {props.isLoading ? (
-                  <div className="bg-[#f4f4f5] w-14 h-8 rounded-lg px-2 pt-2 mt-1">
-                    <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
-                    <div className="h-1 animate-pulse bg-gray-200 rounded-full"></div>
-                  </div>
-                ) : (
-                  <Select
-                    options={perPageResult}
-                    value={props.perPage}
-                    onChange={(event) => props.setPerPage(event)}
-                  />
-                )}
-              </div>
-
-              {props.children}
+          <div className="px-5 py-4 bg-white border-t flex  items-center justify-between">
+            <div className="w-32 h-0 -mt-10">
+              {props.isLoading ? (
+                <div className="bg-[#f4f4f5] w-14 h-8 rounded-lg px-2 pt-2 mt-1">
+                  <div className="h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2"></div>
+                  <div className="h-1 animate-pulse bg-gray-200 rounded-full"></div>
+                </div>
+              ) : (
+                <Select
+                  options={perPageResult}
+                  value={props.perPage}
+                  onChange={(event) => props.setPerPage(event)}
+                />
+              )}
             </div>
-          )}
+
+            {props.children}
+          </div>
         </div>
       </div>
     </div>

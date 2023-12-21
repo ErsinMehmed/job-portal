@@ -24,7 +24,7 @@ export function generateRegisterRules(userRole) {
     },
   };
 
-  if (userRole === RoleEnums.EMPLOYER) {
+  if (userRole === RoleEnums.EMPLOYERID) {
     registerRules = {
       ...registerRules,
       vat_number: { required: true, type: "string", minLength: 10 },

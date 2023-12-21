@@ -26,6 +26,7 @@ const Ads = () => {
     searchAds,
     setShowFilter,
     deleteAd,
+    clearFilterData,
   } = adStore;
 
   useEffect(() => {
@@ -41,19 +42,18 @@ const Ads = () => {
     ({
       _id,
       title,
-      location,
+
       position,
       employment_type,
-      field,
+      category,
       salary,
       expired,
     }) => ({
       _id,
       title,
-      location,
       position,
       employment_type,
-      field,
+      category,
       salary,
       expired,
     })
@@ -69,7 +69,6 @@ const Ads = () => {
           data={filteredAds}
           columns={[
             "заглавие",
-            "локация",
             "позиция",
             "тип",
             "област",
@@ -79,6 +78,7 @@ const Ads = () => {
           deleteAd={handleDeleteAd}
           perPage={perPage}
           filterSearchOnClick={searchAds}
+          clearFilterData={clearFilterData}
           filterData={filterData}
           showFilter={showFilter}
           setShowFilter={setShowFilter}

@@ -59,7 +59,7 @@ const Register = () => {
               <Input
                 type="text"
                 label={
-                  userData.role === RoleEnums.EMPLOYER
+                  userData.role === RoleEnums.EMPLOYERID
                     ? "Име на фирмата"
                     : "Име и фамилия"
                 }
@@ -68,7 +68,7 @@ const Register = () => {
                 onChange={(value) => handleInputChange("name", value)}
               />
 
-              {userData.role !== RoleEnums.EMPLOYER && (
+              {userData.role !== RoleEnums.EMPLOYERID && (
                 <Input
                   type="date"
                   label="Дата на раждане"
@@ -78,7 +78,7 @@ const Register = () => {
                 />
               )}
 
-              {userData.role !== RoleEnums.EMPLOYER && (
+              {userData.role !== RoleEnums.EMPLOYERID && (
                 <Input
                   type="text"
                   label="Град"
@@ -88,7 +88,7 @@ const Register = () => {
                 />
               )}
 
-              {userData.role === RoleEnums.EMPLOYER && (
+              {userData.role === RoleEnums.EMPLOYERID && (
                 <Input
                   type="text"
                   label="ДДС номер"
