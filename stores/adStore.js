@@ -5,7 +5,9 @@ import commonStore from "./commonStore";
 class Ad {
   ads = [];
   siteAds = [];
-  currentPageSite = 0;
+  currentPageSite = 1;
+  totalPagesSite = 10000000000;
+  totalAdsSite = null;
   currentPage = 1;
   perPage = 10;
   isLoading = true;
@@ -72,6 +74,8 @@ class Ad {
       showFilter: observable,
       adDataCreate: observable,
       currentPageSite: observable,
+      totalPagesSite: observable,
+      totalAdsSite: observable,
       setSiteAds: action,
       setAds: action,
       setCurrentPage: action,
@@ -82,6 +86,8 @@ class Ad {
       setShowFilter: action,
       setAdDataCreate: action,
       setCurrentPageSite: action,
+      setTotalPagesSite: action,
+      setTotalAdsSite: action,
     });
   }
 
@@ -94,8 +100,15 @@ class Ad {
   };
 
   setCurrentPageSite = (data) => {
-    console.log(data);
     this.currentPageSite = data;
+  };
+
+  setTotalPagesSite = (data) => {
+    this.totalPagesSite = data;
+  };
+
+  setTotalAdsSite = (data) => {
+    this.totalAdsSite = data;
   };
 
   setCurrentPage = (data) => {
@@ -141,9 +154,19 @@ class Ad {
   };
 
   loadAds = async (newPage) => {
-    this.setSiteAds(await adAction.getAllAds(newPage ?? this.currentPageSite));
+    if (this.currentPageSite <= this.totalPagesSite) {
+      const data = await adAction.getAllAds(newPage ?? this.currentPageSite);
 
-    this.setIsLoading(false);
+      this.setSiteAds(
+        this.currentPageSite === 1 ? data.ads : [...this.siteAds, ...data.ads]
+      );
+
+      this.setTotalPagesSite(data.totalPages);
+
+      this.setTotalAdsSite(data.totalAds);
+
+      this.setIsLoading(false);
+    }
   };
 
   loadUserAds = async (newPage) => {

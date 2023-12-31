@@ -1,62 +1,88 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { observer } from "mobx-react-lite";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { adStore } from "@/stores/useStore";
+import { motion, AnimatePresence } from "framer-motion";
 import { FiList } from "react-icons/fi";
 import { FaHouse } from "react-icons/fa6";
 import Layout from "@/components/layouts/Website";
 import AdBox from "@/components/ad/adBox";
 
 const FindJob = () => {
-  const { siteAds, currentPageSite, loadAds, setCurrentPageSite } = adStore;
-  const observerRef = useRef(null);
+  const {
+    siteAds,
+    currentPageSite,
+    totalPagesSite,
+    totalAdsSite,
+    loadAds,
+    setCurrentPageSite,
+  } = adStore;
 
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.1,
-    };
+  const [shouldLoadMore, setShouldLoadMore] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  const observer = useRef();
+  const prevScrollY = useRef(0);
 
-    const handleIntersection = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const updatedPageSite = currentPageSite + 1;
+  const lastAdRef = useCallback(
+    (node) => {
+      const loadMoreAds = () => {
+        if (currentPageSite <= totalPagesSite) {
+          setShouldLoadMore(false);
 
-          setCurrentPageSite(updatedPageSite);
+          loadAds(currentPageSite).then(() => {
+            setShouldLoadMore(true);
 
-          loadAds(updatedPageSite);
+            const updatedPageSite = currentPageSite + 1;
+
+            setCurrentPageSite(updatedPageSite);
+          });
+        }
+      };
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && shouldLoadMore) {
+          loadMoreAds();
         }
       });
+
+      if (node) observer.current.observe(node);
+    },
+    [
+      shouldLoadMore,
+      loadAds,
+      currentPageSite,
+      setCurrentPageSite,
+      totalPagesSite,
+    ]
+  );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY < prevScrollY.current;
+
+      setIsVisible(!isScrollingDown);
+      prevScrollY.current = currentScrollY;
     };
 
-    observerRef.current = new IntersectionObserver(
-      handleIntersection,
-      observerOptions
-    );
-
-    if (observerRef.current) {
-      observerRef.current.observe(
-        document.getElementById("lazy-load-trigger-element")
-      );
-    }
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [loadAds]);
+  }, []);
 
   return (
     <Layout>
-      <div className="bg-[#f6f8fd] pt-24 pb-[78px] text-center w-full">
-        <h2 className="font-semibold text-2xl sm:text-3xl text-center text-slate-700 mb-2.5">
+      <div className='bg-[#f6f8fd] pt-20 pb-[72px] text-center w-full'>
+        <h2 className='font-semibold text-2xl sm:text-3xl text-center text-slate-700 mb-2.5'>
           Намери работа
         </h2>
 
-        <div className="flex justify-center w-full">
+        <div className='flex justify-center w-full'>
           <Breadcrumbs>
             <BreadcrumbItem startContent={<FaHouse />}>Начало</BreadcrumbItem>
             <BreadcrumbItem startContent={<FiList />}>Обяви</BreadcrumbItem>
@@ -64,18 +90,50 @@ const FindJob = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-x-3 max-w-screen-2xl my-10 px-6 sm:px-8">
-        <div className="col-span-1"></div>
-        <div className="col-span-3 md:col-span-2 space-y-6">
-          {Array.isArray(siteAds) &&
-            siteAds.map((ad, index) => <AdBox key={index} data={ad} />)}
+      <div className='relative grid grid-cols-3 gap-x-8 max-w-screen-2xl mx-auto my-7 px-6 sm:px-8'>
+        <div className='col-span-1'>
+          <div className='sticky top-20 bg-[#f5f7fc] rounded-md'>
+            ersin mehmed
+          </div>
         </div>
+        <div className='col-span-3 md:col-span-2 space-y-6'>
+          {Array.isArray(siteAds) &&
+            siteAds.map((ad, index) => (
+              <AdBox
+                key={index}
+                data={ad}
+              />
+            ))}
+        </div>
+
+        <div ref={lastAdRef}></div>
       </div>
 
-      <div
-        id="lazy-load-trigger-element"
-        style={{ height: "1px", position: "relative", bottom: "-1px" }}
-      />
+      <AnimatePresence>
+        {isVisible && totalAdsSite && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+            className='fixed -ml-[105px] left-1/2 text-slate-700 text-sm font-semibold bottom-4 bg-slate-50 rounded-md w-48 shadow-2xl border text-center py-1'>
+            Обяви{" "}
+            <motion.span
+              key={`${(currentPageSite - 2) * 10}-${
+                (currentPageSite - 1) * 10
+              }-${totalAdsSite}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}>
+              {currentPageSite === 2 ? 1 : (currentPageSite - 2) * 10} -{" "}
+              {currentPageSite === totalPagesSite + 1
+                ? totalAdsSite
+                : (currentPageSite - 1) * 10}
+            </motion.span>{" "}
+            от {totalAdsSite}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Layout>
   );
 };

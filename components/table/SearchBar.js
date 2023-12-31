@@ -11,7 +11,7 @@ const Select = (props) => {
   };
 
   return props.isLoading ? (
-    <div className='mt-4 2xl:mt-0 h-12 2xl:h-14 w-full bg-white px-4 rounded-lg mb-5 2xl:mb-4 flex items-center border border-gray-300 shadow-sm'>
+    <div className='mt-5 h-12 2xl:h-14 w-full bg-white px-4 rounded-lg mb-5 2xl:mb-4 flex items-center border border-gray-300 shadow-sm'>
       <div className='w-6 mr-4'>
         <div className='h-1 animate-pulse bg-gray-200 rounded-full w-10/12 mb-2' />
         <div className='h-1 animate-pulse bg-gray-200 rounded-full' />
