@@ -19,15 +19,18 @@ const WebsiteLayout = (props) => {
     if (session?.user.role === RoleEnums.EMPLOYER) {
       router.push("/dashboard");
     }
-  }, [session]);
+  }, [session, router]);
 
   return (
-    <div className="w-full min-h-screen">
+    <div className='w-full min-h-screen'>
       <Navbar onMenuClick={toggleMenu} />
 
-      <MobileMenu outsideOnClick={toggleMenu} show={isVisible} />
+      <MobileMenu
+        outsideOnClick={toggleMenu}
+        show={isVisible}
+      />
 
-      <div className="mt-16">{props.children}</div>
+      <div className='mt-16'>{props.children}</div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { commonStore } from "../stores/useStore";
 
@@ -6,10 +6,10 @@ const Alert = () => {
   const { setErrorMessage, setSuccessMessage, errorMessage, successMessage } =
     commonStore;
 
-  const handleHideAlert = () => {
+  const handleHideAlert = useCallback(() => {
     setErrorMessage("");
     setSuccessMessage("");
-  };
+  }, [setErrorMessage, setSuccessMessage]);
 
   useEffect(() => {
     if (errorMessage || successMessage) {
@@ -21,7 +21,7 @@ const Alert = () => {
         clearTimeout(timeoutId);
       };
     }
-  }, [errorMessage, successMessage]);
+  }, [errorMessage, successMessage, handleHideAlert]);
 
   return (
     errorMessage ||
@@ -34,8 +34,7 @@ const Alert = () => {
           errorMessage
             ? "text-red-600 bg-red-100"
             : "text-green-600 bg-green-100 "
-        }  rounded-lg font-medium`}
-      >
+        }  rounded-lg font-medium`}>
         {errorMessage || successMessage}
       </motion.div>
     ))
