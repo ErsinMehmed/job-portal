@@ -6,7 +6,11 @@ import Dropdown from "./AccountDropdown";
 
 const Navbar = (props) => {
   return (
-    <nav className="fixed z-30 w-full bg-white border-b border-gray-200 md:pr-56 2xl:pr-72">
+    <nav
+      className={`fixed z-30 w-full bg-white border-b border-gray-200 ${
+        props.show ? "md:pr-16" : "md:pr-56 2xl:pr-72"
+      }`}
+    >
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center justify-start">

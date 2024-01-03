@@ -22,22 +22,22 @@ const Alert = () => {
       };
     }
   }, [errorMessage, successMessage, handleHideAlert]);
-
+  console.log(errorMessage);
   return (
-    errorMessage ||
-    (successMessage && (
+    (successMessage || errorMessage) && (
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7 }}
-        className={`fixed top-5 left-1/2 -translate-x-1/2 flex justify-center items-center w-96 py-4 mb-4 z-50 ${
+        className={`fixed top-5 -ml-[180px] left-1/2 flex justify-center items-center w-96 py-4 mb-4 z-50 ${
           errorMessage
             ? "text-red-600 bg-red-100"
-            : "text-green-600 bg-green-100 "
-        }  rounded-lg font-medium`}>
+            : "text-green-600 bg-green-100"
+        }  rounded-lg font-medium`}
+      >
         {errorMessage || successMessage}
       </motion.div>
-    ))
+    )
   );
 };
 

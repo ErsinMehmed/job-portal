@@ -213,12 +213,10 @@ const ShowEditCreate = (props) => {
   };
 
   const renderListItems = (items) => (
-    <ul className='pl-10 pr-3 sm:px-16 space-y-2 text-slate-600'>
+    <ul className="pl-10 pr-3 sm:px-16 space-y-2 text-slate-600">
       {items &&
         items.map((item, index) => (
-          <li
-            key={index}
-            className='list-disc'>
+          <li key={index} className="list-disc">
             {item}
           </li>
         ))}
@@ -268,16 +266,17 @@ const ShowEditCreate = (props) => {
     return (
       <div key={key}>
         {props.editable ? (
-          <div className='flex justify-between items-center'>
-            <h2 className='font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12'>
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
               {title}
             </h2>
 
             {isFirst && (
               <button
-                className='rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12'
-                onClick={() => handleArrowClick("down")}>
-                <IoIosArrowDown className='w-5 h-5' />
+                className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12"
+                onClick={() => handleArrowClick("down")}
+              >
+                <IoIosArrowDown className="w-5 h-5" />
               </button>
             )}
 
@@ -285,29 +284,32 @@ const ShowEditCreate = (props) => {
               <div>
                 <div>
                   <button
-                    className='rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12'
-                    onClick={() => handleArrowClick("up")}>
-                    <IoIosArrowUp className='w-5 h-5' />
+                    className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12"
+                    onClick={() => handleArrowClick("up")}
+                  >
+                    <IoIosArrowUp className="w-5 h-5" />
                   </button>
                 </div>
                 <button
-                  className='rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-2 mr-12'
-                  onClick={() => handleArrowClick("down")}>
-                  <IoIosArrowDown className='w-5 h-5' />
+                  className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-2 mr-12"
+                  onClick={() => handleArrowClick("down")}
+                >
+                  <IoIosArrowDown className="w-5 h-5" />
                 </button>
               </div>
             )}
 
             {isLast && (
               <button
-                className='rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12'
-                onClick={() => handleArrowClick("up")}>
-                <IoIosArrowUp className='w-5 h-5' />
+                className="rounded-full p-1.5 bg-white border hover:bg-slate-50 transition-all active:scale-95 mt-9 mr-12"
+                onClick={() => handleArrowClick("up")}
+              >
+                <IoIosArrowUp className="w-5 h-5" />
               </button>
             )}
           </div>
         ) : (
-          <h2 className='font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12'>
+          <h2 className="font-semibold text-xl sm:text-2xl text-slate-700 mb-2.5 mt-10 sm:mt-12 px-6 sm:px-12">
             {title}
           </h2>
         )}
@@ -380,11 +382,13 @@ const ShowEditCreate = (props) => {
     <div
       className={`w-full ${
         pathname.includes("/dashboard") && "mt-16"
-      } max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative`}>
+      } max-w-screen-xl 2xl:max-w-screen-2xl mx-auto relative`}
+    >
       <Link
         href={pathname.includes("/dashboard") ? "/dashboard/ads" : "/find-job"}
-        className='flex items-center pl-4 2xl:pl-5 pt-8 text-blue-600 font-semibold hover:ml-1.5 hover:text-blue-400 transition-all w-fit'>
-        <HiOutlineArrowLeft className='mt-0.5 mr-1 w-5 h-5' />
+        className="flex items-center pl-4 2xl:pl-5 pt-8 text-blue-600 font-semibold hover:ml-1.5 hover:text-blue-400 transition-all w-fit"
+      >
+        <HiOutlineArrowLeft className="mt-0.5 mr-1 w-5 h-5" />
         {pathname.includes("/dashboard")
           ? "Към всички обяви"
           : "Виж всички обяви"}
@@ -393,23 +397,24 @@ const ShowEditCreate = (props) => {
       <div
         className={`w-full px-4 2xl:px-5 pb-10 pt-8 ${
           pathname.includes("/dashboard") ? "xl:flex-row" : "lg:flex-row"
-        } flex flex-col-reverse gap-8 relative`}>
-        <div className='rounded-2xl shadow-md border pb-10 bg-white'>
+        } flex flex-col-reverse gap-8 relative`}
+      >
+        <div className="rounded-2xl shadow-md border pb-10 bg-white">
           <Image
             src={adBannerImg}
-            alt='Ad banner'
+            alt="Ad banner"
             width={"100%"}
             height={"100%"}
-            className='rounded-t-2xl h-48'
+            className="rounded-t-2xl h-48"
           />
 
-          <div className='flex justify-center rounded-xl -mt-12'>
+          <div className="flex justify-center rounded-xl -mt-12">
             <Image
               src={adProfileImg}
-              alt='Ad banner'
+              alt="Ad banner"
               width={"100%"}
               height={"100%"}
-              className='rounded-xl h-24 w-24 p-1 bg-white'
+              className="rounded-xl h-24 w-24 p-1 bg-white"
             />
           </div>
 
@@ -417,7 +422,8 @@ const ShowEditCreate = (props) => {
             className={`font-semibold text-2xl sm:text-4xl text-center text-slate-700 mt-7 ${
               activeElement !== "title" && "mb-1.5"
             } ${props.editable && "cursor-pointer"}`}
-            onClick={() => handleElementClick("title")}>
+            onClick={() => handleElementClick("title")}
+          >
             {props.editable
               ? activeElement === "title"
                 ? renderInputElement("title", undefined, "center")
@@ -425,7 +431,7 @@ const ShowEditCreate = (props) => {
               : adData?.ad?.title ?? ""}
           </h2>
 
-          <div className='flex flex-wrap justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2'>
+          <div className="flex flex-wrap justify-center mt-1.4 sm:mt-2.5 space-x-1 sm:space-x-2">
             <EditableBadge
               editable={props.editable}
               editCreateValue={adData?.ad?.category ?? adDataCreate.category}
@@ -435,7 +441,7 @@ const ShowEditCreate = (props) => {
               onChange={(value) => handleInputChange("category", value)}
               items={dashboardCategories}
               value={adData?.ad?.category ?? adDataCreate.category}
-              label='Избери категория'
+              label="Избери категория"
               text={adData?.ad?.category}
             />
 
@@ -448,7 +454,7 @@ const ShowEditCreate = (props) => {
               onChange={(value) => handleInputChange("position", value)}
               items={workPositions}
               value={adData?.ad?.position ?? adDataCreate.position}
-              label='Избери длъжност'
+              label="Избери длъжност"
               text={adData?.ad?.position}
             />
 
@@ -465,23 +471,23 @@ const ShowEditCreate = (props) => {
               value={
                 adData?.ad?.employment_type ?? adDataCreate.employment_type
               }
-              label='Избери тип заетост'
+              label="Избери тип заетост"
               text={adData?.ad?.employment_type}
             />
           </div>
 
-          <div className='px-6 sm:px-12 py-10'>
-            <div className='border-b-2 border-gray-200' />
+          <div className="px-6 sm:px-12 py-10">
+            <div className="border-b-2 border-gray-200" />
           </div>
 
-          <div className='sm:flex justify-between items-center px-6 sm:px-12'>
-            <h2 className='font-semibold text-xl sm:text-2xl text-center text-slate-700 mb-1.5'>
+          <div className="sm:flex justify-between items-center px-6 sm:px-12">
+            <h2 className="font-semibold text-xl sm:text-2xl text-center text-slate-700 mb-1.5">
               Описание
             </h2>
 
-            <h2 className='font-semibold text-sm sm:text-base text-center text-slate-700 mb-1.5'>
+            <h2 className="font-semibold text-sm sm:text-base text-center text-slate-700 mb-1.5">
               Публикувано на
-              <span className='text-slate-500'>
+              <span className="text-slate-500">
                 {" "}
                 {props.editable
                   ? moment().locale("bg").format("D MMMM YYYY")
@@ -494,19 +500,20 @@ const ShowEditCreate = (props) => {
 
           {props.editable ? (
             <div
-              className='px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left cursor-pointer'
-              onClick={() => handleElementClick("details")}>
+              className="px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left cursor-pointer"
+              onClick={() => handleElementClick("details")}
+            >
               {activeElement === "details"
                 ? renderTextareaElement("details")
                 : adData?.ad.details ?? adDataCreate.details}
             </div>
           ) : (
             <>
-              <div className='px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left'>
+              <div className="px-6 sm:px-12 text-slate-600 mt-5 text-justify sm:text-left">
                 {getWords(adData?.ad.details ?? "", 40)}
               </div>
 
-              <div className='px-6 sm:px-12 text-slate-600 mt-3 text-justify sm:text-left'>
+              <div className="px-6 sm:px-12 text-slate-600 mt-3 text-justify sm:text-left">
                 {getRemainingWords(adData?.ad.details ?? "", 40)}
               </div>
             </>
@@ -527,16 +534,17 @@ const ShowEditCreate = (props) => {
             </div>
           </div>
 
-          <div className='flex gap-2 mt-8 px-6 sm:px-20 lg:hidden'>
+          <div className="flex gap-2 mt-8 px-6 sm:px-20 lg:hidden">
             <button
-              type='button'
-              className='bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] font-semibold active:scale-95'>
-              Кандидаствай
+              type="button"
+              className="bg-blue-500 text-white py-2 rounded-full w-full transition-all hover:bg-[#1967d2] font-semibold active:scale-95"
+            >
+              Кандидатствай
             </button>
 
             {session?.user && (
-              <button className='bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all lg:hover:scale-110'>
-                <FiBookmark className='w-5 h-5' />
+              <button className="bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all lg:hover:scale-110">
+                <FiBookmark className="w-5 h-5" />
               </button>
             )}
           </div>
@@ -552,31 +560,35 @@ const ShowEditCreate = (props) => {
               pathname.includes("/edit") || pathname.includes("/create")
                 ? "top-20"
                 : "top-24"
-            }`}>
+            }`}
+          >
             <div
               className={`hidden gap-2 mb-3.5 ${
                 pathname.includes("/dashboard") ? "xl:flex" : "lg:flex"
-              }`}>
+              }`}
+            >
               {props.editable ? (
                 <Tooltip
-                  width='w-56'
-                  buttonWidth='w-full'
-                  space='11'
+                  width="w-56"
+                  buttonWidth="w-full"
+                  space="11"
                   buttonChild={
                     <div
                       className={`${
                         adData?.ad?.apply_button_color ??
                         adDataCreate.apply_button_color
-                      } text-white py-2 rounded-full w-full text-center transition-all font-semibold cursor-pointer`}>
-                      Кандидаствай
+                      } text-white py-2 rounded-full w-full text-center transition-all font-semibold cursor-pointer`}
+                    >
+                      Кандидатствай
                     </div>
                   }
-                  position='bottom'>
-                  <div className='text-slate-600 font-semibold mb-1.5'>
+                  position="bottom"
+                >
+                  <div className="text-slate-600 font-semibold mb-1.5">
                     Избери цвят:
                   </div>
 
-                  <div className='w-full grid grid-cols-4 gap-2'>
+                  <div className="w-full grid grid-cols-4 gap-2">
                     {buttonColors.map((color, index) => (
                       <div
                         key={index}
@@ -596,10 +608,11 @@ const ShowEditCreate = (props) => {
                               apply_button_color: color,
                             });
                           }
-                        }}>
+                        }}
+                      >
                         {(adData?.ad?.apply_button_color ??
                           adDataCreate.apply_button_color) === color && (
-                          <FaCheck className='w-5 h-5' />
+                          <FaCheck className="w-5 h-5" />
                         )}
                       </div>
                     ))}
@@ -607,44 +620,46 @@ const ShowEditCreate = (props) => {
                 </Tooltip>
               ) : (
                 <button
-                  type='button'
+                  type="button"
                   className={`${
                     adData?.ad?.apply_button_color ??
                     adDataCreate.apply_button_color
-                  } text-white py-2 rounded-full w-full transition-all font-semibold`}>
-                  Кандидаствай
+                  } text-white py-2 rounded-full w-full transition-all font-semibold`}
+                >
+                  Кандидатствай
                 </button>
               )}
 
               {session?.user && (
-                <button className='bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all active:scale-95'>
-                  <FiBookmark className='w-5 h-5' />
+                <button className="bg-[#e2eaf8] rounded-full p-2.5 text-blue-500 hover:text-white hover:bg-blue-500 transition-all active:scale-95">
+                  <FiBookmark className="w-5 h-5" />
                 </button>
               )}
             </div>
 
-            <div className='rounded-2xl shadow-md border p-5 space-y-3 bg-white'>
-              <h2 className='font-semibold text-lg text-slate-700 border-b-2 pb-2.5'>
+            <div className="rounded-2xl shadow-md border p-5 space-y-3 bg-white">
+              <h2 className="font-semibold text-lg text-slate-700 border-b-2 pb-2.5">
                 ДЕТАЙЛИ
               </h2>
 
               {props.editable ? (
                 <div
-                  className='flex items-center gap-1 cursor-pointer'
-                  onClick={() => handleElementClick("location")}>
-                  <CiLocationOn className='text-slate-600 w-5 h-5 mt-0.5' />
+                  className="flex items-center gap-1 cursor-pointer"
+                  onClick={() => handleElementClick("location")}
+                >
+                  <CiLocationOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {activeElement === "location"
                       ? renderInputElement("location", undefined, "left", 56)
                       : adData?.ad?.location ?? adDataCreate.location}
                   </div>
                 </div>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiLocationOn className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiLocationOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {adData?.ad?.location}
                   </div>
                 </div>
@@ -653,12 +668,12 @@ const ShowEditCreate = (props) => {
               {props.editable ? (
                 <div>
                   <Tooltip
-                    width='w-64'
+                    width="w-64"
                     buttonChild={
-                      <div className='flex items-center gap-1'>
-                        <CiMicrophoneOn className='text-slate-600 w-5 h-5 mt-0.5' />
+                      <div className="flex items-center gap-1">
+                        <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                        <div className='text-slate-700 font-semibold'>
+                        <div className="text-slate-700 font-semibold">
                           {(
                             adData?.ad?.languages ?? adDataCreate.languages
                           ).map((language, index, array) => (
@@ -673,12 +688,13 @@ const ShowEditCreate = (props) => {
                         </div>
                       </div>
                     }
-                    position='bottom'>
-                    <div className='text-slate-600 font-semibold mb-1.5'>
+                    position="bottom"
+                  >
+                    <div className="text-slate-600 font-semibold mb-1.5">
                       Избери еизици:
                     </div>
 
-                    <div className='flex gap-1.5 flex-wrap'>
+                    <div className="flex gap-1.5 flex-wrap">
                       {languages.map((language, index) => (
                         <span
                           className={`shadow-lg rounded-lg border border-slate-200 p-1.5 text-sm cursor-pointer transition-all active:scale-95 ${
@@ -689,7 +705,8 @@ const ShowEditCreate = (props) => {
                               : "bg-white hover:bg-blue-300 hover:text-white text-slate-600"
                           }`}
                           key={index}
-                          onClick={() => handleLanguageClick(language)}>
+                          onClick={() => handleLanguageClick(language)}
+                        >
                           {language}
                         </span>
                       ))}
@@ -697,10 +714,10 @@ const ShowEditCreate = (props) => {
                   </Tooltip>
                 </div>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiMicrophoneOn className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiMicrophoneOn className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {adData?.ad?.languages &&
                       adData?.ad.languages.map((language, index) => (
                         <span key={index}>
@@ -717,25 +734,26 @@ const ShowEditCreate = (props) => {
 
               {props.editable ? (
                 <Tooltip
-                  width='w-64'
+                  width="w-64"
                   buttonChild={
-                    <div className='flex items-center gap-1 cursor-pointer'>
-                      <CiSettings className='text-slate-600 w-5 h-5 mt-0.5' />
+                    <div className="flex items-center gap-1 cursor-pointer">
+                      <CiSettings className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                      <div className='text-slate-700 font-semibold'>
+                      <div className="text-slate-700 font-semibold">
                         {adData?.ad?.education_requirements ??
                           adDataCreate.education_requirements}
                       </div>
                     </div>
                   }
-                  position='bottom'>
-                  <div className='text-slate-600 font-semibold mb-1.5'>
+                  position="bottom"
+                >
+                  <div className="text-slate-600 font-semibold mb-1.5">
                     Избери образование:
                   </div>
 
                   <Select
                     items={educationTypes}
-                    label='Избери образование'
+                    label="Избери образование"
                     value={
                       adData?.ad?.education_requirements ??
                       adDataCreate.education_requirements
@@ -746,10 +764,10 @@ const ShowEditCreate = (props) => {
                   />
                 </Tooltip>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiSettings className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiSettings className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {adData?.ad?.education_requirements}
                   </div>
                 </div>
@@ -758,25 +776,26 @@ const ShowEditCreate = (props) => {
               {props.editable ? (
                 <div>
                   <Tooltip
-                    width='w-64'
+                    width="w-64"
                     buttonChild={
-                      <div className='flex items-center gap-1 cursor-pointer'>
-                        <CiTimer className='text-slate-600 w-5 h-5 mt-0.5' />
+                      <div className="flex items-center gap-1 cursor-pointer">
+                        <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                        <div className='text-slate-700 font-semibold'>
+                        <div className="text-slate-700 font-semibold">
                           Години опит{" "}
                           {adData?.ad?.experience ?? adDataCreate.experience}
                         </div>
                       </div>
                     }
-                    position='bottom'>
-                    <div className='text-slate-600 font-semibold mb-1.5'>
+                    position="bottom"
+                  >
+                    <div className="text-slate-600 font-semibold mb-1.5">
                       Избери години опит:
                     </div>
 
                     <Select
                       items={experience}
-                      label='Избери годни опит'
+                      label="Избери годни опит"
                       value={
                         (adData?.ad?.experience || "") ??
                         adDataCreate.experience
@@ -788,10 +807,10 @@ const ShowEditCreate = (props) => {
                   </Tooltip>
                 </div>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiTimer className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiTimer className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     Години опит {adData?.ad?.experience}
                   </div>
                 </div>
@@ -799,33 +818,34 @@ const ShowEditCreate = (props) => {
 
               {props.editable ? (
                 <Tooltip
-                  width='w-64'
+                  width="w-64"
                   buttonChild={
-                    <div className='flex items-center gap-1 cursor-pointer'>
-                      <CiClock2 className='text-slate-600 w-5 h-5 mt-0.5' />
+                    <div className="flex items-center gap-1 cursor-pointer">
+                      <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                      <div className='text-slate-700 font-semibold'>
+                      <div className="text-slate-700 font-semibold">
                         {adData?.ad?.employment ?? adDataCreate.employment}
                       </div>
                     </div>
                   }
-                  position='bottom'>
-                  <div className='text-slate-600 font-semibold mb-1.5'>
+                  position="bottom"
+                >
+                  <div className="text-slate-600 font-semibold mb-1.5">
                     Избери работно време:
                   </div>
 
                   <Select
                     items={employment}
-                    label='Избери работно време'
+                    label="Избери работно време"
                     value={adDataCreate.employment || ""}
                     onChange={(value) => handleInputChange("employment", value)}
                   />
                 </Tooltip>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiClock2 className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiClock2 className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {adData?.ad?.employment}
                   </div>
                 </div>
@@ -833,11 +853,12 @@ const ShowEditCreate = (props) => {
 
               {props.editable ? (
                 <div
-                  className='flex items-center gap-1 cursor-pointer'
-                  onClick={() => handleElementClick("paid_leave")}>
-                  <CiUmbrella className='text-slate-600 w-5 h-5 mt-0.5' />
+                  className="flex items-center gap-1 cursor-pointer"
+                  onClick={() => handleElementClick("paid_leave")}
+                >
+                  <CiUmbrella className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {activeElement === "paid_leave"
                       ? renderInputElement(
                           "paid_leave",
@@ -851,10 +872,10 @@ const ShowEditCreate = (props) => {
                   </div>
                 </div>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiUmbrella className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiUmbrella className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     Отпуска: {adData?.ad?.paid_leave} дни
                   </div>
                 </div>
@@ -862,11 +883,12 @@ const ShowEditCreate = (props) => {
 
               {props.editable ? (
                 <div
-                  className='flex items-center gap-1 cursor-pointer'
-                  onClick={() => handleElementClick("salary")}>
-                  <CiDollar className='text-slate-600 w-5 h-5 mt-0.5' />
+                  className="flex items-center gap-1 cursor-pointer"
+                  onClick={() => handleElementClick("salary")}
+                >
+                  <CiDollar className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     {activeElement === "salary"
                       ? renderInputElement("salary", undefined, "center", 20)
                       : `Заплата: ${formatCurrency(
@@ -876,25 +898,26 @@ const ShowEditCreate = (props) => {
                   </div>
                 </div>
               ) : (
-                <div className='flex items-center gap-1'>
-                  <CiDollar className='text-slate-600 w-5 h-5 mt-0.5' />
+                <div className="flex items-center gap-1">
+                  <CiDollar className="text-slate-600 w-5 h-5 mt-0.5" />
 
-                  <div className='text-slate-700 font-semibold'>
+                  <div className="text-slate-700 font-semibold">
                     Заплата: {formatCurrency(adData?.ad?.salary, 0)}
                   </div>
                 </div>
               )}
 
-              <h2 className='font-semibold text-lg text-slate-700'>
+              <h2 className="font-semibold text-lg text-slate-700">
                 Меки умения
               </h2>
 
-              <div className='flex flex-wrap gap-2'>
+              <div className="flex flex-wrap gap-2">
                 {adData?.ad?.soft_skills &&
                   adData?.ad.soft_skills.map((skill, index) => (
                     <div
                       key={index}
-                      className='rounded-xl px-2 py-0.5 bg-blue-300 text-white text-sm'>
+                      className="rounded-xl px-2 py-0.5 bg-blue-300 text-white text-sm"
+                    >
                       {skill}
                     </div>
                   ))}
@@ -906,20 +929,21 @@ const ShowEditCreate = (props) => {
                 pathname.includes("/dashboard")
                   ? "sm:ml-0 sm:mt-5 md:ml-8 md:mt-0 xl:ml-0 xl:mt-5"
                   : "sm:mt-0 sm:ml-8 lg:ml-0 lg:mt-5"
-              } rounded-2xl shadow-md border p-5 space-y-3 mt-8  text-slate-700 bg-white`}>
+              } rounded-2xl shadow-md border p-5 space-y-3 mt-8  text-slate-700 bg-white`}
+            >
               <Image
                 src={adProfileImg}
-                alt='Ad banner'
+                alt="Ad banner"
                 width={"100%"}
                 height={"100%"}
-                className='rounded-xl bg-white'
+                className="rounded-xl bg-white"
               />
 
-              <h2 className='font-semibold sm:text-lg border-b-2 pb-3 pt-2'>
+              <h2 className="font-semibold sm:text-lg border-b-2 pb-3 pt-2">
                 {adData?.ad?.creator.name ?? user?.name}
               </h2>
 
-              <p className='text-sm sm:text-base'>
+              <p className="text-sm sm:text-base">
                 {getWords(
                   adData?.ad?.creator.company_description ??
                     user?.company_description ??
@@ -928,7 +952,7 @@ const ShowEditCreate = (props) => {
                 )}
               </p>
 
-              <p className='text-sm sm:text-base'>
+              <p className="text-sm sm:text-base">
                 {getRemainingWords(
                   adData?.ad?.creator.company_description ??
                     user?.company_description ??
@@ -937,10 +961,10 @@ const ShowEditCreate = (props) => {
                 )}
               </p>
 
-              <div className='flex items-center gap-1 text-sm sm:text-base'>
-                <CiCalendar className='text-slate-600 w-4 h-4 mt-0.5' />
+              <div className="flex items-center gap-1 text-sm sm:text-base">
+                <CiCalendar className="text-slate-600 w-4 h-4 mt-0.5" />
 
-                <div className='text-slate-700 font-semibold'>
+                <div className="text-slate-700 font-semibold">
                   В България
                   {" " +
                     moment(
@@ -950,26 +974,26 @@ const ShowEditCreate = (props) => {
                 </div>
               </div>
 
-              <div className='flex items-center gap-1 border-b-2 pb-3 text-sm sm:text-base'>
-                <CiUser className='text-slate-600 w-4 h-4 mt-0.5' />
+              <div className="flex items-center gap-1 border-b-2 pb-3 text-sm sm:text-base">
+                <CiUser className="text-slate-600 w-4 h-4 mt-0.5" />
 
-                <div className='text-slate-700 font-semibold'>
+                <div className="text-slate-700 font-semibold">
                   {adData?.ad?.creator.company_size ?? user?.company_size}{" "}
                   служители
                 </div>
               </div>
 
-              <div className='flex sm:flex-col md:flex-row text-sm sm:text-base items-center justify-between sm:justify-start md:justify-between text-blue-600 pt-1'>
-                <button className='flex items-center gap-1 hover:text-blue-400 transition-all sm:w-full md:w-auto'>
-                  <CiCircleList className='w-4 h-4 mt-0.5' />
+              <div className="flex sm:flex-col md:flex-row text-sm sm:text-base items-center justify-between sm:justify-start md:justify-between text-blue-600 pt-1">
+                <button className="flex items-center gap-1 hover:text-blue-400 transition-all sm:w-full md:w-auto">
+                  <CiCircleList className="w-4 h-4 mt-0.5" />
 
-                  <div className='font-semibold'>ОБЯВИ ({adData?.adCount})</div>
+                  <div className="font-semibold">ОБЯВИ ({adData?.adCount})</div>
                 </button>
 
-                <button className='flex items-center gap-1 hover:text-blue-400 transition-all sm:w-full md:w-auto'>
-                  <CiSearch className='w-4 h-4 mt-0.5' />
+                <button className="flex items-center gap-1 hover:text-blue-400 transition-all sm:w-full md:w-auto">
+                  <CiSearch className="w-4 h-4 mt-0.5" />
 
-                  <div className='font-semibold'>ВИЖ ПРОФИЛА</div>
+                  <div className="font-semibold">ВИЖ ПРОФИЛА</div>
                 </button>
               </div>
             </div>
